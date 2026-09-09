@@ -1,0 +1,625 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #020202;
+    color: #ffffff;
+    overflow: hidden;
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+
+.background {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px),
+        #020202;
+
+    background-size: 50px 50px;
+}
+
+/* =========================
+   FLOATING SQUARES
+========================= */
+
+.square {
+    position: absolute;
+    border: 1px solid rgba(255,255,255,0.16);
+    background: rgba(255,255,255,0.015);
+    border-radius: 10px;
+    transform: rotate(20deg);
+    animation: floatSquare linear infinite;
+}
+
+.square-1 {
+    width: 130px;
+    height: 130px;
+    left: 8%;
+    top: 15%;
+    animation-duration: 22s;
+}
+
+.square-2 {
+    width: 80px;
+    height: 80px;
+    left: 25%;
+    top: 60%;
+    animation-duration: 18s;
+    animation-delay: -5s;
+}
+
+.square-3 {
+    width: 180px;
+    height: 180px;
+    right: 8%;
+    top: 8%;
+    animation-duration: 27s;
+    animation-delay: -8s;
+}
+
+.square-4 {
+    width: 100px;
+    height: 100px;
+    right: 20%;
+    top: 55%;
+    animation-duration: 20s;
+    animation-delay: -10s;
+}
+
+.square-5 {
+    width: 55px;
+    height: 55px;
+    left: 38%;
+    top: 12%;
+    animation-duration: 16s;
+}
+
+.square-6 {
+    width: 75px;
+    height: 75px;
+    left: 3%;
+    bottom: 10%;
+    animation-duration: 25s;
+    animation-delay: -4s;
+}
+
+.square-7 {
+    width: 145px;
+    height: 145px;
+    right: 4%;
+    bottom: 5%;
+    animation-duration: 24s;
+    animation-delay: -7s;
+}
+
+.square-8 {
+    width: 45px;
+    height: 45px;
+    right: 32%;
+    top: 18%;
+    animation-duration: 15s;
+    animation-delay: -3s;
+}
+
+@keyframes floatSquare {
+
+    0% {
+        transform: translate3d(0, 0, 0) rotate(20deg);
+    }
+
+    25% {
+        transform: translate3d(35px, -25px, 0) rotate(35deg);
+    }
+
+    50% {
+        transform: translate3d(-20px, 35px, 0) rotate(50deg);
+    }
+
+    75% {
+        transform: translate3d(30px, 20px, 0) rotate(30deg);
+    }
+
+    100% {
+        transform: translate3d(0, 0, 0) rotate(20deg);
+    }
+}
+
+/* =========================
+   PAGE
+========================= */
+
+.auth-page {
+    position: relative;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+}
+
+/* =========================
+   MOVING WHITE LIGHT
+========================= */
+
+.light {
+    position: absolute;
+
+    width: 520px;
+    height: 520px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.13);
+
+    filter: blur(100px);
+
+    animation: moveLight 7s ease-in-out infinite;
+
+    pointer-events: none;
+}
+
+@keyframes moveLight {
+
+    0% {
+        transform: translate(-80px, -20px) scale(0.85);
+        opacity: 0.45;
+    }
+
+    25% {
+        transform: translate(70px, -80px) scale(1);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: translate(100px, 60px) scale(0.9);
+        opacity: 0.5;
+    }
+
+    75% {
+        transform: translate(-70px, 80px) scale(1.05);
+        opacity: 0.65;
+    }
+
+    100% {
+        transform: translate(-80px, -20px) scale(0.85);
+        opacity: 0.45;
+    }
+}
+
+/* =========================
+   CARD
+========================= */
+
+.auth-card {
+    position: relative;
+    z-index: 5;
+
+    width: 410px;
+    max-width: 100%;
+
+    padding: 40px 36px 32px;
+
+    background: rgba(12,12,12,0.88);
+
+    border: 1px solid rgba(255,255,255,0.20);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 0 20px rgba(255,255,255,0.08),
+        0 0 70px rgba(255,255,255,0.08),
+        inset 0 0 40px rgba(255,255,255,0.015);
+
+    backdrop-filter: blur(18px);
+
+    overflow: hidden;
+}
+
+/* Card üstündeki hafif beyaz çizgi */
+
+.auth-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 10%;
+    right: 10%;
+
+    height: 1px;
+
+    background: rgba(255,255,255,0.7);
+
+    filter: blur(2px);
+
+    opacity: 0.5;
+}
+
+/* =========================
+   LOGO
+========================= */
+
+.logo {
+    width: 54px;
+    height: 54px;
+
+    margin: 0 auto 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #ffffff;
+    color: #050505;
+
+    border-radius: 14px;
+
+    font-size: 28px;
+    font-weight: 800;
+
+    box-shadow:
+        0 0 20px rgba(255,255,255,0.25);
+}
+
+/* =========================
+   TITLES
+========================= */
+
+.auth-card h1 {
+    text-align: center;
+
+    font-size: 25px;
+    font-weight: 700;
+
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    text-align: center;
+
+    color: #8d8d8d;
+
+    font-size: 14px;
+
+    margin-bottom: 30px;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.form-group {
+    margin-bottom: 19px;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 0.5px;
+
+    color: #bdbdbd;
+}
+
+.input-box {
+    position: relative;
+
+    width: 100%;
+}
+
+.input-box input {
+    width: 100%;
+    height: 48px;
+
+    padding: 0 45px;
+
+    background: #0d0d0d;
+
+    border: 1px solid #303030;
+
+    border-radius: 11px;
+
+    outline: none;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    transition: 0.2s ease;
+}
+
+.input-box input::placeholder {
+    color: #626262;
+}
+
+.input-box input:focus {
+    border-color: #ffffff;
+
+    box-shadow:
+        0 0 0 1px rgba(255,255,255,0.2),
+        0 0 20px rgba(255,255,255,0.05);
+}
+
+.input-icon {
+    position: absolute;
+
+    left: 15px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #8c8c8c;
+
+    font-size: 15px;
+
+    pointer-events: none;
+}
+
+.password-toggle {
+    position: absolute;
+
+    right: 13px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    border: 0;
+
+    background: transparent;
+
+    color: #777777;
+
+    cursor: pointer;
+
+    font-size: 15px;
+}
+
+.password-toggle:hover {
+    color: #ffffff;
+}
+
+/* =========================
+   OPTIONS
+========================= */
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin: 5px 0 22px;
+
+    font-size: 12px;
+}
+
+.remember {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    color: #999999;
+
+    cursor: pointer;
+}
+
+.remember input {
+    appearance: none;
+
+    width: 14px;
+    height: 14px;
+
+    border: 1px solid #555;
+
+    border-radius: 3px;
+
+    background: #090909;
+
+    cursor: pointer;
+}
+
+.remember input:checked {
+    background: #ffffff;
+
+    border-color: #ffffff;
+
+    box-shadow: inset 0 0 0 3px #090909;
+}
+
+.forgot {
+    color: #999999;
+
+    text-decoration: none;
+}
+
+.forgot:hover {
+    color: #ffffff;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.submit-button {
+    width: 100%;
+    height: 48px;
+
+    border: 0;
+    border-radius: 11px;
+
+    background: #ffffff;
+
+    color: #050505;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.submit-button:hover {
+    background: #eeeeee;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 0 25px rgba(255,255,255,0.25);
+}
+
+.submit-button:active {
+    transform: translateY(0);
+}
+
+/* =========================
+   DIVIDER
+========================= */
+
+.divider {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin: 25px 0;
+}
+
+.divider span {
+    flex: 1;
+
+    height: 1px;
+
+    background: #292929;
+}
+
+.divider p {
+    color: #666666;
+
+    font-size: 12px;
+}
+
+/* =========================
+   REGISTER LINK
+========================= */
+
+.register-link {
+    text-align: center;
+
+    color: #777777;
+
+    font-size: 13px;
+}
+
+.register-link a {
+    color: #ffffff;
+
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+/* =========================
+   REGISTER CARD
+========================= */
+
+.register-card {
+    padding-top: 34px;
+}
+
+.register-card .subtitle {
+    margin-bottom: 24px;
+}
+
+.register-card .form-group {
+    margin-bottom: 15px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    body {
+        overflow-y: auto;
+    }
+
+    .auth-page {
+        min-height: 100vh;
+
+        padding: 20px 15px;
+    }
+
+    .auth-card {
+        width: 100%;
+
+        max-width: 390px;
+
+        padding: 32px 22px 27px;
+
+        border-radius: 16px;
+    }
+
+    .auth-card h1 {
+        font-size: 22px;
+    }
+
+    .subtitle {
+        font-size: 13px;
+    }
+
+    .light {
+        width: 350px;
+        height: 350px;
+
+        filter: blur(80px);
+    }
+
+    .square-3,
+    .square-7 {
+        display: none;
+    }
+}
+
+@media (max-width: 380px) {
+
+    .auth-page {
+        padding: 15px 10px;
+    }
+
+    .auth-card {
+        padding: 28px 18px 24px;
+    }
+
+    .auth-card h1 {
+        font-size: 20px;
+    }
+}
