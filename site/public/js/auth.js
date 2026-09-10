@@ -199,7 +199,7 @@ setTimeout(() => {
                     password
                 );
 
-
+localStorage.setItem("username", userData.username);
 showToast("Giriş başarılı!", "success");
 
 setTimeout(() => {

@@ -3,40 +3,66 @@ document.addEventListener("DOMContentLoaded", () => {
     const menuButton = document.getElementById("menuButton");
     const sideMenu = document.getElementById("side-menu");
     const menuOverlay = document.getElementById("menu-overlay");
+    const menuClose = document.getElementById("menu-close");
 
-    if (!menuButton || !sideMenu) {
+        const menuUsername = document.getElementById("menuUsername");
+    const menuStatus = document.getElementById("menuStatus");
+    const menuAccount = document.querySelector(".menu-account");
+
+    const username = localStorage.getItem("username");
+
+if (username) {
+    menuUsername.textContent = username;
+    menuStatus.textContent = "Hoş geldin";
+
+    if (menuAccount) {
+        menuAccount.style.display = "none";
+    }
+} else {
+    menuUsername.textContent = "Misafir";
+    menuStatus.textContent = "Giriş yapmadınız";
+
+    if (menuAccount) {
+        menuAccount.style.display = "flex";
+    }
+}
+
+    if (!menuButton || !sideMenu || !menuOverlay) {
         console.error("Menü elemanları bulunamadı.");
         return;
     }
 
     // MENÜYÜ AÇ
     menuButton.addEventListener("click", () => {
-        sideMenu.classList.add("active");
-
-        if (menuOverlay) {
-            menuOverlay.classList.add("active");
-        }
+        sideMenu.classList.add("open");
+        menuOverlay.classList.add("show");
     });
 
-    // OVERLAY'E BASINCA KAPAT
-    if (menuOverlay) {
-        menuOverlay.addEventListener("click", () => {
-            sideMenu.classList.remove("active");
-            menuOverlay.classList.remove("active");
+    // X İLE KAPAT
+    if (menuClose) {
+        menuClose.addEventListener("click", () => {
+            closeMenu();
         });
     }
 
-    // MENÜDEKİ LİNKLERE BASINCA KAPAT
+    // KARARTMAYA BASINCA KAPAT
+    menuOverlay.addEventListener("click", () => {
+        closeMenu();
+    });
+
+    // MENÜ LİNKLERİNE BASINCA KAPAT
     const menuLinks = sideMenu.querySelectorAll("a");
 
-    menuLinks.forEach(link => {
+    menuLinks.forEach((link) => {
         link.addEventListener("click", () => {
-            sideMenu.classList.remove("active");
-
-            if (menuOverlay) {
-                menuOverlay.classList.remove("active");
-            }
+            closeMenu();
         });
     });
+
+    // KAPATMA FONKSİYONU
+    function closeMenu() {
+        sideMenu.classList.remove("open");
+        menuOverlay.classList.remove("show");
+    }
 
 });
