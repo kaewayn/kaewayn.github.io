@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
 showToast("Hesabın başarıyla oluşturuldu!", "success");
 
 setTimeout(() => {
-    window.location.href = "/";
+    window.location.href = "/login";
 }, 1500);
 
             } catch (error) {

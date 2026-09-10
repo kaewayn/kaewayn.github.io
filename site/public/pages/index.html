@@ -2,6 +2,7 @@
 <html lang="tr">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -9,38 +10,49 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Kae Wayn</title>
+    <meta
+        name="description"
+        content="Kaewayn - Sosyal medyada yeni nesil güç."
+    >
+
+    <title>Kaewayn</title>
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="/img/favicon.png"
+    >
 
     <link
         rel="stylesheet"
         href="/css/index.css"
-
-
     >
 
-        <link
+    <link
         rel="stylesheet"
-        href="/css/notification.css"
-        >
+        href="/css/toast.css"
+    >
 
 </head>
 
+
 <body>
 
-    <!-- ========================================= -->
-    <!-- BACKGROUND -->
-    <!-- ========================================= -->
+
+    <!-- ==================================================
+         ARKA PLAN
+    =================================================== -->
 
     <div class="background">
 
-        <span class="square square-1"></span>
-        <span class="square square-2"></span>
-        <span class="square square-3"></span>
-        <span class="square square-4"></span>
-        <span class="square square-5"></span>
-        <span class="square square-6"></span>
+        <div class="background-grid"></div>
+
+        <div class="background-glow background-glow-1"></div>
+
+        <div class="background-glow background-glow-2"></div>
 
     </div>
+
 
 
     <!-- ========================================= -->
@@ -53,302 +65,782 @@
 
             <!-- Logo -->
 
-            <a href="/" class="logo">
+            <a href="#"
+                class="logo">
 
                 <div class="logo-image">
 
-                    <!-- YARIN LOGONU BURAYA KOYACAKSIN -->
-                    <img
-                        src="/assets/img/logo.png"
-                        alt="kaewayn"
-                    >
+                  <img src="/img/logo.png" alt="Kae">
 
                 </div>
 
                 <div class="logo-text">
 
-                    <h2>kaewayn</h2>
+                    <h2>Kaewayn</h2>
 
                 </div>
 
             </a>
 
-
             <!-- Desktop Menu -->
 
             <nav class="desktop-menu">
 
-                <a href="#hero">Ana Sayfa</a>
+                <a href="#hero"> </a>
 
-                <a href="#features">Özellikler</a>
+                <a href="#features"></a>
 
-                <a href="#about">Hakkımızda</a>
+                <a href="#premium"></a>
 
-                <a href="#contact">İletişim</a>
+                <a href="#contact"></a>
 
             </nav>
-
 
             <!-- Right -->
 
             <div class="navbar-right">
 
-                <a
-                    href="/login"
-                    class="login-button"
-                >
-                    Giriş Yap
-                </a>
-
-                <button
-                    class="menu-button"
-                    id="menuButton"
-                    type="button"
-                    aria-label="Menüyü aç"
-                >
+                <button class="menu-button"
+                    id="menuButton">
 
                     <span></span>
+
                     <span></span>
+
                     <span></span>
 
                 </button>
 
             </div>
 
-        </div>
-
     </header>
 
 
-    <!-- ========================================= -->
-    <!-- MOBILE MENU -->
-    <!-- ========================================= -->
+
+
+    <!-- ==================================================
+         MENÜ ARKA PLANI
+    =================================================== -->
 
     <div
-        class="mobile-menu"
-        id="mobileMenu"
+        class="menu-overlay"
+        id="menu-overlay"
+    ></div>
+
+
+
+    <!-- ==================================================
+         SAĞ MENÜ
+    =================================================== -->
+
+    <aside
+        class="side-menu"
+        id="side-menu"
     >
 
-        <a href="#hero">Ana Sayfa</a>
-
-        <a href="#features">Özellikler</a>
-
-        <a href="#about">Hakkımızda</a>
-
-        <a href="#contact">İletişim</a>
-
-        <a href="/login">Giriş Yap</a>
-
-        <a href="/register">Kayıt Ol</a>
-
-    </div>
+        <button
+            type="button"
+            class="menu-close"
+            id="menu-close"
+            aria-label="Menüyü kapat"
+        >
+            ×
+        </button>
 
 
-    <!-- ========================================= -->
-    <!-- HERO -->
-    <!-- ========================================= -->
+        <!-- PROFİL -->
+
+        <div class="menu-profile">
+
+            <div class="menu-profile-logo">
+
+                <img
+                    src="/img/favicon.png"
+                    alt="kaewayn"
+                >
+
+            </div>
+
+            <h2>
+                Kaewayn
+            </h2>
+
+            <p>
+                sss
+            </p>
+
+        </div>
+
+
+
+        <!-- HESAP -->
+
+        <div class="menu-account">
+
+            <a
+                href="/login"
+                class="menu-login"
+            >
+                Giriş Yap
+            </a>
+
+            <a
+                href="/register"
+                class="menu-register"
+            >
+                Kayıt Ol
+            </a>
+
+        </div>
+
+
+
+        <!-- MENÜ -->
+
+        <nav class="menu-navigation">
+
+            <a
+                href="/"
+                class="menu-link active"
+            >
+
+                <span class="menu-icon">
+                    ⌂
+                </span>
+
+                <span>
+                    Ana Sayfa
+                </span>
+
+            </a>
+
+
+            <a
+                href="#services"
+                class="menu-link"
+            >
+
+                <span class="menu-icon">
+                    ⚡
+                </span>
+
+                <span>
+                    Hizmetler
+                </span>
+
+            </a>
+
+
+            <a
+                href="#about"
+                class="menu-link"
+            >
+
+                <span class="menu-icon">
+                    ◆
+                </span>
+
+                <span>
+                    Hakkımda
+                </span>
+
+            </a>
+
+
+            <a
+                href="#contact"
+                class="menu-link"
+            >
+
+                <span class="menu-icon">
+                    ✉
+                </span>
+
+                <span>
+                    İletişim
+                </span>
+
+            </a>
+
+        </nav>
+
+
+
+        <!-- SOSYAL MEDYA -->
+
+        <div class="menu-social">
+
+            <a
+                href="#"
+                aria-label="Instagram"
+            >
+                ◎
+            </a>
+
+            <a
+                href="#"
+                aria-label="TikTok"
+            >
+                ♪
+            </a>
+
+            <a
+                href="#"
+                aria-label="Discord"
+            >
+                ◈
+            </a>
+
+            <a
+                href="#"
+                aria-label="YouTube"
+            >
+                ▶
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- ==================================================
+         ANA İÇERİK
+    =================================================== -->
 
     <main>
 
-        <section
-            class="hero"
-            id="hero"
-        >
+
+        <!-- ==================================================
+             HERO
+        =================================================== -->
+
+        <section class="hero">
+
+            <div class="hero-orbit orbit-1"></div>
+
+            <div class="hero-orbit orbit-2"></div>
+
 
             <div class="hero-content">
 
-                <span class="hero-badge">
-                    KAEWAYN
-                </span>
 
-                <h1>
-                    Yeni bir
-                    <span>başlangıç.</span>
-                </h1>
+                <!-- ÜST BADGE -->
 
-                <p>
-                    Buraya sitenin ana açıklaması gelecek.
-                    Yarın bu bölümü birlikte dolduracağız.
+                <div class="hero-badge hero-badge-site">
+
+                    <span>
+                        👑
+                    </span>
+
+                    kaewayn.com
+
+                </div>
+
+
+
+                <!-- SOL BADGE -->
+
+                <div class="hero-badge hero-badge-trend">
+
+                    <span>
+                        🔥
+                    </span>
+
+                    Trend
+
+                </div>
+
+
+
+                <!-- SAĞ BADGE -->
+
+                <div class="hero-badge hero-badge-growth">
+
+                    <span>
+                        ↗
+                    </span>
+
+                    Growth
+
+                </div>
+
+
+
+                <!-- ALT SOL BADGE -->
+
+                <div class="hero-badge hero-badge-premium">
+
+                    <span>
+                        ★
+                    </span>
+
+                    Premium
+
+                </div>
+
+
+
+                <!-- BAŞLIK -->
+
+                <div class="hero-title">
+
+                    <h1>
+                        Always The Best
+                    </h1>
+
+                    <h1 class="hero-gradient-text">
+                       
+                    </h1>
+
+                </div>
+
+
+
+                <!-- AÇIKLAMA -->
+
+                <p class="hero-description">
+
+Aradığınız her şey ve daha fazlası için iletişime geçin.
                 </p>
+
+
+
+                <!-- BUTONLAR -->
 
                 <div class="hero-buttons">
 
+
                     <a
-                        href="/register"
-                        class="primary-button"
+                        href="#services"
+                        class="hero-button hero-button-primary"
                     >
-                        Hemen Başla
+
+                        <span>
+                            🚀
+                        </span>
+
+                        Hizmetler
+
+                    </a>
+
+
+
+                    <a
+                        href="#about"
+                        class="hero-button hero-button-secondary"
+                    >
+
+                        <span>
+                            ◆
+                        </span>
+
+                        Hakkımda
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==================================================
+             SERVICES
+        =================================================== -->
+
+        <section
+            class="content-section services-section"
+            id="services"
+        >
+
+            <div class="section-heading">
+
+                <span class="section-label">
+                    HİZMETLER
+                </span>
+
+                <h2>
+                    Dijital dünyada
+                    <span>fark yarat.</span>
+                </h2>
+
+                <p>
+                    İhtiyacın olan araçlar ve hizmetler
+                    tek bir yerde.
+                </p>
+
+            </div>
+
+
+
+            <div class="service-grid">
+
+
+                <!-- KART 1 -->
+
+                <article class="service-card">
+
+                    <div class="service-card-icon">
+                        ⚡
+                    </div>
+
+                    <div class="service-card-content">
+
+                        <span class="service-number">
+                            01
+                        </span>
+
+                        <h3>
+                            Hızlı Hizmet
+                        </h3>
+
+                        <p>
+                            İhtiyacın olan hizmetlere
+                            hızlı ve kolay şekilde ulaş.
+                        </p>
+
+                    </div>
+
+                    <span class="service-arrow">
+                        →
+                    </span>
+
+                </article>
+
+
+
+                <!-- KART 2 -->
+
+                <article class="service-card">
+
+                    <div class="service-card-icon">
+                        ★
+                    </div>
+
+                    <div class="service-card-content">
+
+                        <span class="service-number">
+                            02
+                        </span>
+
+                        <h3>
+                            Premium Deneyim
+                        </h3>
+
+                        <p>
+                            Daha kaliteli ve özel
+                            bir kullanıcı deneyimi.
+                        </p>
+
+                    </div>
+
+                    <span class="service-arrow">
+                        →
+                    </span>
+
+                </article>
+
+
+
+                <!-- KART 3 -->
+
+                <article class="service-card">
+
+                    <div class="service-card-icon">
+                        ↗
+                    </div>
+
+                    <div class="service-card-content">
+
+                        <span class="service-number">
+                            03
+                        </span>
+
+                        <h3>
+                            Growth
+                        </h3>
+
+                        <p>
+                            Sosyal medya yolculuğunu
+                            bir sonraki seviyeye taşı.
+                        </p>
+
+                    </div>
+
+                    <span class="service-arrow">
+                        →
+                    </span>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==================================================
+             ABOUT
+        =================================================== -->
+
+        <section
+            class="content-section about-section"
+            id="about"
+        >
+
+            <div class="about-wrapper">
+
+
+                <div class="about-visual">
+
+                    <div class="about-logo">
+
+                        <span>
+                            KW
+                        </span>
+
+                    </div>
+
+                    <div class="about-ring ring-1"></div>
+
+                    <div class="about-ring ring-2"></div>
+
+                </div>
+
+
+
+                <div class="about-content">
+
+                    <span class="section-label">
+                        HAKKIMDA
+                    </span>
+
+                    <h2>
+                        Burası
+                        <span>AizawaKae.</span>
+                    </h2>
+
+                    <p>
+                        Sosyal medya, dijital içerik ve
+                        internet deneyimini tek bir çatı
+                        altında buluşturan kişisel platform.
+                    </p>
+
+                    <p>
+                        Amacımız sade, hızlı ve modern
+                        bir dijital deneyim sunmak.
+                    </p>
+
+                    <a
+                        href="#contact"
+                        class="text-button"
+                    >
+                        Daha fazla keşfet
+                        <span>→</span>
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==================================================
+             CONTACT
+        =================================================== -->
+
+        <section
+            class="content-section contact-section"
+            id="contact"
+        >
+
+            <div class="contact-box">
+
+                <span class="section-label">
+                    İLETİŞİM
+                </span>
+
+                <h2>
+                    Bir şey mi
+                    <span>söylemek istiyorsun?</span>
+                </h2>
+
+                <p>
+                    Bana ulaşmak için e-posta adresini
+                    kullanabilirsin.
+                </p>
+
+                <a
+                    href="mailto:aizawakae@gmail.com"
+                    class="contact-button"
+                >
+
+                    <span>
+                        ✉
+                    </span>
+
+                    aizawakae@gmail.com
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- ==================================================
+         FOOTER
+    =================================================== -->
+
+    <footer class="footer">
+
+        <div class="footer-inner">
+
+
+            <!-- MARKA -->
+
+            <div class="footer-brand">
+
+                <div class="footer-logo">
+
+                    <img
+                        src="/img/favicon.png"
+                        alt="AizawaKae"
+                    >
+
+                </div>
+
+                <h2>
+                    AizawaKae
+                </h2>
+
+                <p>
+                    Yeni nesil sosyal medya.
+                </p>
+
+
+
+                <div class="footer-social">
+
+                    <a
+                        href="#"
+                        aria-label="Instagram"
+                    >
+                        ◎
                     </a>
 
                     <a
-                        href="#features"
-                        class="secondary-button"
+                        href="#"
+                        aria-label="TikTok"
                     >
-                        Keşfet
+                        ♪
+                    </a>
+
+                    <a
+                        href="#"
+                        aria-label="Discord"
+                    >
+                        ◈
+                    </a>
+
+                    <a
+                        href="#"
+                        aria-label="YouTube"
+                    >
+                        ▶
                     </a>
 
                 </div>
 
             </div>
 
-        </section>
 
 
-        <!-- ========================================= -->
-        <!-- FEATURES -->
-        <!-- ========================================= -->
+            <!-- MENÜ -->
 
-        <section
-            class="features"
-            id="features"
-        >
+            <div class="footer-column">
 
-            <div class="section-heading">
+                <h3>
+                    Menü
+                </h3>
 
-                <span>ÖZELLİKLER</span>
+                <a href="/">
+                    Ana Sayfa
+                </a>
 
-                <h2>
-                    Her şey tek yerde.
-                </h2>
+                <a href="#about">
+                    Kae Kimdir
+                </a>
 
-                <p>
-                    Bu alan daha sonra gerçek içeriklerle
-                    doldurulacak.
-                </p>
+                <a href="#services">
+                    Hizmetler
+                </a>
 
             </div>
 
 
-            <div class="feature-grid">
 
-                <article class="feature-card">
+            <!-- İLETİŞİM -->
 
-                    <div class="feature-number">
-                        01
-                    </div>
+            <div class="footer-column">
 
-                    <h3>
-                        Özellik Başlığı
-                    </h3>
+                <h3>
+                    Mail
+                </h3>
 
-                    <p>
-                        Buraya özellik hakkında kısa
-                        açıklama gelecek.
-                    </p>
-
-                </article>
-
-
-                <article class="feature-card">
-
-                    <div class="feature-number">
-                        02
-                    </div>
-
-                    <h3>
-                        Özellik Başlığı
-                    </h3>
-
-                    <p>
-                        Buraya özellik hakkında kısa
-                        açıklama gelecek.
-                    </p>
-
-                </article>
-
-
-                <article class="feature-card">
-
-                    <div class="feature-number">
-                        03
-                    </div>
-
-                    <h3>
-                        Özellik Başlığı
-                    </h3>
-
-                    <p>
-                        Buraya özellik hakkında kısa
-                        açıklama gelecek.
-                    </p>
-
-                </article>
+                <a
+                    href="mailto:aizawakae@gmail.com"
+                >
+                    aizawakae@gmail.com
+                </a>
 
             </div>
 
-        </section>
+
+        </div>
 
 
-        <!-- ========================================= -->
-        <!-- ABOUT -->
-        <!-- ========================================= -->
 
-        <section
-            class="about"
-            id="about"
-        >
+        <!-- FOOTER ALT -->
 
-            <div class="about-content">
+        <div class="footer-bottom">
 
-                <span>HAKKIMIZDA</span>
+            <span>
+                © 2026 AizawaKae. Tüm hakları saklıdır.
+            </span>
 
-                <h2>
-                    kaewayn hakkında.
-                </h2>
+            <span>
+                Made with ♡
+            </span>
 
-                <p>
-                    Bu bölümde sitenin amacı,
-                    özellikleri ve hikayesi yer alacak.
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- ========================================= -->
-        <!-- CONTACT -->
-        <!-- ========================================= -->
-
-        <section
-            class="contact"
-            id="contact"
-        >
-
-            <div class="contact-box">
-
-                <span>İLETİŞİM</span>
-
-                <h2>
-                    Bizimle iletişime geç.
-                </h2>
-
-                <p>
-                    İletişim bilgileri daha sonra
-                    buraya eklenecek.
-                </p>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- ========================================= -->
-    <!-- FOOTER -->
-    <!-- ========================================= -->
-
-    <footer class="footer">
-
-        <p>
-            © 2026 kaewayn. Tüm hakları saklıdır.
-        </p>
+        </div>
 
     </footer>
 
 
-    <script src="/js/index.js"></script>
+
+    <!-- ==================================================
+         INDEX JS
+    =================================================== -->
+
+    <script
+        type="module"
+        src="/js/index.js"
+    ></script>
+
 
 </body>
 
