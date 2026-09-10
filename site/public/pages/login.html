@@ -6,6 +6,8 @@
     <title>Giriş Yap</title>
 
     <link rel="stylesheet" href="/css/auth.css">
+    <link rel="stylesheet" href="/css/toast.css">
+    
 </head>
 
 <body>
@@ -49,7 +51,7 @@
                             type="text"
                             id="username"
                             name="username"
-                            placeholder="Kullanıcı adınızı girin"
+                            placeholder="Kullanıcı Adı"
                             autocomplete="username"
                             required
                         >
@@ -66,7 +68,7 @@
                             type="password"
                             id="password"
                             name="password"
-                            placeholder="Şifrenizi girin"
+                            placeholder="Şifre"
                             autocomplete="current-password"
                             required
                         >
@@ -88,12 +90,12 @@
                     </label>
 
                     <a href="#" class="forgot">
-                        Şifremi unuttum?
+                        Şifremi unuttum
                     </a>
                 </div>
 
                 <button type="submit" class="submit-button">
-                    ↪ &nbsp; Giriş Yap
+                     &nbsp; Giriş Yap
                 </button>
 
             </form>
@@ -113,7 +115,34 @@
 
     </main>
 
-    <script type="module" src="/js/auth.js"></script>
+    <div id="reset-modal" class="reset-modal">
+    <div class="reset-box">
+
+        <h2>Şifreni Sıfırla</h2>
+
+        <p>E-posta adresini gir:</p>
+
+        <input
+            type="email"
+            id="reset-email"
+            placeholder="E-posta adresin"
+        >
+
+        <div class="reset-buttons">
+            <button type="button" id="reset-cancel">
+                İptal
+            </button>
+
+            <button type="button" id="reset-send">
+                Gönder
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<script src="/js/toast.js"></script>
+<script type="module" src="/js/auth.js"></script>
 
 </body>
 </html>

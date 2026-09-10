@@ -4,7 +4,7 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     sendPasswordResetEmail
-} from "firebase/auth";
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 import {
     collection,
@@ -13,86 +13,91 @@ import {
     getDocs,
     doc,
     setDoc
-} from "firebase/firestore";
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    // Şifre göster / gizle
+    // =========================
+    // ŞİFRE GÖSTER / GİZLE
+    // =========================
+
     const toggleButtons = document.querySelectorAll(".password-toggle");
 
     toggleButtons.forEach(button => {
 
         button.addEventListener("click", () => {
 
-            const targetId = button.dataset.target;
-            const input = document.getElementById(targetId);
+            const input = document.getElementById(
+                button.dataset.target
+            );
 
             if (!input) return;
 
-            input.type = input.type === "password"
-                ? "text"
-                : "password";
+            input.type =
+                input.type === "password"
+                    ? "text"
+                    : "password";
         });
 
     });
 
 
     // =========================
-    // KAYIT OL
+    // REGISTER
     // =========================
 
-    const registerForm = document.querySelector('form[action="/register"]');
+    const registerForm =
+        document.querySelector('form[action="/register"]');
 
     if (registerForm) {
 
-        registerForm.addEventListener("submit", async (e) => {
+        registerForm.addEventListener("submit", async (event) => {
 
-            e.preventDefault();
+            event.preventDefault();
 
-            const username = document
-                .getElementById("username")
-                .value
-                .trim();
+            const username =
+                document.getElementById("username").value.trim();
 
-            const email = document
-                .getElementById("email")
-                .value
-                .trim();
+            const email =
+                document.getElementById("email").value.trim();
 
-            const password = document
-                .getElementById("password")
-                .value;
+            const password =
+                document.getElementById("password").value;
 
-            const passwordConfirm = document
-                .getElementById("passwordConfirm")
-                .value;
+            const passwordConfirm =
+                document.getElementById("passwordConfirm").value;
+
 
             if (password !== passwordConfirm) {
-                alert("Şifreler aynı değil.");
+                showToast("Şifreler aynı değil.", "error");
                 return;
             }
 
             if (password.length < 6) {
-                alert("Şifre en az 6 karakter olmalı.");
+                showToast("Şifre en az 6 karakter olmalı.", "error");
                 return;
             }
 
+
             try {
 
-                // Kullanıcı adı daha önce alınmış mı?
+                // Kullanıcı adı kontrolü
                 const usernameQuery = query(
                     collection(db, "users"),
                     where("username", "==", username)
                 );
 
-                const usernameSnapshot = await getDocs(usernameQuery);
+                const usernameSnapshot =
+                    await getDocs(usernameQuery);
 
                 if (!usernameSnapshot.empty) {
                     alert("Bu kullanıcı adı zaten alınmış.");
                     return;
                 }
 
-                // Firebase hesabını oluştur
+
+                // Firebase hesabı oluştur
                 const userCredential =
                     await createUserWithEmailAndPassword(
                         auth,
@@ -102,29 +107,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const user = userCredential.user;
 
-                // Kullanıcı bilgilerini Firestore'a kaydet
-                await setDoc(doc(db, "users", user.uid), {
-                    username: username,
-                    email: email,
-                    createdAt: new Date()
-                });
 
-                alert("Hesabın başarıyla oluşturuldu!");
+                // Firestore'a kullanıcıyı kaydet
+                await setDoc(
+                    doc(db, "users", user.uid),
+                    {
+                        username: username,
+                        email: email,
+                        createdAt: new Date()
+                    }
+                );
 
-                window.location.href = "/";
+
+showToast("Hesabın başarıyla oluşturuldu!", "success");
+
+setTimeout(() => {
+    window.location.href = "/";
+}, 1500);
 
             } catch (error) {
 
-                console.error(error);
+                console.error("REGISTER ERROR:", error);
 
                 if (error.code === "auth/email-already-in-use") {
-                    alert("Bu e-posta adresi zaten kayıtlı.");
-                } else if (error.code === "auth/invalid-email") {
-                    alert("Geçersiz e-posta adresi.");
-                } else if (error.code === "auth/weak-password") {
-                    alert("Şifre çok zayıf.");
-                } else {
-                    alert("Kayıt sırasında bir hata oluştu.");
+                    showToast("Bu e-posta adresi zaten kayıtlı.", "error");
+                }
+                else if (error.code === "auth/invalid-email") {
+                    showToast("Geçersiz e-posta adresi.", "error");
+                }
+                else if (error.code === "auth/weak-password") {
+                    showToast("Şifre en az 6 karakter olmalı.", "error");
+                }
+                else {
+                    showToast("Kayıt sırasında hata oluştu: " + error.message, "error");
+                    
                 }
 
             }
@@ -135,25 +151,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // =========================
-    // GİRİŞ YAP
+    // LOGIN
     // =========================
 
-    const loginForm = document.querySelector('form[action="/login"]');
+    const loginForm =
+        document.querySelector('form[action="/login"]');
 
     if (loginForm) {
 
-        loginForm.addEventListener("submit", async (e) => {
+        loginForm.addEventListener("submit", async (event) => {
 
-            e.preventDefault();
+            event.preventDefault();
 
-            const username = document
-                .getElementById("username")
-                .value
-                .trim();
+            const username =
+                document.getElementById("username").value.trim();
 
-            const password = document
-                .getElementById("password")
-                .value;
+            const password =
+                document.getElementById("password").value;
+
 
             try {
 
@@ -163,14 +178,19 @@ document.addEventListener("DOMContentLoaded", () => {
                     where("username", "==", username)
                 );
 
-                const usernameSnapshot = await getDocs(usernameQuery);
+                const usernameSnapshot =
+                    await getDocs(usernameQuery);
+
 
                 if (usernameSnapshot.empty) {
-                    alert("Kullanıcı adı veya şifre yanlış.");
+                   showToast("Kullanıcı adı veya şifre yanlış.", "error");
                     return;
                 }
 
-                const userData = usernameSnapshot.docs[0].data();
+
+                const userData =
+                    usernameSnapshot.docs[0].data();
+
 
                 // Firebase ile giriş yap
                 await signInWithEmailAndPassword(
@@ -179,21 +199,28 @@ document.addEventListener("DOMContentLoaded", () => {
                     password
                 );
 
-                alert("Giriş başarılı!");
 
-                window.location.href = "/";
+showToast("Giriş başarılı!", "success");
+
+setTimeout(() => {
+    window.location.href = "/";
+}, 1500);
 
             } catch (error) {
 
-                console.error(error);
+                console.error("LOGIN ERROR:", error);
 
                 if (
                     error.code === "auth/invalid-credential" ||
                     error.code === "auth/wrong-password"
                 ) {
                     alert("Kullanıcı adı veya şifre yanlış.");
-                } else {
-                    alert("Giriş sırasında bir hata oluştu.");
+                }
+                else {
+                    alert(
+                        "Giriş sırasında hata oluştu: " +
+                        error.message
+                    );
                 }
 
             }
@@ -203,44 +230,69 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    // =========================
-    // ŞİFREMİ UNUTTUM
-    // =========================
+// =========================
+// ŞİFREMİ UNUTTUM
+// =========================
 
-    const forgotButton = document.querySelector(".forgot");
+const forgotButton = document.querySelector(".forgot");
+console.log("ŞİFRE BUTONU:", forgotButton);
 
-    if (forgotButton) {
+if (forgotButton) {
 
-        forgotButton.addEventListener("click", async (e) => {
+    forgotButton.addEventListener("click", (event) => {
 
-            e.preventDefault();
+        event.preventDefault();
 
-            const email = prompt(
-                "Şifre sıfırlama bağlantısını göndereceğimiz e-posta adresini yaz:"
-            );
+        const modal = document.getElementById("reset-modal");
+        const emailInput = document.getElementById("reset-email");
+        const sendButton = document.getElementById("reset-send");
+        const cancelButton = document.getElementById("reset-cancel");
 
-            if (!email) return;
+        if (!modal || !emailInput || !sendButton || !cancelButton) {
+            console.error("Şifre sıfırlama penceresi bulunamadı.");
+            return;
+        }
+
+        modal.classList.add("show");
+
+        emailInput.value = "";
+        emailInput.focus();
+
+        cancelButton.onclick = () => {
+            modal.classList.remove("show");
+        };
+
+        sendButton.onclick = async () => {
+
+            const email = emailInput.value.trim();
+
+            if (!email) {
+                showToast("E-posta adresini gir.", "error");
+                return;
+            }
 
             try {
 
                 await sendPasswordResetEmail(auth, email);
 
-                alert(
-                    "Şifre sıfırlama bağlantısı e-posta adresine gönderildi."
+                modal.classList.remove("show");
+
+                showToast(
+                    "Şifre sıfırlama bağlantısı gönderildi.",
+                    "success"
                 );
 
             } catch (error) {
 
-                console.error(error);
+                console.error("RESET ERROR:", error);
 
-                alert(
-                    "Bu e-posta adresiyle kayıtlı bir hesap bulunamadı veya bir hata oluştu."
+                showToast(
+                    "Şifre sıfırlama işlemi başarısız oldu.",
+                    "error"
                 );
-
             }
-
-        });
-
-    }
+        };
+    });
+}
 
 });
