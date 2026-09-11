@@ -1,9 +1,12 @@
 import { auth, db } from "./firebase.js";
 
+
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
-    sendPasswordResetEmail
+    sendPasswordResetEmail,
+    signOut,
+    onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 import {
@@ -22,9 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ŞİFRE GÖSTER / GİZLE
     // =========================
 
-    const toggleButtons = document.querySelectorAll(".password-toggle");
-
-    toggleButtons.forEach(button => {
+    document.querySelectorAll(".password-toggle").forEach(button => {
 
         button.addEventListener("click", () => {
 
@@ -38,6 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 input.type === "password"
                     ? "text"
                     : "password";
+
         });
 
     });
@@ -82,7 +84,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             try {
 
-                // Kullanıcı adı kontrolü
                 const usernameQuery = query(
                     collection(db, "users"),
                     where("username", "==", username)
@@ -97,7 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
 
-                // Firebase hesabı oluştur
                 const userCredential =
                     await createUserWithEmailAndPassword(
                         auth,
@@ -108,7 +108,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 const user = userCredential.user;
 
 
-                // Firestore'a kullanıcıyı kaydet
                 await setDoc(
                     doc(db, "users", user.uid),
                     {
@@ -119,28 +118,45 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
 
 
-showToast("Hesabın başarıyla oluşturuldu!", "success");
+                showToast(
+                    "Hesabın başarıyla oluşturuldu!",
+                    "success"
+                );
 
-setTimeout(() => {
-    window.location.href = "/login";
-}, 1500);
+
+                setTimeout(() => {
+                    window.location.href = "/login";
+                }, 1500);
+
 
             } catch (error) {
 
                 console.error("REGISTER ERROR:", error);
 
                 if (error.code === "auth/email-already-in-use") {
-                    showToast("Bu e-posta adresi zaten kayıtlı.", "error");
+                    showToast(
+                        "Bu e-posta adresi zaten kayıtlı.",
+                        "error"
+                    );
                 }
                 else if (error.code === "auth/invalid-email") {
-                    showToast("Geçersiz e-posta adresi.", "error");
+                    showToast(
+                        "Geçersiz e-posta adresi.",
+                        "error"
+                    );
                 }
                 else if (error.code === "auth/weak-password") {
-                    showToast("Şifre en az 6 karakter olmalı.", "error");
+                    showToast(
+                        "Şifre en az 6 karakter olmalı.",
+                        "error"
+                    );
                 }
                 else {
-                    showToast("Kayıt sırasında hata oluştu: " + error.message, "error");
-                    
+                    showToast(
+                        "Kayıt sırasında hata oluştu: " +
+                        error.message,
+                        "error"
+                    );
                 }
 
             }
@@ -172,7 +188,6 @@ setTimeout(() => {
 
             try {
 
-                // Kullanıcı adına göre kullanıcıyı bul
                 const usernameQuery = query(
                     collection(db, "users"),
                     where("username", "==", username)
@@ -183,7 +198,10 @@ setTimeout(() => {
 
 
                 if (usernameSnapshot.empty) {
-                   showToast("Kullanıcı adı veya şifre yanlış.", "error");
+                    showToast(
+                        "Kullanıcı adı veya şifre yanlış.",
+                        "error"
+                    );
                     return;
                 }
 
@@ -192,19 +210,29 @@ setTimeout(() => {
                     usernameSnapshot.docs[0].data();
 
 
-                // Firebase ile giriş yap
                 await signInWithEmailAndPassword(
                     auth,
                     userData.email,
                     password
                 );
 
-localStorage.setItem("username", userData.username);
-showToast("Giriş başarılı!", "success");
 
-setTimeout(() => {
-    window.location.href = "/";
-}, 1500);
+                localStorage.setItem(
+                    "username",
+                    userData.username
+                );
+
+
+                showToast(
+                    "Giriş başarılı!",
+                    "success"
+                );
+
+
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 1500);
+
 
             } catch (error) {
 
@@ -230,69 +258,179 @@ setTimeout(() => {
     }
 
 
-// =========================
-// ŞİFREMİ UNUTTUM
-// =========================
+    // =========================
+    // ŞİFREMİ UNUTTUM
+    // =========================
 
-const forgotButton = document.querySelector(".forgot");
-console.log("ŞİFRE BUTONU:", forgotButton);
+    const forgotButton =
+        document.querySelector(".forgot");
 
-if (forgotButton) {
+    if (forgotButton) {
 
-    forgotButton.addEventListener("click", (event) => {
+        forgotButton.addEventListener("click", (event) => {
 
-        event.preventDefault();
+            event.preventDefault();
 
-        const modal = document.getElementById("reset-modal");
-        const emailInput = document.getElementById("reset-email");
-        const sendButton = document.getElementById("reset-send");
-        const cancelButton = document.getElementById("reset-cancel");
+            const modal =
+                document.getElementById("reset-modal");
 
-        if (!modal || !emailInput || !sendButton || !cancelButton) {
-            console.error("Şifre sıfırlama penceresi bulunamadı.");
-            return;
-        }
+            const emailInput =
+                document.getElementById("reset-email");
 
-        modal.classList.add("show");
+            const sendButton =
+                document.getElementById("reset-send");
 
-        emailInput.value = "";
-        emailInput.focus();
+            const cancelButton =
+                document.getElementById("reset-cancel");
 
-        cancelButton.onclick = () => {
-            modal.classList.remove("show");
-        };
 
-        sendButton.onclick = async () => {
-
-            const email = emailInput.value.trim();
-
-            if (!email) {
-                showToast("E-posta adresini gir.", "error");
+            if (
+                !modal ||
+                !emailInput ||
+                !sendButton ||
+                !cancelButton
+            ) {
+                console.error(
+                    "Şifre sıfırlama penceresi bulunamadı."
+                );
                 return;
             }
 
+
+            modal.classList.add("show");
+
+            emailInput.value = "";
+            emailInput.focus();
+
+
+            cancelButton.onclick = () => {
+                modal.classList.remove("show");
+            };
+
+
+            sendButton.onclick = async () => {
+
+                const email =
+                    emailInput.value.trim();
+
+
+                if (!email) {
+                    showToast(
+                        "E-posta adresini gir.",
+                        "error"
+                    );
+                    return;
+                }
+
+
+                try {
+
+                    await sendPasswordResetEmail(
+                        auth,
+                        email
+                    );
+
+                    modal.classList.remove("show");
+
+                    showToast(
+                        "Şifre sıfırlama bağlantısı gönderildi.",
+                        "success"
+                    );
+
+
+                } catch (error) {
+
+                    console.error(
+                        "RESET ERROR:",
+                        error
+                    );
+
+                    showToast(
+                        "Şifre sıfırlama işlemi başarısız oldu.",
+                        "error"
+                    );
+
+                }
+
+            };
+
+        });
+
+    }
+
+
+    // =========================
+    // HESAP DURUMU
+    // =========================
+
+    const loginMenu =
+        document.getElementById("loginMenu");
+
+    const logoutMenu =
+        document.getElementById("logoutMenu");
+
+
+onAuthStateChanged(auth, (user) => {
+
+    console.log("FIREBASE KULLANICI:", user);
+
+    if (!loginMenu || !logoutMenu) {
+        console.log("MENÜLER BULUNAMADI");
+        return;
+    }
+
+    if (user) {
+        loginMenu.style.display = "none";
+        logoutMenu.style.display = "block";
+
+        console.log("GİRİŞ YAPILMIŞ → ÇIKIŞ YAP");
+    } else {
+        loginMenu.style.display = "block";
+        logoutMenu.style.display = "none";
+
+        console.log("GİRİŞ YAPILMAMIŞ → GİRİŞ YAP");
+    }
+
+});
+
+
+    // =========================
+    // ÇIKIŞ YAP
+    // =========================
+
+    const logoutButton =
+        document.getElementById("logoutButton");
+
+    if (logoutButton) {
+
+        logoutButton.addEventListener("click", async (event) => {
+
+            event.preventDefault();
+
             try {
 
-                await sendPasswordResetEmail(auth, email);
+                await signOut(auth);
 
-                modal.classList.remove("show");
+                localStorage.removeItem("username");
 
-                showToast(
-                    "Şifre sıfırlama bağlantısı gönderildi.",
-                    "success"
-                );
+                window.location.href = "/";
 
             } catch (error) {
 
-                console.error("RESET ERROR:", error);
+                console.error(
+                    "LOGOUT ERROR:",
+                    error
+                );
 
                 showToast(
-                    "Şifre sıfırlama işlemi başarısız oldu.",
+                    "Çıkış yapılırken bir hata oluştu.",
                     "error"
                 );
+
             }
-        };
-    });
-}
+
+        });
+
+    }
 
 });

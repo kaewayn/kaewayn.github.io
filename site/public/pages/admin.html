@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Kaewayn Admin Paneli"
+    >
+
+    <title>Admin Paneli | Kaewayn</title>
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="/img/favicon.png"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/css/admin.css"
+    >
+
+    <link
+    rel="stylesheet"
+    href="/css/toast.css"
+>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==================================================
+         ARKA PLAN
+    =================================================== -->
+
+    <div class="admin-background">
+
+        <div class="admin-grid"></div>
+
+        <div class="admin-glow admin-glow-1"></div>
+
+        <div class="admin-glow admin-glow-2"></div>
+
+    </div>
+
+
+
+    <!-- ==================================================
+         ADMIN
+    =================================================== -->
+
+    <main class="admin-page">
+
+
+        <!-- ==================================================
+             HEADER
+        =================================================== -->
+
+        <header class="admin-header">
+
+            <div class="admin-brand">
+
+                <div class="admin-logo">
+
+                    <img
+                        src="/img/logo.png"
+                        alt="Kaewayn"
+                    >
+
+                </div>
+
+                <div>
+
+                    <h1>
+                        Admin Paneli
+                    </h1>
+
+                    <p>
+                        Kaewayn yönetim merkezi
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <a
+                href="/"
+                class="admin-home"
+            >
+
+                <i class="fas fa-house"></i>
+
+                Siteye Dön
+
+            </a>
+
+        </header>
+
+
+
+        <!-- ==================================================
+             İSTATİSTİKLER
+        =================================================== -->
+
+        <section class="admin-stats">
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        Toplam Kullanıcı
+                    </span>
+
+                    <strong id="totalUsers">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    <i class="fas fa-crown"></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        Premium Kullanıcı
+                    </span>
+
+                    <strong id="premiumUsers">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    <i class="fas fa-circle-check"></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        Mavi Tikli
+                    </span>
+
+                    <strong id="verifiedUsers">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        Son Kayıtlar
+                    </span>
+
+                    <strong id="recentUsers">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ==================================================
+             KULLANICI YÖNETİMİ
+        =================================================== -->
+
+        <section class="admin-section">
+
+
+            <div class="section-header">
+
+                <div>
+
+                    <span class="section-label">
+                        KULLANICI YÖNETİMİ
+                    </span>
+
+                    <h2>
+                        Kullanıcılar
+                    </h2>
+
+                    <p>
+                        Kullanıcıları ara ve hesaplarını yönet.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ARAMA -->
+
+            <div class="user-search">
+
+                <i class="fas fa-magnifying-glass"></i>
+
+                <input
+                    type="text"
+                    id="userSearch"
+                    placeholder="Kullanıcı adı veya e-posta ara..."
+                >
+
+            </div>
+
+
+
+            <!-- KULLANICI LİSTESİ -->
+
+            <div
+                class="user-list"
+                id="userList"
+            >
+
+                <div class="empty-state">
+
+                    <i class="fas fa-users"></i>
+
+                    <h3>
+                        Kullanıcı aranıyor
+                    </h3>
+
+                    <p>
+                        Kullanıcıları görmek için arama yap.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="pagination">
+
+    <button
+        type="button"
+        id="prevPage"
+    >
+        <i class="fas fa-chevron-left"></i>
+        Önceki
+    </button>
+
+    <span id="pageInfo">
+        1 / 1
+    </span>
+
+    <button
+        type="button"
+        id="nextPage"
+    >
+        Sonraki
+        <i class="fas fa-chevron-right"></i>
+    </button>
+
+</div>
+
+
+        </section>
+
+
+
+        <!-- ==================================================
+             HESAP YÖNETİMİ
+        =================================================== -->
+
+        <section class="admin-section">
+
+
+            <div class="section-header">
+
+                <div>
+
+                    <span class="section-label">
+                        HESAP İŞLEMLERİ
+                    </span>
+
+                    <h2>
+                        Premium & Mavi Tik
+                    </h2>
+
+                    <p>
+                        Seçilen kullanıcının hesap özelliklerini yönet.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="management-box">
+
+
+                <div class="selected-user">
+
+                    <div class="selected-user-icon">
+
+                        <i class="fas fa-user"></i>
+
+                    </div>
+
+                    <div>
+
+                        <strong id="selectedUsername">
+                            Kullanıcı seçilmedi
+                        </strong>
+
+                        <span id="selectedEmail">
+                            Yönetmek istediğin kullanıcıyı seç.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="management-actions">
+
+
+                    <!-- PREMIUM -->
+
+                    <div class="management-card">
+
+                        <div class="management-icon premium-icon">
+
+                            <i class="fas fa-crown"></i>
+
+                        </div>
+
+                        <div class="management-info">
+
+                            <h3>
+                                Premium
+                            </h3>
+
+                            <p id="premiumStatus">
+                                Pasif
+                            </p>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            id="premiumButton"
+                            class="management-button"
+                        >
+
+                            Premium Ver
+
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- MAVİ TİK -->
+
+                    <div class="management-card">
+
+                        <div class="management-icon verified-icon">
+
+                            <i class="fas fa-circle-check"></i>
+
+                        </div>
+
+                        <div class="management-info">
+
+                            <h3>
+                                Mavi Tik
+                            </h3>
+
+                            <p id="verifiedStatus">
+                                Pasif
+                            </p>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            id="verifiedButton"
+                            class="management-button"
+                        >
+
+                            Mavi Tik Ver
+
+                        </button>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ==================================================
+             HIZLI İŞLEMLER
+        =================================================== -->
+
+        <section class="admin-section">
+
+
+            <div class="section-header">
+
+                <div>
+
+                    <span class="section-label">
+                        HIZLI İŞLEMLER
+                    </span>
+
+                    <h2>
+                        Yönetim
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="quick-actions">
+
+
+                <button
+                    type="button"
+                    class="quick-action"
+                    id="refreshUsers"
+                >
+
+                    <i class="fas fa-rotate"></i>
+
+                    <span>
+
+                        <strong>
+                            Kullanıcıları Yenile
+                        </strong>
+
+                        <small>
+                            Kullanıcı listesini güncelle
+                        </small>
+
+                    </span>
+
+                </button>
+
+
+
+                <button
+                    type="button"
+                    class="quick-action"
+                    id="searchUser"
+                >
+
+                    <i class="fas fa-magnifying-glass"></i>
+
+                    <span>
+
+                        <strong>
+                            Kullanıcı Ara
+                        </strong>
+
+                        <small>
+                            Kullanıcı bul ve yönet
+                        </small>
+
+                    </span>
+
+                </button>
+
+
+
+                <button
+                    type="button"
+                    class="quick-action"
+                    id="siteSettings"
+                >
+
+                    <i class="fas fa-gear"></i>
+
+                    <span>
+
+                        <strong>
+                            Site Ayarları
+                        </strong>
+
+                        <small>
+                            Yönetim ayarları
+                        </small>
+
+                    </span>
+
+                </button>
+
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ==================================================
+             FOOTER
+        =================================================== -->
+
+        <footer class="admin-footer">
+
+            <span>
+                © Admin
+            </span>
+
+            <span>
+                Yönetici Alanı
+            </span>
+
+        </footer>
+
+
+    </main>
+
+
+
+    <!-- ==================================================
+         JAVASCRIPT
+    =================================================== -->
+
+    <script
+        type="module"
+        src="/js/admin.js"
+    ></script>
+
+ <script src="/js/toast.js"></script>
+
+</body>
+
+</html>

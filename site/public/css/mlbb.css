@@ -1,0 +1,411 @@
+/* =========================================================
+   KAEWAYN - MLBB ORTAK TEMA
+   Ortak arka plan + hareketli kareler + temel sayfa altyapısı
+   ========================================================= */
+
+
+/* =========================
+   TEMEL SAYFA
+   ========================= */
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+body {
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+
+    background-color: #050505;
+    color: #ffffff;
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =========================
+   GRID ARKA PLAN
+   ========================= */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    z-index: -10;
+    pointer-events: none;
+
+    background-image:
+        linear-gradient(
+            rgba(255, 255, 255, 0.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.035) 1px,
+            transparent 1px
+        );
+
+    background-size: 48px 48px;
+
+    opacity: 0.65;
+}
+
+
+/* =========================
+   HAFİF MERKEZ GLOW
+   ========================= */
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    z-index: -9;
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(255, 255, 255, 0.045),
+            transparent 38%
+        );
+
+    opacity: 0.8;
+}
+
+
+/* =========================
+   HAREKETLİ ARKA PLAN
+   ========================= */
+
+.animated-background {
+    position: fixed;
+    inset: 0;
+
+    z-index: -8;
+    pointer-events: none;
+
+    overflow: hidden;
+}
+
+
+/* =========================
+   KARELER
+   ========================= */
+
+.bg-square {
+    position: absolute;
+
+    display: block;
+
+    width: 80px;
+    height: 80px;
+
+    border: 1px solid rgba(255, 255, 255, 0.14);
+
+    border-radius: 7px;
+
+    transform: rotate(45deg);
+
+    opacity: 0.45;
+
+    box-shadow:
+        0 0 25px rgba(255, 255, 255, 0.015);
+
+    animation:
+        mlbbFloat 18s ease-in-out infinite,
+        mlbbPulse 7s ease-in-out infinite;
+}
+
+
+/* =========================
+   KARE POZİSYONLARI
+   ========================= */
+
+.square-1 {
+    width: 105px;
+    height: 105px;
+
+    top: 13%;
+    left: 9%;
+
+    animation-duration: 20s, 8s;
+}
+
+
+.square-2 {
+    width: 55px;
+    height: 55px;
+
+    top: 10%;
+    left: 39%;
+
+    animation-duration: 17s, 6s;
+
+    animation-delay: -5s, -2s;
+}
+
+
+.square-3 {
+    width: 125px;
+    height: 125px;
+
+    top: 8%;
+    right: 9%;
+
+    animation-duration: 23s, 9s;
+
+    animation-delay: -9s, -3s;
+}
+
+
+.square-4 {
+    width: 65px;
+    height: 65px;
+
+    top: 62%;
+    left: 26%;
+
+    animation-duration: 19s, 7s;
+
+    animation-delay: -7s, -1s;
+}
+
+
+.square-5 {
+    width: 75px;
+    height: 75px;
+
+    top: 60%;
+    right: 18%;
+
+    animation-duration: 21s, 8s;
+
+    animation-delay: -11s, -4s;
+}
+
+
+.square-6 {
+    width: 58px;
+    height: 58px;
+
+    bottom: 7%;
+    left: 5%;
+
+    animation-duration: 18s, 6s;
+
+    animation-delay: -4s, -2s;
+}
+
+
+.square-7 {
+    width: 110px;
+    height: 110px;
+
+    bottom: 6%;
+    right: 8%;
+
+    animation-duration: 24s, 10s;
+
+    animation-delay: -13s, -5s;
+}
+
+
+.square-8 {
+    width: 48px;
+    height: 48px;
+
+    top: 34%;
+    left: 51%;
+
+    animation-duration: 16s, 6s;
+
+    animation-delay: -8s, -1s;
+}
+
+
+/* =========================
+   YAVAŞ HAREKET
+   ========================= */
+
+/* =========================================================
+   HAREKETLİ KARE ANİMASYONU
+   ========================================================= */
+
+@keyframes mlbbFloat {
+
+    0% {
+        transform: translate(0, 0) rotate(45deg);
+    }
+
+    20% {
+        transform: translate(45px, -35px) rotate(60deg);
+    }
+
+    40% {
+        transform: translate(-25px, -70px) rotate(35deg);
+    }
+
+    60% {
+        transform: translate(-65px, -20px) rotate(55deg);
+    }
+
+    80% {
+        transform: translate(25px, 40px) rotate(30deg);
+    }
+
+    100% {
+        transform: translate(0, 0) rotate(45deg);
+    }
+}
+
+
+@keyframes mlbbPulse {
+
+    0%,
+    100% {
+        opacity: 0.22;
+    }
+
+    50% {
+        opacity: 0.48;
+    }
+}
+
+
+/* =========================
+   HAFİF PARLAMA
+   ========================= */
+
+@keyframes mlbbPulse {
+
+    0%,
+    100% {
+        opacity: 0.25;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+
+/* =========================
+   MLBB SAYFA İÇERİĞİ
+   İçeriğin arka planın üstünde
+   kalmasını garanti eder.
+   ========================= */
+
+.mlbb-page {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* =========================
+   SEÇİM RENGİ
+   ========================= */
+
+::selection {
+    background: rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+}
+
+
+/* =========================
+   MOBİL
+   ========================= */
+
+@media (max-width: 768px) {
+
+    body::before {
+        background-size: 36px 36px;
+    }
+
+.bg-square {
+    position: absolute;
+
+    display: block;
+
+    width: 80px;
+    height: 80px;
+
+    border: 1px solid rgba(255, 255, 255, 0.14);
+
+    border-radius: 7px;
+
+    opacity: 0.45;
+
+    pointer-events: none;
+
+    box-shadow:
+        0 0 25px rgba(255, 255, 255, 0.015);
+
+    animation:
+        mlbbFloat 18s ease-in-out infinite,
+        mlbbPulse 7s ease-in-out infinite;
+}s
+
+
+/* =========================
+   HAREKET AZALTMA
+   ========================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .bg-square {
+        animation: none;
+    }
+}
+
+.header {
+    position: relative;
+    z-index: 9999;
+}
+
+.navbar {
+    position: relative;
+    z-index: 10000;
+}
+
+.menu-button {
+    position: relative;
+    z-index: 10001;
+    pointer-events: auto !important;
+    cursor: pointer;
+}
+
+/* MENU TIKLAMA DÜZELTMESİ */
+
+.menu-overlay {
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.menu-overlay.active {
+    pointer-events: auto;
+    opacity: 1;
+    visibility: visible;
+}
+
+.header {
+    position: relative;
+    z-index: 10000;
+}
+
+.navbar {
+    position: relative;
+    z-index: 10001;
+}
+
+.menu-button {
+    position: relative;
+    z-index: 10002;
+    pointer-events: auto !important;
+}
