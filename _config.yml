@@ -1,0 +1,4 @@
+exclude:
+  - site/node_modules
+  - node_modules
+  - site/package-lock.json
