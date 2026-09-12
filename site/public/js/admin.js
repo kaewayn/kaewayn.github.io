@@ -548,6 +548,274 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
 
 
+// ==================================================
+// ÇEKİLİŞ KATILIMCILARI
+// ==================================================
+
+let giveawayParticipants = [];
+let giveawayCurrentPage = 1;
+
+const GIVEAWAY_PER_PAGE = 5;
+
+
+async function loadGiveawayParticipants() {
+
+    const list =
+        document.getElementById(
+            "giveawayParticipantList"
+        );
+
+    const count =
+        document.getElementById(
+            "giveawayParticipantCount"
+        );
+
+    try {
+
+        const response = await fetch(
+            "/api/admin/giveaway-participants"
+        );
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+
+            throw new Error(
+                data.message ||
+                "Katılımcılar yüklenemedi."
+            );
+
+        }
+
+        giveawayParticipants =
+            data.participants || [];
+
+        count.textContent =
+            giveawayParticipants.length;
+
+        giveawayCurrentPage = 1;
+
+        renderGiveawayParticipants();
+
+    } catch (error) {
+
+        console.error(
+            "Çekiliş katılımcıları:",
+            error
+        );
+
+        list.innerHTML = `
+            <div class="empty-state">
+
+                <i class="fas fa-triangle-exclamation"></i>
+
+                <h3>
+                    Katılımcılar yüklenemedi
+                </h3>
+
+                <p>
+                    Sunucu bağlantısını kontrol et.
+                </p>
+
+            </div>
+        `;
+
+    }
+
+}
+
+
+// ==================================================
+// ÇEKİLİŞ KATILIMCILARINI GÖSTER
+// ==================================================
+
+function renderGiveawayParticipants() {
+
+    const list =
+        document.getElementById(
+            "giveawayParticipantList"
+        );
+
+    const pageInfo =
+        document.getElementById(
+            "giveawayPageInfo"
+        );
+
+    const prevButton =
+        document.getElementById(
+            "giveawayPrevPage"
+        );
+
+    const nextButton =
+        document.getElementById(
+            "giveawayNextPage"
+        );
+
+
+    if (!giveawayParticipants.length) {
+
+        list.innerHTML = `
+            <div class="empty-state">
+
+                <i class="fas fa-gift"></i>
+
+                <h3>
+                    Henüz katılımcı yok
+                </h3>
+
+                <p>
+                    Çekilişe katılan oyuncular burada görünecek.
+                </p>
+
+            </div>
+        `;
+
+        pageInfo.textContent = "1 / 1";
+
+        prevButton.disabled = true;
+        nextButton.disabled = true;
+
+        return;
+    }
+
+
+    const totalPages =
+        Math.ceil(
+            giveawayParticipants.length /
+            GIVEAWAY_PER_PAGE
+        );
+
+
+    if (giveawayCurrentPage > totalPages) {
+        giveawayCurrentPage = totalPages;
+    }
+
+
+    const startIndex =
+        (giveawayCurrentPage - 1) *
+        GIVEAWAY_PER_PAGE;
+
+
+    const pageParticipants =
+        giveawayParticipants
+            .slice()
+            .reverse()
+            .slice(
+                startIndex,
+                startIndex + GIVEAWAY_PER_PAGE
+            );
+
+
+    list.innerHTML =
+        pageParticipants
+            .map((participant, index) => {
+
+                const realNumber =
+                    startIndex + index + 1;
+
+                return `
+                    <div class="giveaway-admin-item">
+
+                        <div class="giveaway-admin-number">
+                            ${realNumber}
+                        </div>
+
+                        <div class="giveaway-admin-info">
+
+                            <strong>
+                                ${participant.name || "Bilinmiyor"}
+                            </strong>
+
+                            <span>
+                                ID: ${participant.playerId}
+                            </span>
+
+                            <span>
+                                Zone ID: ${participant.zoneId}
+                            </span>
+
+                        </div>
+
+                        <div class="giveaway-admin-date">
+
+                            ${
+                                participant.joinedAt
+                                    ? new Date(
+                                        participant.joinedAt
+                                      ).toLocaleString(
+                                          "tr-TR"
+                                      )
+                                    : "-"
+                            }
+
+                        </div>
+
+                    </div>
+                `;
+
+            })
+            .join("");
+
+
+    pageInfo.textContent =
+        `${giveawayCurrentPage} / ${totalPages}`;
+
+
+    prevButton.disabled =
+        giveawayCurrentPage <= 1;
+
+
+    nextButton.disabled =
+        giveawayCurrentPage >= totalPages;
+
+}
+
+
+// ==================================================
+// ÖNCEKİ SAYFA
+// ==================================================
+
+document
+    .getElementById("giveawayPrevPage")
+    .addEventListener("click", () => {
+
+        if (giveawayCurrentPage > 1) {
+
+            giveawayCurrentPage--;
+
+            renderGiveawayParticipants();
+
+        }
+
+    });
+
+
+// ==================================================
+// SONRAKİ SAYFA
+// ==================================================
+
+document
+    .getElementById("giveawayNextPage")
+    .addEventListener("click", () => {
+
+        const totalPages =
+            Math.ceil(
+                giveawayParticipants.length /
+                GIVEAWAY_PER_PAGE
+            );
+
+        if (giveawayCurrentPage < totalPages) {
+
+            giveawayCurrentPage++;
+
+            renderGiveawayParticipants();
+
+        }
+
+    });
+
+    await loadGiveawayParticipants();
+
     // ==================================================
     // BAŞLAT
     // ==================================================

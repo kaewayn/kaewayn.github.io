@@ -1104,3 +1104,206 @@ body {
 
     font-size: 9px;
 }
+/* ==================================================
+   ÇEKİLİŞ KATILIMCI KARTLARI
+================================================== */
+
+.giveaway-admin-list {
+    display: grid;
+    gap: 12px;
+}
+
+.giveaway-admin-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    padding: 18px 20px;
+
+    background: #0d0d0d;
+    border: 1px solid #242424;
+    border-radius: 12px;
+
+    transition:
+        border-color 0.25s ease,
+        background 0.25s ease,
+        transform 0.25s ease;
+}
+
+.giveaway-admin-item:hover {
+    background: #111111;
+    border-color: #3a3a3a;
+    transform: translateY(-2px);
+}
+
+
+/* SIRA NUMARASI */
+
+.giveaway-admin-number {
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #181818;
+    border: 1px solid #2d2d2d;
+    border-radius: 10px;
+
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+/* BİLGİLER */
+
+.giveaway-admin-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    flex: 1;
+    min-width: 0;
+}
+
+.giveaway-admin-info strong {
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.giveaway-admin-info span {
+    color: #888888;
+    font-size: 13px;
+}
+
+
+/* TARİH */
+
+.giveaway-admin-date {
+    flex-shrink: 0;
+
+    color: #777777;
+    font-size: 12px;
+    text-align: right;
+}
+
+
+/* KATILIMCI SAYISI */
+
+.giveaway-admin-count {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 8px 12px;
+
+    background: #111111;
+    border: 1px solid #282828;
+    border-radius: 8px;
+}
+
+.giveaway-admin-count strong {
+    color: #ffffff;
+    font-size: 15px;
+}
+
+.giveaway-admin-count span {
+    color: #777777;
+    font-size: 12px;
+}
+
+
+/* MOBİL */
+
+@media (max-width: 700px) {
+
+    .giveaway-admin-item {
+        align-items: flex-start;
+        padding: 15px;
+    }
+
+    .giveaway-admin-date {
+        display: none;
+    }
+
+    .giveaway-admin-number {
+        width: 36px;
+        height: 36px;
+    }
+
+    .giveaway-admin-info strong {
+        font-size: 14px;
+    }
+
+    .giveaway-admin-info span {
+        font-size: 12px;
+    }
+
+}
+/* ==================================================
+   ÇEKİLİŞ PAGINATION
+================================================== */
+
+.giveaway-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+
+    margin-top: 18px;
+}
+
+.giveaway-pagination button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-width: 110px;
+    height: 38px;
+
+    padding: 0 14px;
+
+    background: #111111;
+    border: 1px solid #292929;
+    border-radius: 8px;
+
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.giveaway-pagination button:hover:not(:disabled) {
+    background: #191919;
+    border-color: #555555;
+
+    box-shadow:
+        0 0 15px rgba(255, 255, 255, 0.08);
+}
+
+.giveaway-pagination button:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.giveaway-pagination span {
+    min-width: 45px;
+
+    text-align: center;
+
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+}

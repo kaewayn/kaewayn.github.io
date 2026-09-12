@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Çekiliş | Kaewayn</title>
+
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- MEVCUT SİTE CSS -->
+
+<link
+    rel="stylesheet"
+    href="../css/mlbb/id-checker.css"
+>
+
+    <link
+    rel="stylesheet"
+    href="../css/index.css"
+>
+
+<link
+    rel="stylesheet"
+    href="../css/toast.css"
+>
+
+
+
+
+
+   <style>
+    * {
+        box-sizing: border-box;
+    }
+
+body {
+    margin: 0;
+    background: #050505;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+    .giveaway-page {
+        min-height: 100vh;
+        padding: 130px 20px 80px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .giveaway-card {
+        width: 100%;
+        max-width: 580px;
+        padding: 38px 26px;
+        text-align: center;
+        background: #090909;
+        border: 1px solid #292929;
+        border-radius: 18px;
+    }
+
+    .giveaway-icon {
+        width: 58px;
+        height: 58px;
+        margin: 0 auto 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #333;
+        border-radius: 15px;
+        font-size: 24px;
+    }
+
+    .giveaway-badge {
+        display: inline-block;
+        margin-bottom: 15px;
+        padding: 6px 13px;
+        border: 1px solid #303030;
+        border-radius: 30px;
+        color: #aaa;
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    .giveaway-card h1 {
+        margin: 0;
+        color: #fff;
+        font-size: 42px;
+        line-height: 1.08;
+        font-weight: 900;
+    }
+
+    .giveaway-description {
+        margin: 18px auto 26px;
+        color: #888;
+        font-size: 13px;
+    }
+
+    .giveaway-form {
+        width: 100%;
+        max-width: 430px;
+        margin: auto;
+    }
+
+    .giveaway-form input {
+        width: 100%;
+        height: 52px;
+        margin-bottom: 10px;
+        padding: 0 16px;
+        border: 1px solid #303030;
+        border-radius: 10px;
+        outline: none;
+        background: #151515;
+        color: #fff;
+        font-size: 14px;
+    }
+    .giveaway-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+    .giveaway-form input:focus {
+        border-color: #555;
+    }
+
+.giveaway-button {
+    position: relative;
+    overflow: hidden;
+
+    width: 100%;
+    height: 52px;
+    margin-top: 4px;
+
+    border: 1px solid #333;
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.04);
+    color: #fff;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        background 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        transform 0.2s ease;
+}
+
+/* IŞIK GEÇİŞİ */
+.giveaway-button::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: -120%;
+
+    width: 70%;
+    height: 100%;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.12),
+        transparent
+    );
+
+    transform: skewX(-20deg);
+
+    transition: left 0.6s ease;
+
+    pointer-events: none;
+}
+
+.giveaway-button:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: #555;
+
+    box-shadow:
+        0 0 20px rgba(255, 255, 255, 0.06);
+
+    transform: translateY(-1px);
+}
+
+.giveaway-button:hover::before {
+    left: 140%;
+}
+
+.giveaway-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+    /* =========================
+   KAEWAYN HAREKETLİ KARELER
+   ========================= */
+
+.animated-background {
+    position: fixed;
+    inset: 0;
+    z-index: -8;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.bg-square {
+    position: absolute;
+    display: block;
+
+    width: 80px;
+    height: 80px;
+
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 7px;
+
+    transform: rotate(45deg);
+    opacity: 0.45;
+
+    box-shadow:
+        0 0 25px rgba(255, 255, 255, 0.015);
+
+    animation:
+        mlbbFloat 18s ease-in-out infinite,
+        mlbbPulse 7s ease-in-out infinite;
+}
+
+
+/* KARELER */
+
+.square-1 {
+    width: 105px;
+    height: 105px;
+    top: 13%;
+    left: 9%;
+    animation-duration: 20s, 8s;
+}
+
+.square-2 {
+    width: 55px;
+    height: 55px;
+    top: 10%;
+    left: 39%;
+    animation-duration: 17s, 6s;
+    animation-delay: -5s, -2s;
+}
+
+.square-3 {
+    width: 125px;
+    height: 125px;
+    top: 8%;
+    right: 9%;
+    animation-duration: 23s, 9s;
+    animation-delay: -9s, -3s;
+}
+
+.square-4 {
+    width: 65px;
+    height: 65px;
+    top: 62%;
+    left: 26%;
+    animation-duration: 19s, 7s;
+    animation-delay: -7s, -1s;
+}
+
+.square-5 {
+    width: 75px;
+    height: 75px;
+    top: 60%;
+    right: 18%;
+    animation-duration: 21s, 8s;
+    animation-delay: -11s, -4s;
+}
+
+.square-6 {
+    width: 58px;
+    height: 58px;
+    bottom: 7%;
+    left: 5%;
+    animation-duration: 18s, 6s;
+    animation-delay: -4s, -2s;
+}
+
+.square-7 {
+    width: 110px;
+    height: 110px;
+    bottom: 6%;
+    right: 8%;
+    animation-duration: 24s, 10s;
+    animation-delay: -13s, -5s;
+}
+
+.square-8 {
+    width: 48px;
+    height: 48px;
+    top: 34%;
+    left: 51%;
+    animation-duration: 16s, 6s;
+    animation-delay: -3s, -1s;
+}
+
+
+/* HAREKET */
+
+@keyframes mlbbFloat {
+
+    0% {
+        transform: translate(0, 0) rotate(45deg);
+    }
+
+    20% {
+        transform: translate(45px, -35px) rotate(60deg);
+    }
+
+    40% {
+        transform: translate(-25px, -70px) rotate(35deg);
+    }
+
+    60% {
+        transform: translate(-65px, -20px) rotate(55deg);
+    }
+
+    80% {
+        transform: translate(25px, 40px) rotate(30deg);
+    }
+
+    100% {
+        transform: translate(0, 0) rotate(45deg);
+    }
+}
+
+
+/* PARLAMA */
+
+@keyframes mlbbPulse {
+
+    0%,
+    100% {
+        opacity: 0.22;
+    }
+
+    50% {
+        opacity: 0.48;
+    }
+}
+/* =========================
+   KAEWAYN GRID ÇİZGİLERİ
+   ========================= */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+    z-index: -7;
+
+    background-image:
+        linear-gradient(
+            rgba(255, 255, 255, 0.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.035) 1px,
+            transparent 1px
+        );
+
+    background-size: 55px 55px;
+}
+
+.giveaway-confirm {
+    text-align: left;
+}
+
+.giveaway-confirm-title {
+    color: #fff;
+    font-weight: 800;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.giveaway-confirm-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 10px 0;
+    border-bottom: 1px solid #292929;
+    font-size: 12px;
+}
+
+.giveaway-confirm-row span {
+    color: #888;
+}
+
+.giveaway-confirm-row strong {
+    color: #fff;
+}
+
+.giveaway-confirm-info {
+    margin-top: 12px;
+    color: #888;
+    font-size: 11px;
+    text-align: center;
+}
+
+.giveaway-player-name {
+    display: block;
+    text-align: center;
+    margin-top: 8px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.giveaway-confirm {
+    width: 100%;
+    text-align: center;
+}
+
+.giveaway-confirm-title {
+    font-size: 20px;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 8px;
+}
+
+.giveaway-player-name {
+    display: block;
+    font-size: 26px;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.giveaway-confirm-info {
+    font-size: 12px;
+    color: #888;
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+<!-- =====================================================
+     ORTAK MLBB ARKA PLAN
+===================================================== -->
+
+<div class="particles">
+
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+
+</div>
+
+
+<div class="animated-background">
+
+    <span class="bg-square square-1"></span>
+    <span class="bg-square square-2"></span>
+    <span class="bg-square square-3"></span>
+    <span class="bg-square square-4"></span>
+    <span class="bg-square square-5"></span>
+    <span class="bg-square square-6"></span>
+    <span class="bg-square square-7"></span>
+    <span class="bg-square square-8"></span>
+
+</div>
+
+
+        <!-- ========================================= -->
+    <!-- NAVBAR -->
+    <!-- ========================================= -->
+
+    <header class="header">
+
+        <div class="navbar">
+
+            <!-- Logo -->
+
+            <a href="#"
+                class="logo">
+
+                <div class="logo-image">
+
+                  <img src="/img/logo.png" alt="Kae">
+
+                </div>
+
+                <div class="logo-text">
+
+                    <h2>Kaewayn</h2>
+
+                </div>
+
+            </a>
+
+            <!-- Desktop Menu -->
+
+            <nav class="desktop-menu">
+
+                <a href="#hero"> </a>
+
+                <a href="#features"></a>
+
+                <a href="#premium"></a>
+
+                <a href="#contact"></a>
+
+            </nav>
+
+            <!-- Right -->
+
+            <div class="navbar-right">
+
+                <button class="menu-button"
+                    id="menuButton">
+
+                    <span></span>
+
+                    <span></span>
+
+                    <span></span>
+
+                </button>
+
+            </div>
+
+    </header>
+
+
+
+
+    <!-- ==================================================
+         MENÜ ARKA PLANI
+    =================================================== -->
+
+    <div
+        class="menu-overlay"
+        id="menu-overlay"
+    ></div>
+
+
+
+    <!-- ==================================================
+         SAĞ MENÜ
+    =================================================== -->
+
+    <aside
+        class="side-menu"
+        id="side-menu"
+    >
+
+        <button
+            type="button"
+            class="menu-close"
+            id="menu-close"
+            aria-label="Menüyü kapat"
+        >
+            ×
+        </button>
+
+
+        <!-- PROFİL -->
+
+<!-- PROFİL -->
+
+<div class="menu-profile">
+
+<div class="menu-profile-logo">
+    <img src="/img/logo.png" alt="kaewayn">
+</div>
+
+    <h2 id="menuUsername">
+        Misafir
+    </h2>
+
+    <p id="menuStatus">
+        Giriş yapılmadı
+    </p>
+
+</div>
+
+
+
+        <!-- MENÜ -->
+
+        <nav class="menu-navigation">
+
+            <a
+                href="winrate"
+                class="menu-link"
+            >
+
+<i class="fas fa-star"></i>  
+
+                <span>
+                    Mobile Legends Araçları
+                </span>
+
+            </a>
+
+
+            <a
+                href="#about"
+                class="menu-link"
+            >
+<i class="fas fa-id-card"></i>
+
+                <span>
+                    Hakkımda
+                </span>
+
+            </a>
+
+        </nav>
+
+
+           <!-- HESAP -->
+
+                <div id="loginMenu">
+    <a href="/login">
+        <i class="fas fa-right-to-bracket"></i>
+        <span>Giriş Yap</span>
+    </a>
+</div>
+
+<div id="logoutMenu" style="display: none;">
+    <a href="#" id="logoutButton">
+        <i class="fas fa-right-from-bracket"></i>
+        <span>Çıkış Yap</span>
+    </a>
+</div>
+
+
+    </aside>
+
+
+    <!-- =========================
+         ÇEKİLİŞ
+         ========================= -->
+
+    <main class="giveaway-page">
+
+        <section class="giveaway-card">
+
+            <div class="giveaway-icon">
+                <i class="fa-solid fa-gift"></i>
+            </div>
+
+            <div class="giveaway-badge">
+                ÇEKİLİŞ
+            </div>
+
+            <h1>
+                5 Kişiye Egzorsist
+                <br>
+                Kostümü Hediye
+            </h1>
+
+            <p class="giveaway-description">
+                Çekilişe katıl ve Egzorsist kostümünü kazanma şansını yakala.
+            </p>
+
+            <div class="giveaway-form">
+
+                <div class="giveaway-inputs">
+
+    <input
+        type="text"
+        id="playerId"
+        placeholder="MLBB Oyuncu ID"
+        inputmode="numeric"
+        autocomplete="off"
+    >
+
+    <input
+        type="text"
+        id="zoneId"
+        placeholder="Zone / Server ID"
+        inputmode="numeric"
+        autocomplete="off"
+    >
+
+</div>
+
+<button
+    type="button"
+    id="joinGiveaway"
+    class="giveaway-button"
+>
+    <i class="fa-solid fa-ticket"></i>
+    Çekilişe Katıl
+</button>
+
+            </div>
+
+            <div
+                id="giveawayMessage"
+                class="giveaway-message"
+            ></div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ------navbar------ -->
+
+
+    <script src="/js/index.js"></script>
+    <script src="/js/winrate.js"></script>
+    <script src="/js/toast.js"></script>
+    <script src="/js/cekilis.js"></script>
+
+</body>
+
+</html>

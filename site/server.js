@@ -1,6 +1,7 @@
 const express = require("express");
 const session = require("express-session");
 const path = require("path");
+const fs = require("fs");
 
 const { initializeApp, cert } = require("firebase-admin/app");
 const { getAuth } = require("firebase-admin/auth");
@@ -173,8 +174,8 @@ app.get("/api/id-checker", async (req, res) => {
             });
         }
 
-        const apiUrl =
-            `https://api.isan.eu.org/nickname/ml?id=${encodeURIComponent(playerId)}&server=${encodeURIComponent(zoneId)}&decode=false`;
+const apiUrl =
+    `https://api.isan.eu.org/nickname/ml?id=${encodeURIComponent(playerId)}&server=${encodeURIComponent(zoneId)}&decode=false`;
 
         console.log("MLBB API İSTEĞİ:", apiUrl);
 
@@ -215,7 +216,127 @@ app.get("/api/id-checker", async (req, res) => {
 
 });
 
+// =========================================================
+// ÇEKİLİŞ - KATILIM API
+// =========================================================
 
+const giveawayFile = path.join(__dirname, "giveaway-participants.json");
+
+if (!fs.existsSync(giveawayFile)) {
+    fs.writeFileSync(
+        giveawayFile,
+        JSON.stringify([], null, 2),
+        "utf8"
+    );
+}
+
+app.post("/api/giveaway/join", async (req, res) => {
+
+    try {
+
+        const playerId = String(req.body.playerId || "").trim();
+        const zoneId = String(req.body.zoneId || "").trim();
+
+        // ID + ZONE KONTROLÜ
+        if (!playerId || !zoneId) {
+            return res.status(400).json({
+                success: false,
+                message: "Oyuncu ID ve Zone ID gerekli."
+            });
+        }
+
+        if (!/^\d+$/.test(playerId) || !/^\d+$/.test(zoneId)) {
+            return res.status(400).json({
+                success: false,
+                message: "ID ve Zone ID yalnızca rakamlardan oluşmalıdır."
+            });
+        }
+
+        // =====================================================
+        // AYNI ID DAHA ÖNCE KATILMIŞ MI?
+        // =====================================================
+
+        const participants = JSON.parse(
+            fs.readFileSync(giveawayFile, "utf8")
+        );
+
+        const alreadyJoined = participants.some(
+            participant =>
+                String(participant.playerId) === playerId
+        );
+
+        if (alreadyJoined) {
+            return res.status(409).json({
+                success: false,
+                message: "Bu oyuncu ID'si çekilişe daha önce katılmış."
+            });
+        }
+
+        // =====================================================
+        // MEVCUT ID CHECKER'DA KULLANILAN MLBB API
+        // =====================================================
+
+        const apiUrl =
+            `https://api.isan.eu.org/nickname/ml?id=${encodeURIComponent(playerId)}&server=${encodeURIComponent(zoneId)}&decode=false`;
+
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        // =====================================================
+        // HESAP BULUNAMADI
+        // =====================================================
+
+        if (!response.ok || !data.success || !data.name) {
+            return res.status(404).json({
+                success: false,
+                message: "Bu ID ve Zone ID ile eşleşen oyuncu bulunamadı."
+            });
+        }
+
+        // =====================================================
+        // ÇEKİLİŞE KAYDET
+        // =====================================================
+
+        participants.push({
+            playerId: String(data.id || playerId),
+            zoneId: String(data.server || zoneId),
+            name: data.name,
+            country: data.country || "",
+            joinedAt: new Date().toISOString()
+        });
+
+        fs.writeFileSync(
+            giveawayFile,
+            JSON.stringify(participants, null, 2),
+            "utf8"
+        );
+
+        // =====================================================
+        // BAŞARILI
+        // =====================================================
+
+        return res.json({
+            success: true,
+            message: `${data.name} çekilişe başarıyla katıldı.`,
+            playerId: String(data.id || playerId),
+            zoneId: String(data.server || zoneId),
+            name: data.name
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Çekiliş katılım hatası:",
+            error
+        );
+
+        return res.status(500).json({
+            success: false,
+            message: "Çekilişe katılırken sunucu tarafında bir hata oluştu."
+        });
+    }
+
+});
 
 // =========================================================
 // MLBB - ID CHECKER SAYFASI
@@ -378,6 +499,50 @@ app.get("/bingo", (req, res) => {
 
 
 // =========================================================
+// ADMIN - ÇEKİLİŞ KATILIMCILARI
+// =========================================================
+
+app.get("/api/admin/giveaway-participants", (req, res) => {
+
+    try {
+
+        if (!fs.existsSync(giveawayFile)) {
+            return res.json({
+                success: true,
+                participants: []
+            });
+        }
+
+        const participants = JSON.parse(
+            fs.readFileSync(
+                giveawayFile,
+                "utf8"
+            )
+        );
+
+        return res.json({
+            success: true,
+            participants: participants
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Çekiliş katılımcıları okunamadı:",
+            error
+        );
+
+        return res.status(500).json({
+            success: false,
+            message: "Katılımcılar yüklenemedi."
+        });
+
+    }
+
+});
+
+
+// =========================================================
 // ADMIN
 // =========================================================
 
@@ -389,6 +554,82 @@ app.get("/admin", (req, res) => {
             "admin.html"
         )
     );
+
+});
+
+
+// =========================================================
+// ADMIN - ÇEKİLİŞ KATILIMCILARI
+// =========================================================
+
+app.get("/api/admin/giveaway-participants", (req, res) => {
+
+    try {
+
+        if (!fs.existsSync(giveawayFile)) {
+
+            return res.json({
+                success: true,
+                participants: []
+            });
+
+        }
+
+        const participants =
+            JSON.parse(
+                fs.readFileSync(
+                    giveawayFile,
+                    "utf8"
+                )
+            );
+
+        return res.json({
+            success: true,
+            participants: participants
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Çekiliş katılımcıları okunamadı:",
+            error
+        );
+
+        return res.status(500).json({
+            success: false,
+            message: "Katılımcılar yüklenemedi."
+        });
+
+    }
+
+});
+
+// =========================================================
+// ÇEKİLİŞ
+// =========================================================
+
+app.get("/cekilis", (req, res) => {
+
+    res.sendFile(
+        path.join(
+            pagesPath,
+            "cekilis.html"
+        )
+    );
+
+});
+
+
+
+
+app.post("/api/giveaway/join", (req, res) => {
+
+    console.log("CEKILIS POST GELDI:", req.body);
+
+    return res.json({
+        success: true,
+        message: "TEST: Çekiliş API'si çalışıyor."
+    });
 
 });
 
@@ -482,6 +723,10 @@ app.listen(
 
         console.log(
             `   http://localhost:${PORT}/admin`
+        );
+
+                console.log(
+            `   http://localhost:${PORT}/cekilis`
         );
 
         console.log(
