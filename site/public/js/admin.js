@@ -572,9 +572,9 @@ async function loadGiveawayParticipants() {
 
     try {
 
-        const response = await fetch(
-            "/api/admin/giveaway-participants"
-        );
+const response = await fetch(
+    "/api/admin/giveaway-participants?t=" + Date.now()
+);
 
         const data = await response.json();
 
