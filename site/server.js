@@ -220,120 +220,195 @@ const apiUrl =
 // ÇEKİLİŞ - KATILIM API
 // =========================================================
 
-const giveawayFile = path.join(__dirname, "giveaway-participants.json");
+const giveawayFile = path.join(
+    __dirname,
+    "giveaway-participants.json"
+);
 
 if (!fs.existsSync(giveawayFile)) {
     fs.writeFileSync(
         giveawayFile,
-        JSON.stringify([], null, 2),
+        "[]",
         "utf8"
     );
 }
+
 
 app.post("/api/giveaway/join", async (req, res) => {
 
     try {
 
-        const playerId = String(req.body.playerId || "").trim();
-        const zoneId = String(req.body.zoneId || "").trim();
+        const playerId =
+            String(req.body.playerId || "").trim();
 
-        // ID + ZONE KONTROLÜ
-        if (!playerId || !zoneId) {
+        const zoneId =
+            String(req.body.zoneId || "").trim();
+
+        const name =
+            String(req.body.name || "").trim();
+
+
+        // -------------------------
+        // INPUT KONTROLÜ
+        // -------------------------
+
+        if (!playerId || !zoneId || !name) {
+
             return res.status(400).json({
                 success: false,
-                message: "Oyuncu ID ve Zone ID gerekli."
+                message: "Oyuncu bilgileri eksik."
             });
+
         }
 
-        if (!/^\d+$/.test(playerId) || !/^\d+$/.test(zoneId)) {
+
+        if (!/^\d+$/.test(playerId)) {
+
             return res.status(400).json({
                 success: false,
-                message: "ID ve Zone ID yalnızca rakamlardan oluşmalıdır."
+                message: "Oyuncu ID yalnızca rakamlardan oluşmalıdır."
             });
+
         }
 
-        // =====================================================
-        // AYNI ID DAHA ÖNCE KATILMIŞ MI?
-        // =====================================================
 
-        const participants = JSON.parse(
-            fs.readFileSync(giveawayFile, "utf8")
-        );
+        if (!/^\d+$/.test(zoneId)) {
 
-        const alreadyJoined = participants.some(
-            participant =>
-                String(participant.playerId) === playerId
-        );
+            return res.status(400).json({
+                success: false,
+                message: "Zone ID yalnızca rakamlardan oluşmalıdır."
+            });
+
+        }
+
+
+        // -------------------------
+        // KAYITLARI OKU
+        // -------------------------
+
+        let participants = [];
+
+        try {
+
+            const fileData =
+                fs.readFileSync(
+                    giveawayFile,
+                    "utf8"
+                );
+
+            participants =
+                JSON.parse(fileData);
+
+            if (!Array.isArray(participants)) {
+                participants = [];
+            }
+
+        } catch (error) {
+
+            console.error(
+                "ÇEKİLİŞ DOSYASI OKUMA HATASI:",
+                error
+            );
+
+            participants = [];
+
+        }
+
+
+        // -------------------------
+        // AYNI ID KONTROLÜ
+        // -------------------------
+
+        const alreadyJoined =
+            participants.some(
+                participant =>
+                    String(participant.playerId) === playerId
+            );
+
 
         if (alreadyJoined) {
+
             return res.status(409).json({
                 success: false,
-                message: "Bu oyuncu ID'si çekilişe daha önce katılmış."
+                message:
+                    "Bu oyuncu ID'si çekilişe daha önce katılmış."
             });
+
         }
 
-        // =====================================================
-        // MEVCUT ID CHECKER'DA KULLANILAN MLBB API
-        // =====================================================
 
-        const apiUrl =
-            `https://api.isan.eu.org/nickname/ml?id=${encodeURIComponent(playerId)}&server=${encodeURIComponent(zoneId)}&decode=false`;
+        // -------------------------
+        // KAYIT
+        // -------------------------
 
-        const response = await fetch(apiUrl);
-        const data = await response.json();
+        const participant = {
 
-        // =====================================================
-        // HESAP BULUNAMADI
-        // =====================================================
+            playerId: playerId,
 
-        if (!response.ok || !data.success || !data.name) {
-            return res.status(404).json({
-                success: false,
-                message: "Bu ID ve Zone ID ile eşleşen oyuncu bulunamadı."
-            });
-        }
+            zoneId: zoneId,
 
-        // =====================================================
-        // ÇEKİLİŞE KAYDET
-        // =====================================================
+            name: name,
 
-        participants.push({
-            playerId: String(data.id || playerId),
-            zoneId: String(data.server || zoneId),
-            name: data.name,
-            country: data.country || "",
-            joinedAt: new Date().toISOString()
-        });
+            joinedAt:
+                new Date().toISOString()
+
+        };
+
+
+        participants.push(participant);
+
+
+        // -------------------------
+        // DOSYAYA YAZ
+        // -------------------------
 
         fs.writeFileSync(
             giveawayFile,
-            JSON.stringify(participants, null, 2),
+            JSON.stringify(
+                participants,
+                null,
+                2
+            ),
             "utf8"
         );
 
-        // =====================================================
+
+        console.log(
+            "ÇEKİLİŞ KAYDI:",
+            participant
+        );
+
+
+        // -------------------------
         // BAŞARILI
-        // =====================================================
+        // -------------------------
 
         return res.json({
+
             success: true,
-            message: `${data.name} çekilişe başarıyla katıldı.`,
-            playerId: String(data.id || playerId),
-            zoneId: String(data.server || zoneId),
-            name: data.name
+
+            message:
+                `${name} çekilişe başarıyla katıldı.`
+
         });
+
 
     } catch (error) {
 
         console.error(
-            "Çekiliş katılım hatası:",
+            "ÇEKİLİŞ KATILIM HATASI:",
             error
         );
 
         return res.status(500).json({
+
             success: false,
-            message: "Çekilişe katılırken sunucu tarafında bir hata oluştu."
+
+            message:
+                "Çekilişe kayıt sırasında sunucu hatası oluştu."
+
         });
+
     }
 
 });
@@ -493,51 +568,7 @@ app.get("/bingo", (req, res) => {
             mlbbPath,
             "bingo.html"
         )
-    );
-
-});
-
-
-// =========================================================
-// ADMIN - ÇEKİLİŞ KATILIMCILARI
-// =========================================================
-
-app.get("/api/admin/giveaway-participants", (req, res) => {
-
-    try {
-
-        if (!fs.existsSync(giveawayFile)) {
-            return res.json({
-                success: true,
-                participants: []
-            });
-        }
-
-        const participants = JSON.parse(
-            fs.readFileSync(
-                giveawayFile,
-                "utf8"
-            )
-        );
-
-        return res.json({
-            success: true,
-            participants: participants
-        });
-
-    } catch (error) {
-
-        console.error(
-            "Çekiliş katılımcıları okunamadı:",
-            error
-        );
-
-        return res.status(500).json({
-            success: false,
-            message: "Katılımcılar yüklenemedi."
-        });
-
-    }
+    );f
 
 });
 
@@ -601,35 +632,6 @@ app.get("/api/admin/giveaway-participants", (req, res) => {
         });
 
     }
-
-});
-
-// =========================================================
-// ÇEKİLİŞ
-// =========================================================
-
-app.get("/cekilis", (req, res) => {
-
-    res.sendFile(
-        path.join(
-            pagesPath,
-            "cekilis.html"
-        )
-    );
-
-});
-
-
-
-
-app.post("/api/giveaway/join", (req, res) => {
-
-    console.log("CEKILIS POST GELDI:", req.body);
-
-    return res.json({
-        success: true,
-        message: "TEST: Çekiliş API'si çalışıyor."
-    });
 
 });
 

@@ -38,10 +38,11 @@ document.addEventListener("DOMContentLoaded", function () {
                             "Content-Type": "application/json"
                         },
 
-                        body: JSON.stringify({
-                            playerId: verifiedAccount.playerId,
-                            zoneId: verifiedAccount.zoneId
-                        })
+body: JSON.stringify({
+    playerId: verifiedAccount.playerId,
+    zoneId: verifiedAccount.zoneId,
+    name: verifiedAccount.name
+})
                     }
                 );
 
