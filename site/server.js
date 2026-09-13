@@ -233,7 +233,7 @@ if (!fs.existsSync(giveawayFile)) {
     );
 }
 
-
+console.log("GIVEAWAY API AKTİF:", giveawayFile);
 app.post("/api/giveaway/join", async (req, res) => {
 
     try {
