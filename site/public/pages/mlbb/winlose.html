@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Kaewayn - MLBB Win Lose Hesaplama"
+    >
+
+    <title>Win Lose Hesaplama</title>
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="/img/favicon.png"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <!-- ANA SİTE CSS -->
+    <link
+        rel="stylesheet"
+        href="/css/index.css"
+    >
+
+    <!-- MLBB ORTAK TEMA -->
+    <link
+        rel="stylesheet"
+        href="/css/mlbb/winrate.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/css/toast.css"
+    >
+
+    <style>
+
+        /* =====================================================
+           WIN LOSE SAYFASI
+        ===================================================== */
+
+        .winlose-page {
+            position: relative;
+            z-index: 2;
+
+            width: 100%;
+            min-height: 100vh;
+
+            padding: 150px 20px 80px;
+        }
+
+
+        .winlose-container {
+            width: 100%;
+            max-width: 850px;
+
+            margin: 0 auto;
+        }
+
+
+        /* =====================================================
+           BAŞLIK
+        ===================================================== */
+
+        .winlose-header {
+            text-align: center;
+
+            margin-bottom: 35px;
+        }
+
+
+        .winlose-header h1 {
+            margin: 0;
+
+            color: #ffffff;
+
+            font-size: clamp(30px, 5vw, 45px);
+            font-weight: 900;
+
+            letter-spacing: -1px;
+        }
+
+
+        .winlose-header p {
+            max-width: 600px;
+
+            margin: 14px auto 0;
+
+            color: rgba(255,255,255,.58);
+
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           ARAÇLAR
+        ===================================================== */
+
+        .tools-wrapper {
+            position: relative;
+            z-index: 1000;
+
+            display: flex;
+            justify-content: center;
+
+            margin-bottom: 22px;
+        }
+
+
+        .tools-button {
+            position: relative;
+            overflow: hidden;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+
+            height: 45px;
+
+            padding: 0 20px;
+
+            border: 1px solid rgba(255,255,255,.2);
+            border-radius: 10px;
+
+            background: #ffffff;
+            color: #111111;
+
+            font-size: 13px;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease;
+        }
+
+
+        .tools-button::after {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: -120%;
+
+            width: 70%;
+            height: 100%;
+
+            background: linear-gradient(
+                100deg,
+                transparent,
+                rgba(255,255,255,.9),
+                transparent
+            );
+
+            transform: skewX(-20deg);
+
+            transition: left .6s ease;
+        }
+
+
+        .tools-button:hover::after {
+            left: 140%;
+        }
+
+
+        .tools-button:hover {
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 10px 35px rgba(255,255,255,.08);
+        }
+
+
+        #toolsArrow {
+            transition: transform .2s ease;
+        }
+
+
+        /* =====================================================
+           ARAÇ MENÜSÜ
+        ===================================================== */
+
+        .tools-menu {
+            position: absolute;
+            z-index: 1001;
+
+            top: calc(100% + 10px);
+            left: 50%;
+
+            width: min(600px, calc(100vw - 30px));
+
+            padding: 12px;
+
+            background: rgba(12,12,12,.97);
+
+            border: 1px solid rgba(255,255,255,.14);
+            border-radius: 15px;
+
+            box-shadow:
+                0 25px 70px rgba(0,0,0,.55);
+
+            transform:
+                translate(-50%, -8px);
+
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+
+            transition:
+                opacity .2s ease,
+                transform .2s ease;
+        }
+
+
+        .tools-menu.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+
+            transform:
+                translate(-50%, 0);
+        }
+
+
+        .tools-menu-title {
+            padding: 8px 10px;
+
+            color: rgba(255,255,255,.45);
+
+            font-size: 10px;
+            font-weight: 800;
+
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+
+        .tools-list {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 6px;
+        }
+
+
+        .tool-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            min-height: 50px;
+
+            padding: 8px 10px;
+
+            border: 1px solid transparent;
+            border-radius: 10px;
+
+            color: #ffffff;
+
+            text-decoration: none;
+
+            transition:
+                background .2s ease,
+                border-color .2s ease;
+        }
+
+
+        .tool-link:hover {
+            background: rgba(255,255,255,.06);
+
+            border-color:
+                rgba(255,255,255,.1);
+        }
+
+
+        .tool-link.active {
+            background: rgba(255,255,255,.06);
+            color: #ffffff;
+
+            border-color:
+                rgba(255,255,255,.12);
+        }
+
+
+        .tool-icon {
+            width: 32px;
+            height: 32px;
+
+            flex: 0 0 32px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid rgba(255,255,255,.15);
+            border-radius: 8px;
+
+            font-size: 12px;
+        }
+
+
+        .tool-link.active .tool-icon {
+            border-color: #dddddd;
+        }
+
+
+        .tool-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        .tool-name {
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+
+        .tool-description {
+            margin-top: 2px;
+
+            color: rgba(255,255,255,.42);
+
+            font-size: 10px;
+        }
+
+
+        .tool-link.active .tool-description {
+            color: #777777;
+        }
+
+
+        /* =====================================================
+           HESAPLAYICI
+        ===================================================== */
+
+        .calculator {
+            width: 100%;
+            max-width: 650px;
+
+            margin: 0 auto;
+
+            padding: 28px;
+
+            background: rgba(10,10,10,.88);
+
+            border: 1px solid rgba(255,255,255,.13);
+            border-radius: 18px;
+
+            box-shadow:
+                0 25px 80px rgba(0,0,0,.45);
+
+            backdrop-filter: blur(8px);
+
+            position: relative;
+            z-index: 1;
+        }
+
+
+        .calculator h2 {
+            margin: 0 0 24px;
+
+            color: #ffffff;
+
+            font-size: 21px;
+            font-weight: 900;
+        }
+
+
+        /* =====================================================
+           INPUTLAR
+        ===================================================== */
+
+        .input-group {
+            margin-bottom: 17px;
+        }
+
+
+        .input-group label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: rgba(255,255,255,.75);
+
+            font-size: 11px;
+            font-weight: 800;
+
+            text-transform: uppercase;
+        }
+
+
+        .input {
+            width: 100%;
+            height: 50px;
+
+            padding: 0 14px;
+
+            border: 1px solid rgba(255,255,255,.13);
+            border-radius: 10px;
+
+            outline: none;
+
+            background: rgba(255,255,255,.045);
+            color: #ffffff;
+
+            font-family: inherit;
+            font-size: 14px;
+
+            box-sizing: border-box;
+
+            transition:
+                border-color .2s ease,
+                background .2s ease,
+                box-shadow .2s ease;
+        }
+
+
+        .input::placeholder {
+            color: rgba(255,255,255,.3);
+        }
+
+
+        .input:hover {
+            border-color:
+                rgba(255,255,255,.25);
+        }
+
+
+        .input:focus {
+            background: rgba(255,255,255,.07);
+
+            border-color:
+                rgba(255,255,255,.45);
+
+            box-shadow:
+                0 0 0 3px rgba(255,255,255,.04);
+        }
+
+
+        /* =====================================================
+           SONUÇ
+        ===================================================== */
+
+        .result {
+            display: none;
+
+            margin-top: 24px;
+
+            padding: 20px;
+
+            background: #ffffff;
+            color: #111111;
+
+            border-radius: 14px;
+
+            animation:
+                resultIn .2s ease;
+        }
+
+
+        .result.show {
+            display: block;
+        }
+
+
+        @keyframes resultIn {
+
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+
+        .result-title {
+            color: #777777;
+
+            font-size: 10px;
+            font-weight: 800;
+
+            text-transform: uppercase;
+        }
+
+
+        .result-value {
+            margin-top: 5px;
+
+            color: #111111;
+
+            font-size: 32px;
+            font-weight: 950;
+        }
+
+
+        .result-text {
+            margin-top: 6px;
+
+            color: #555555;
+
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+
+        .result-details {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 8px;
+
+            margin-top: 16px;
+        }
+
+
+        .result-detail {
+            padding: 11px;
+
+            background: #f3f3f3;
+
+            border-radius: 9px;
+        }
+
+
+        .result-detail-label {
+            color: #888888;
+
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+
+        .result-detail-value {
+            margin-top: 4px;
+
+            color: #111111;
+
+            font-size: 14px;
+            font-weight: 850;
+        }
+
+
+        /* =====================================================
+           HATA
+        ===================================================== */
+
+        .error {
+            display: none;
+
+            margin-top: 12px;
+
+            padding: 11px 13px;
+
+            background: rgba(255,255,255,.06);
+
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 9px;
+
+            color: #ffffff;
+
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+
+        .error.show {
+            display: block;
+        }
+
+
+        /* =====================================================
+           TEMİZLE
+        ===================================================== */
+
+        .clear-button {
+            position: relative;
+            overflow: hidden;
+
+            width: 100%;
+            height: 48px;
+
+            margin-top: 10px;
+
+            border: 1px solid rgba(255,255,255,.2);
+            border-radius: 10px;
+
+            background: #ffffff;
+            color: #111111;
+
+            font-family: inherit;
+
+            font-size: 12px;
+            font-weight: 850;
+
+            cursor: pointer;
+
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease;
+        }
+
+
+        .clear-button::after {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: -120%;
+
+            width: 70%;
+            height: 100%;
+
+            background: linear-gradient(
+                100deg,
+                transparent,
+                rgba(255,255,255,.9),
+                transparent
+            );
+
+            transform: skewX(-20deg);
+
+            transition: left .6s ease;
+        }
+
+
+        .clear-button:hover::after {
+            left: 140%;
+        }
+
+
+        .clear-button:hover {
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 10px 30px rgba(255,255,255,.08);
+        }
+
+
+        /* =====================================================
+           MOBİL
+        ===================================================== */
+
+        @media (max-width: 650px) {
+
+            .winlose-page {
+                padding: 125px 14px 60px;
+            }
+
+
+            .winlose-header h1 {
+                font-size: 30px;
+            }
+
+
+            .winlose-header p {
+                font-size: 12px;
+            }
+
+
+            .calculator {
+                padding: 20px 16px;
+
+                border-radius: 14px;
+            }
+
+
+            .tools-menu {
+                width:
+                    calc(100vw - 24px);
+            }
+
+
+            .tools-list {
+                grid-template-columns: 1fr;
+            }
+
+
+            .result-details {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         ORTAK MLBB ARKA PLAN
+    ===================================================== -->
+
+    <div class="particles">
+
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+
+    </div>
+
+
+    <div class="animated-background">
+
+        <span class="bg-square square-1"></span>
+        <span class="bg-square square-2"></span>
+        <span class="bg-square square-3"></span>
+        <span class="bg-square square-4"></span>
+        <span class="bg-square square-5"></span>
+        <span class="bg-square square-6"></span>
+        <span class="bg-square square-7"></span>
+        <span class="bg-square square-8"></span>
+
+    </div>
+
+
+    <!-- =====================================================
+         NAVBAR
+    ===================================================== -->
+
+    <header class="header">
+
+        <div class="navbar">
+
+            <a href="/" class="logo">
+
+                <div class="logo-image">
+
+                    <img
+                        src="/img/logo.png"
+                        alt="Kae"
+                    >
+
+                </div>
+
+                <div class="logo-text">
+
+                    <h2>Kaewayn</h2>
+
+                </div>
+
+            </a>
+
+
+            <nav class="desktop-menu">
+
+                <a href="#hero"></a>
+                <a href="#features"></a>
+                <a href="#premium"></a>
+                <a href="#contact"></a>
+
+            </nav>
+
+
+            <div class="navbar-right">
+
+                <button
+                    class="menu-button"
+                    id="menuButton"
+                >
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MENÜ ARKA PLANI
+    ===================================================== -->
+
+    <div
+        class="menu-overlay"
+        id="menu-overlay"
+    ></div>
+
+
+    <!-- =====================================================
+         SAĞ MENÜ
+    ===================================================== -->
+
+    <aside
+        class="side-menu"
+        id="side-menu"
+    >
+
+        <button
+            type="button"
+            class="menu-close"
+            id="menu-close"
+            aria-label="Menüyü kapat"
+        >
+            ×
+        </button>
+
+
+        <div class="menu-profile">
+
+            <div class="menu-profile-logo">
+
+                <img
+                    src="/img/logo.png"
+                    alt="kaewayn"
+                >
+
+            </div>
+
+            <h2 id="menuUsername">
+                Misafir
+            </h2>
+
+            <p id="menuStatus">
+                Giriş yapmadınız
+            </p>
+
+        </div>
+
+
+        <nav class="menu-navigation">
+
+            <a
+                href="/"
+                class="menu-link"
+            >
+
+                <i class="fas fa-star"></i>
+
+                <span>
+                    Ana Sayfa
+                </span>
+
+            </a>
+
+
+            <a
+                href="#about"
+                class="menu-link"
+            >
+
+                <i class="fas fa-id-card"></i>
+
+                <span>
+                    Hakkımda
+                </span>
+
+            </a>
+
+        </nav>
+
+
+        <div id="loginMenu">
+
+            <a href="/login">
+
+                <i class="fas fa-right-to-bracket"></i>
+
+                <span>
+                    Giriş Yap
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <div
+            id="logoutMenu"
+            style="display: none;"
+        >
+
+            <a
+                href="#"
+                id="logoutButton"
+            >
+
+                <i class="fas fa-right-from-bracket"></i>
+
+                <span>
+                    Çıkış Yap
+                </span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         WIN LOSE SAYFASI
+    ===================================================== -->
+
+    <main class="winlose-page">
+
+        <div class="winlose-container">
+
+
+            <!-- BAŞLIK -->
+
+            <div class="winlose-header">
+
+                <h1>
+                    Win Lose Hesaplama
+                </h1>
+
+                <p>
+                    Toplam maç sayını ve Win Rate değerini
+                    girerek kaç maç kazandığını ve kaybettiğini
+                    anında hesapla.
+                </p>
+
+            </div>
+
+
+            <!-- =================================================
+                 ARAÇLAR
+            ================================================= -->
+
+            <div class="tools-wrapper">
+
+                <button
+                    type="button"
+                    class="tools-button"
+                    id="toolsButton"
+                >
+
+                    <i class="fa-solid fa-table-cells-large"></i>
+
+                    Araçlar
+
+                    <i
+                        class="fa-solid fa-chevron-down"
+                        id="toolsArrow"
+                    ></i>
+
+                </button>
+
+
+                <div
+                    class="tools-menu"
+                    id="toolsMenu"
+                >
+
+                    <div class="tools-menu-title">
+                        MLBB Araçları
+                    </div>
+
+
+                    <div class="tools-list">
+
+
+                        <!-- WIN RATE -->
+
+                        <a
+                            href="/winrate"
+                            class="tool-link"
+                        >
+
+                            <span class="tool-icon">
+
+                                <i
+                                    class="fa-solid fa-percent"
+                                ></i>
+
+                            </span>
+
+                            <span class="tool-info">
+
+                                <span class="tool-name">
+                                    Win Rate
+                                </span>
+
+                                <span class="tool-description">
+                                    Kazanma oranı hesaplama
+                                </span>
+
+                            </span>
+
+                        </a>
+
+
+                        <!-- ID CHECKER -->
+
+                        <a
+                            href="/id-checker"
+                            class="tool-link"
+                        >
+
+                            <span class="tool-icon">
+
+                                <i
+                                    class="fa-solid fa-magnifying-glass"
+                                ></i>
+
+                            </span>
+
+                            <span class="tool-info">
+
+                                <span class="tool-name">
+                                    ID Checker
+                                </span>
+
+                                <span class="tool-description">
+                                    Oyuncu ID kontrolü
+                                </span>
+
+                            </span>
+
+                        </a>
+
+
+                        <!-- WIN LOSE -->
+
+                        <a
+                            href="/winlose"
+                            class="tool-link active"
+                        >
+
+                            <span class="tool-icon">
+
+                                <i
+                                    class="fa-solid fa-chart-pie"
+                                ></i>
+
+                            </span>
+
+                            <span class="tool-info">
+
+                                <span class="tool-name">
+                                    Win Lose
+                                </span>
+
+                                <span class="tool-description">
+                                    Kazanma kaybetme oranı hesaplama
+                                </span>
+
+                            </span>
+
+                        </a>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 HESAPLAYICI
+            ================================================= -->
+
+            <section class="calculator">
+
+                <h2>
+                    MLBB Win Lose Hesaplayıcı
+                </h2>
+
+
+                <!-- TOPLAM MAÇ -->
+
+                <div class="input-group">
+
+                    <label for="totalMatches">
+                        Toplam Maç
+                    </label>
+
+                    <input
+                        class="input"
+                        id="totalMatches"
+                        type="number"
+                        min="1"
+                        step="1"
+                        placeholder="Örn. 5000"
+                    >
+
+                </div>
+
+
+                <!-- WIN RATE -->
+
+                <div class="input-group">
+
+                    <label for="winRate">
+                        Win Rate (%)
+                    </label>
+
+                    <input
+                        class="input"
+                        id="winRate"
+                        type="number"
+                        min="0"
+                        max="100"
+                        step="0.01"
+                        placeholder="Örn. 64"
+                    >
+
+                </div>
+
+
+                <!-- HATA -->
+
+                <div
+                    class="error"
+                    id="error"
+                ></div>
+
+
+                <!-- =================================================
+                     SONUÇ
+                ================================================= -->
+
+                <div
+                    class="result"
+                    id="result"
+                >
+
+                    <div class="result-title">
+                        Maç Sonucun
+                    </div>
+
+
+                    <div
+                        class="result-value"
+                        id="resultValue"
+                    >
+                        0 Win / 0 Lose
+                    </div>
+
+
+                    <div
+                        class="result-text"
+                        id="resultText"
+                    ></div>
+
+
+                    <div class="result-details">
+
+
+                        <div class="result-detail">
+
+                            <div class="result-detail-label">
+                                Kazanılan Maç
+                            </div>
+
+                            <div
+                                class="result-detail-value"
+                                id="wins"
+                            >
+                                -
+                            </div>
+
+                        </div>
+
+
+                        <div class="result-detail">
+
+                            <div class="result-detail-label">
+                                Kaybedilen Maç
+                            </div>
+
+                            <div
+                                class="result-detail-value"
+                                id="loses"
+                            >
+                                -
+                            </div>
+
+                        </div>
+
+
+                        <div class="result-detail">
+
+                            <div class="result-detail-label">
+                                Win Rate
+                            </div>
+
+                            <div
+                                class="result-detail-value"
+                                id="winResult"
+                            >
+                                -
+                            </div>
+
+                        </div>
+
+
+                        <div class="result-detail">
+
+                            <div class="result-detail-label">
+                                Lose Rate
+                            </div>
+
+                            <div
+                                class="result-detail-value"
+                                id="loseResult"
+                            >
+                                -
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- TEMİZLE -->
+
+                <button
+                    type="button"
+                    class="clear-button"
+                    id="clearButton"
+                >
+
+                    <i class="fa-solid fa-rotate-left"></i>
+
+                    Temizle
+
+                </button>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ===================================================== -->
+
+    <script>
+
+        /* =====================================================
+           ARAÇ MENÜSÜ
+        ===================================================== */
+
+        const toolsButton =
+            document.getElementById("toolsButton");
+
+        const toolsMenu =
+            document.getElementById("toolsMenu");
+
+        const toolsArrow =
+            document.getElementById("toolsArrow");
+
+
+        toolsButton.addEventListener(
+            "click",
+            function (event) {
+
+                event.stopPropagation();
+
+                const isOpen =
+                    toolsMenu.classList.toggle("active");
+
+                toolsArrow.style.transform =
+                    isOpen
+                        ? "rotate(180deg)"
+                        : "rotate(0deg)";
+
+            }
+        );
+
+
+        document.addEventListener(
+            "click",
+            function (event) {
+
+                if (
+                    !toolsMenu.contains(event.target) &&
+                    !toolsButton.contains(event.target)
+                ) {
+
+                    toolsMenu.classList.remove("active");
+
+                    toolsArrow.style.transform =
+                        "rotate(0deg)";
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           ELEMENTLER
+        ===================================================== */
+
+        const totalMatches =
+            document.getElementById("totalMatches");
+
+        const winRate =
+            document.getElementById("winRate");
+
+        const result =
+            document.getElementById("result");
+
+        const resultValue =
+            document.getElementById("resultValue");
+
+        const resultText =
+            document.getElementById("resultText");
+
+        const wins =
+            document.getElementById("wins");
+
+        const loses =
+            document.getElementById("loses");
+
+        const winResult =
+            document.getElementById("winResult");
+
+        const loseResult =
+            document.getElementById("loseResult");
+
+        const error =
+            document.getElementById("error");
+
+        const clearButton =
+            document.getElementById("clearButton");
+
+
+        /* =====================================================
+           WIN / LOSE HESAPLAMA
+        ===================================================== */
+
+        function calculate() {
+
+            const matches =
+                Number(totalMatches.value);
+
+            const wr =
+                Number(winRate.value);
+
+
+            /* BOŞ */
+
+            if (
+                totalMatches.value === "" ||
+                winRate.value === ""
+            ) {
+
+                result.classList.remove("show");
+
+                error.classList.remove("show");
+
+                return;
+            }
+
+
+            /* GEÇERSİZ */
+
+            if (
+                matches <= 0 ||
+                !Number.isFinite(matches) ||
+                wr < 0 ||
+                wr > 100 ||
+                !Number.isFinite(wr)
+            ) {
+
+                result.classList.remove("show");
+
+                error.textContent =
+                    "Lütfen geçerli değerler girin.";
+
+                error.classList.add("show");
+
+                return;
+            }
+
+
+            error.classList.remove("show");
+
+
+            /* =================================================
+               KAZANILAN MAÇ
+            ================================================= */
+
+            const calculatedWins =
+                Math.round(
+                    matches * (wr / 100)
+                );
+
+
+            /* =================================================
+               KAYBEDİLEN MAÇ
+            ================================================= */
+
+            const calculatedLoses =
+                matches - calculatedWins;
+
+
+            /* =================================================
+               ORANLAR
+            ================================================= */
+
+            const calculatedWinRate =
+                (calculatedWins / matches) * 100;
+
+            const calculatedLoseRate =
+                (calculatedLoses / matches) * 100;
+
+
+            /* =================================================
+               EKRANA YAZ
+            ================================================= */
+
+            resultValue.textContent =
+                calculatedWins.toLocaleString("tr-TR") +
+                " Win / " +
+                calculatedLoses.toLocaleString("tr-TR") +
+                " Lose";
+
+
+            resultText.textContent =
+                `${matches.toLocaleString("tr-TR")} maçın ` +
+                `%${wr.toFixed(2)} Win Rate değerine göre ` +
+                `${calculatedWins.toLocaleString("tr-TR")} maç kazanılmış, ` +
+                `${calculatedLoses.toLocaleString("tr-TR")} maç kaybedilmiş.`;
+
+
+            wins.textContent =
+                calculatedWins.toLocaleString("tr-TR");
+
+
+            loses.textContent =
+                calculatedLoses.toLocaleString("tr-TR");
+
+
+            winResult.textContent =
+                "%" + calculatedWinRate.toFixed(2);
+
+
+            loseResult.textContent =
+                "%" + calculatedLoseRate.toFixed(2);
+
+
+            result.classList.add("show");
+
+        }
+
+
+        /* =====================================================
+           OTOMATİK HESAPLAMA
+        ===================================================== */
+
+        totalMatches.addEventListener(
+            "input",
+            calculate
+        );
+
+
+        winRate.addEventListener(
+            "input",
+            calculate
+        );
+
+
+        /* =====================================================
+           TEMİZLE
+        ===================================================== */
+
+        clearButton.addEventListener(
+            "click",
+            function () {
+
+                totalMatches.value = "";
+                winRate.value = "";
+
+                result.classList.remove("show");
+                error.classList.remove("show");
+
+                totalMatches.focus();
+
+            }
+        );
+
+    </script>
+
+
+    <!-- ORTAK JS -->
+
+    <script src="/js/index.js"></script>
+
+    <script src="/js/toast.js"></script>
+
+    <script src="/js/mlbb/winrate.js"></script>
+
+    <script
+        type="module"
+        src="/js/auth.js"
+    ></script>
+
+
+</body>
+
+</html>

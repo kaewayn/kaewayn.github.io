@@ -432,12 +432,12 @@ app.get("/id-checker", (req, res) => {
 // MLBB - HERO WIN LOSE
 // =========================================================
 
-app.get("/herowinlose", (req, res) => {
+app.get("/winlose", (req, res) => {
 
     res.sendFile(
         path.join(
             mlbbPath,
-            "herowinlose.html"
+            "winlose.html"
         )
     );
 
@@ -529,7 +529,7 @@ app.listen(
         );
 
         console.log(
-            `   http://localhost:${PORT}/herowinlose`
+            `   http://localhost:${PORT}/winlose`
         );
 
         console.log(
