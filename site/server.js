@@ -414,7 +414,7 @@ app.post("/api/giveaway/join", async (req, res) => {
 });
 
 // =========================================================
-// MLBB - ID CHECKER SAYFASI
+// MLBB - ID CHECKER 
 // =========================================================
 
 app.get("/id-checker", (req, res) => {
@@ -428,39 +428,6 @@ app.get("/id-checker", (req, res) => {
 
 });
 
-
-// =========================================================
-// MLBB - HESAP YAŞI
-// =========================================================
-
-app.get("/hesap-yasi", (req, res) => {
-
-    res.sendFile(
-        path.join(
-            mlbbPath,
-            "hesap-yasi.html"
-        )
-    );
-
-});
-
-
-// =========================================================
-// MLBB - DEĞERLEME
-// =========================================================
-
-app.get("/degerleme", (req, res) => {
-
-    res.sendFile(
-        path.join(
-            mlbbPath,
-            "degerleme.html"
-        )
-    );
-
-});
-
-
 // =========================================================
 // MLBB - HERO WIN LOSE
 // =========================================================
@@ -473,102 +440,6 @@ app.get("/herowinlose", (req, res) => {
             "herowinlose.html"
         )
     );
-
-});
-
-
-// =========================================================
-// MLBB - RÜTBE
-// =========================================================
-
-app.get("/rutbe", (req, res) => {
-
-    res.sendFile(
-        path.join(
-            mlbbPath,
-            "rutbe.html"
-        )
-    );
-
-});
-
-
-// =========================================================
-// MLBB - ZODYAK
-// =========================================================
-
-app.get("/zodyak", (req, res) => {
-
-    res.sendFile(
-        path.join(
-            mlbbPath,
-            "zodyak.html"
-        )
-    );
-
-});
-
-
-// =========================================================
-// MLBB - YILDIZ
-// =========================================================
-
-app.get("/yildiz", (req, res) => {
-
-    res.sendFile(
-        path.join(
-            mlbbPath,
-            "yildiz.html"
-        )
-    );
-
-});
-
-
-// =========================================================
-// MLBB - ASPIRANT
-// =========================================================
-
-app.get("/aspirant", (req, res) => {
-
-    res.sendFile(
-        path.join(
-            mlbbPath,
-            "aspirant.html"
-        )
-    );
-
-});
-
-
-// =========================================================
-// MLBB - BÜYÜLÜ ÇARK
-// =========================================================
-
-app.get("/buyulu-cark", (req, res) => {
-
-    res.sendFile(
-        path.join(
-            mlbbPath,
-            "buyulu-cark.html"
-        )
-    );
-
-});
-
-
-// =========================================================
-// MLBB - BINGO
-// =========================================================
-
-app.get("/bingo", (req, res) => {
-
-    res.sendFile(
-        path.join(
-            mlbbPath,
-            "bingo.html"
-        )
-    );f
 
 });
 
@@ -589,66 +460,23 @@ app.get("/admin", (req, res) => {
 });
 
 
+
 // =========================================================
-// CEKİLİŞ
+// SERVİCES
 // =========================================================
 
-app.get("/cekilis", (req, res) => {
+app.get("/services", (req, res) => {
 
     res.sendFile(
         path.join(
             pagesPath,
-            "cekilis.html"
+            "services.html"
         )
     );
 
 });
 
-// =========================================================
-// ADMIN - ÇEKİLİŞ KATILIMCILARI
-// =========================================================
 
-app.get("/api/admin/giveaway-participants", (req, res) => {
-
-    try {
-
-        if (!fs.existsSync(giveawayFile)) {
-
-            return res.json({
-                success: true,
-                participants: []
-            });
-
-        }
-
-        const participants =
-            JSON.parse(
-                fs.readFileSync(
-                    giveawayFile,
-                    "utf8"
-                )
-            );
-
-        return res.json({
-            success: true,
-            participants: participants
-        });
-
-    } catch (error) {
-
-        console.error(
-            "Çekiliş katılımcıları okunamadı:",
-            error
-        );
-
-        return res.status(500).json({
-            success: false,
-            message: "Katılımcılar yüklenemedi."
-        });
-
-    }
-
-});
 
 
 // =========================================================
@@ -701,56 +529,17 @@ app.listen(
         );
 
         console.log(
-            `   http://localhost:${PORT}/hesap-yasi`
-        );
-
-        console.log(
-            `   http://localhost:${PORT}/degerleme`
-        );
-
-        console.log(
             `   http://localhost:${PORT}/herowinlose`
         );
-
-        console.log(
-            `   http://localhost:${PORT}/rutbe`
-        );
-
-        console.log(
-            `   http://localhost:${PORT}/zodyak`
-        );
-
-        console.log(
-            `   http://localhost:${PORT}/yildiz`
-        );
-
-        console.log(
-            `   http://localhost:${PORT}/aspirant`
-        );
-
-        console.log(
-            `   http://localhost:${PORT}/buyulu-cark`
-        );
-
-        console.log(
-            `   http://localhost:${PORT}/bingo`
-        );
-
-        console.log("");
 
         console.log(
             `   http://localhost:${PORT}/admin`
         );
 
-                console.log(
-            `   http://localhost:${PORT}/cekilis`
-        );
-
         console.log(
-            "================================"
+           `   http://localhost:${PORT}/services`
         );
 
-        console.log("");
 
     }
 );

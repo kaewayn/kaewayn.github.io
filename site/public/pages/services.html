@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Servisler"
+    >
+
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+
+    <title>Servisler</title>
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <!-- Ana tema -->
+    <link
+        rel="stylesheet"
+        href="../css/index.css"
+    >
+<link rel="stylesheet" href="/css/mlbb/winrate.css">
+
+
+    <style>
+
+        /* ==================================================
+           SERVICES PAGE
+        ================================================== */
+
+        .services-page {
+            min-height: 100vh;
+            padding: 150px 6% 100px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .services-page-header {
+            text-align: center;
+            margin-bottom: 70px;
+            animation: servicesHeaderIn 1s ease forwards;
+        }
+
+        .services-page-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 18px;
+            padding: 8px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.035);
+            backdrop-filter: blur(12px);
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .services-page-label i {
+            font-size: 10px;
+        }
+
+        .services-page-header h1 {
+            margin: 0;
+            font-size: clamp(42px, 6vw, 76px);
+            line-height: 1;
+            font-weight: 800;
+            letter-spacing: -3px;
+            color: #fff;
+        }
+
+        .services-page-header h1 span {
+            background: linear-gradient(
+                90deg,
+                #fff,
+                rgba(255, 255, 255, 0.45)
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .services-page-header p {
+            max-width: 620px;
+            margin: 22px auto 0;
+            color: rgba(255, 255, 255, 0.48);
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+
+        /* ==================================================
+           KARTLAR
+        ================================================== */
+
+        .services-page-grid {
+            width: min(1250px, 100%);
+            margin: 0 auto;
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .services-page-card {
+            position: relative;
+            min-height: 330px;
+            padding: 34px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            overflow: hidden;
+
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 24px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.065),
+                    rgba(255, 255, 255, 0.018)
+                );
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+            transform: translateY(25px);
+            opacity: 0;
+
+            animation: serviceCardIn 0.8s ease forwards;
+
+            transition:
+                transform 0.45s ease,
+                border-color 0.45s ease,
+                box-shadow 0.45s ease,
+                background 0.45s ease;
+        }
+
+        .services-page-card:nth-child(1) {
+            animation-delay: 0.15s;
+        }
+
+        .services-page-card:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .services-page-card:nth-child(3) {
+            animation-delay: 0.45s;
+        }
+
+
+        /* Kartın içindeki ışık */
+
+        .services-page-card::before {
+            content: "";
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            top: -80px;
+            right: -80px;
+
+            border-radius: 50%;
+
+            background: rgba(255, 255, 255, 0.055);
+            filter: blur(35px);
+
+            transition:
+                transform 0.6s ease,
+                opacity 0.6s ease;
+        }
+
+
+        /* Hover */
+
+        .services-page-card:hover {
+            transform: translateY(-12px) scale(1.015);
+
+            border-color: rgba(255, 255, 255, 0.22);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.09),
+                    rgba(255, 255, 255, 0.025)
+                );
+
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.4),
+                0 0 35px rgba(255, 255, 255, 0.035),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        .services-page-card:hover::before {
+            transform: scale(1.8);
+            opacity: 0.8;
+        }
+
+
+        /* ==================================================
+           NUMARA
+        ================================================== */
+
+        .services-page-number {
+            position: absolute;
+            top: 28px;
+            right: 30px;
+
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+
+            color: rgba(255, 255, 255, 0.22);
+        }
+
+
+        /* ==================================================
+           İKON
+        ================================================== */
+
+        .services-page-icon {
+            width: 62px;
+            height: 62px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 18px;
+
+            border: 1px solid rgba(255, 255, 255, 0.12);
+
+            background: rgba(255, 255, 255, 0.045);
+
+            color: rgba(255, 255, 255, 0.9);
+
+            font-size: 23px;
+
+            box-shadow:
+                0 10px 35px rgba(0, 0, 0, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+            transition:
+                transform 0.5s ease,
+                border-color 0.5s ease,
+                box-shadow 0.5s ease;
+        }
+
+        .services-page-card:hover .services-page-icon {
+            transform: rotate(-5deg) scale(1.1);
+
+            border-color: rgba(255, 255, 255, 0.3);
+
+            box-shadow:
+                0 0 30px rgba(255, 255, 255, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+
+        /* ==================================================
+           İÇERİK
+        ================================================== */
+
+        .services-page-content {
+            position: relative;
+            z-index: 2;
+            margin-top: 35px;
+        }
+
+        .services-page-content h2 {
+            margin: 0 0 12px;
+
+            color: #fff;
+
+            font-size: clamp(21px, 2vw, 27px);
+            font-weight: 750;
+            letter-spacing: -0.5px;
+        }
+
+        .services-page-content p {
+            margin: 0;
+
+            color: rgba(255, 255, 255, 0.45);
+
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+
+        /* ==================================================
+           ALT OK
+        ================================================== */
+
+        .services-page-link {
+            position: relative;
+            z-index: 2;
+
+            margin-top: 30px;
+
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+
+            width: fit-content;
+
+            color: rgba(255, 255, 255, 0.72);
+
+            font-size: 13px;
+            font-weight: 700;
+
+            text-decoration: none;
+
+            transition:
+                color 0.35s ease,
+                gap 0.35s ease;
+        }
+
+        .services-page-link i {
+            font-size: 11px;
+            transition: transform 0.35s ease;
+        }
+
+        .services-page-card:hover .services-page-link {
+            color: #fff;
+            gap: 15px;
+        }
+
+        .services-page-card:hover .services-page-link i {
+            transform: translateX(4px);
+        }
+
+
+        /* ==================================================
+           ANİMASYONLAR
+        ================================================== */
+
+        @keyframes serviceCardIn {
+            from {
+                opacity: 0;
+                transform: translateY(35px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes servicesHeaderIn {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        /* ==================================================
+           MOBİL
+        ================================================== */
+
+        @media (max-width: 900px) {
+
+            .services-page {
+                padding: 125px 25px 70px;
+            }
+
+            .services-page-grid {
+                grid-template-columns: 1fr;
+                max-width: 600px;
+            }
+
+            .services-page-card {
+                min-height: 290px;
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .services-page {
+                padding: 110px 17px 60px;
+            }
+
+            .services-page-header {
+                margin-bottom: 45px;
+            }
+
+            .services-page-header h1 {
+                letter-spacing: -2px;
+            }
+
+            .services-page-header p {
+                font-size: 13px;
+            }
+
+            .services-page-card {
+                min-height: 270px;
+                padding: 27px;
+                border-radius: 21px;
+            }
+
+            .services-page-number {
+                top: 23px;
+                right: 25px;
+            }
+
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+    <!-- ==================================================
+         ARKA PLAN
+    ================================================== -->
+
+<div class="particles">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<div class="animated-background">
+    <span class="bg-square square-1"></span>
+    <span class="bg-square square-2"></span>
+    <span class="bg-square square-3"></span>
+    <span class="bg-square square-4"></span>
+    <span class="bg-square square-5"></span>
+    <span class="bg-square square-6"></span>
+    <span class="bg-square square-7"></span>
+    <span class="bg-square square-8"></span>
+</div>
+
+
+    <!-- ==================================================
+         NAVBAR
+    ================================================== -->
+
+    <header class="header">
+
+        <div class="navbar">
+
+            <a href="/" class="logo">
+
+                <div class="logo-image">
+                    <img src="/img/logo.png" alt="Kae">
+                </div>
+
+                <div class="logo-text">
+                    <h2>Kaewayn</h2>
+                </div>
+
+            </a>
+
+
+            <nav class="desktop-menu">
+            </nav>
+
+
+            <div class="navbar-right">
+
+                <button
+                    class="menu-button"
+                    id="menuButton"
+                >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ==================================================
+         MENÜ
+    ================================================== -->
+
+    <div
+        class="menu-overlay"
+        id="menu-overlay"
+    ></div>
+
+
+    <aside
+        class="side-menu"
+        id="side-menu"
+    >
+
+        <button
+            type="button"
+            class="menu-close"
+            id="menu-close"
+            aria-label="Menüyü kapat"
+        >
+            ×
+        </button>
+
+
+
+
+        <!-- PROFİL -->
+
+<!-- PROFİL -->
+
+<div class="menu-profile">
+
+    <div class="menu-profile-logo">
+
+        <img
+            src="/img/logo.png"
+            alt="kaewayn"
+        >
+
+    </div>
+
+    <h2 id="menuUsername">
+        Misafir
+    </h2>
+
+    <p id="menuStatus">
+        Giriş yapmadınız
+    </p>
+
+</div>
+
+
+
+        <!-- MENÜ -->
+
+        <nav class="menu-navigation">
+
+            <a
+                href="/"
+                class="menu-link"
+            >
+
+<i class="fas fa-star"></i>  
+
+                <span>
+                    Ana Sayfa
+                </span>
+
+            </a>
+
+
+            <a
+                href="#about"
+                class="menu-link"
+            >
+<i class="fas fa-id-card"></i>
+
+                <span>
+                    Hakkımda
+                </span>
+
+            </a>
+
+            
+
+        </nav>
+
+        <!-- HESAP -->
+
+                <div id="loginMenu">
+    <a href="/login">
+        <i class="fas fa-right-to-bracket"></i>
+        <span>Giriş Yap</span>
+    </a>
+</div>
+
+<div id="logoutMenu" style="display: none;">
+    <a href="#" id="logoutButton">
+        <i class="fas fa-right-from-bracket"></i>
+        <span>Çıkış Yap</span>
+    </a>
+</div>
+
+
+
+    </aside>
+
+
+    <!-- ==================================================
+         ANA İÇERİK
+    ================================================== -->
+
+    <main>
+
+        <section class="services-page">
+
+
+            <!-- BAŞLIK -->
+
+            <div class="services-page-header">
+
+                <div class="services-page-label">
+                    <i class="fas fa-layer-group"></i>
+                    SERVİSLER
+                </div>
+
+                <h1>
+                    Tüm <span>Araçlar.</span>
+                </h1>
+
+                <p>
+                    Kaewayn tarafından sunulan araçlara ve hizmetlere
+                    buradan ulaşabilirsiniz.
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 3 KUTU
+            ================================================== -->
+
+            <div class="services-page-grid">
+
+
+                <!-- MOBILE LEGENDS -->
+
+                <article class="services-page-card">
+
+                    <span class="services-page-number">
+                        01
+                    </span>
+
+                    <div class="services-page-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+
+                    <div class="services-page-content">
+
+                        <h2>
+                            Mobile Legends Araçları
+                        </h2>
+
+                        <p>
+                            Mobile Legends için geliştirilmiş
+                            araçlara ve yardımcı sistemlere erişin.
+                        </p>
+
+                        <a
+                            href="/winrate"
+                            class="services-page-link"
+                        >
+                            Araçları Gör
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+
+                    </div>
+
+                </article>
+
+
+                <!-- SOSYAL MEDYA -->
+
+                <article class="services-page-card">
+
+                    <span class="services-page-number">
+                        02
+                    </span>
+
+                    <div class="services-page-icon">
+                        <i class="fas fa-share-nodes"></i>
+                    </div>
+
+                    <div class="services-page-content">
+
+                        <h2>
+                            Sosyal Medya Araçları
+                        </h2>
+
+                        <p>
+                            Sosyal medya hesaplarınız için
+                            kullanabileceğiniz araçları keşfedin.
+                        </p>
+
+                        <a
+                            href="smm"
+                            class="services-page-link"
+                        >
+                            Araçları Gör
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+
+                    </div>
+
+                </article>
+
+
+                <!-- DİĞER -->
+
+                <article class="services-page-card">
+
+                    <span class="services-page-number">
+                        03
+                    </span>
+
+                    <div class="services-page-icon">
+                        <i class="fas fa-cubes"></i>
+                    </div>
+
+                    <div class="services-page-content">
+
+                        <h2>
+                            Diğer Araçlar
+                        </h2>
+
+                        <p>
+                            Diğer yardımcı araçlar ve sistemler
+                            burada yer alacak.
+                        </p>
+
+                        <a
+                            href="#"
+                            class="services-page-link"
+                        >
+                            Yakında
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+
+                    </div>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ==================================================
+         JS
+    ================================================== -->
+
+    <script src="/js/index.js"></script>
+    <script src="/js/toast.js"></script>
+
+    <script type="module" src="/js/auth.js"></script>
+
+    <script type="module">
+
+        import { auth } from "/js/firebase.js";
+        import {
+            signOut
+        } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const logoutButton =
+                document.getElementById("logoutButton");
+
+
+            if (logoutButton) {
+
+                logoutButton.addEventListener(
+                    "click",
+                    async (event) => {
+
+                        event.preventDefault();
+
+                        await signOut(auth);
+
+                        localStorage.removeItem("username");
+
+                        window.location.href = "/";
+
+                    }
+                );
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>
