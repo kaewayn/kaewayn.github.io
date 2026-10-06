@@ -43,6 +43,15 @@ const verifyRow = new ActionRowBuilder()
 
 client.once(Events.ClientReady, async (readyClient) => {
     console.log(`Wayn aktif! ${readyClient.user.tag}`);
+    readyClient.user.setPresence({
+    status: 'dnd',
+    activities: [
+        {
+            name: 'KaeWayn',
+            type: 0
+        }
+    ]
+});
 
     try {
         const verifyChannel = await client.channels.fetch(VERIFY_CHANNEL_ID);
