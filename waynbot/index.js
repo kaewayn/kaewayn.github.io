@@ -42,18 +42,21 @@ const verifyRow = new ActionRowBuilder()
 // ==============================
 
 client.once(Events.ClientReady, async (readyClient) => {
+
     console.log(`Wayn aktif! ${readyClient.user.tag}`);
+
     readyClient.user.setPresence({
-    status: 'dnd',
-    activities: [
-        {
-            name: 'KaeWayn',
-            type: 0
-        }
-    ]
-});
+        status: 'dnd',
+        activities: [
+            {
+                name: 'kaewayn.com',
+                type: 0
+            }
+        ]
+    });
 
     try {
+
         const verifyChannel = await client.channels.fetch(VERIFY_CHANNEL_ID);
 
         if (!verifyChannel) {
@@ -82,6 +85,7 @@ client.once(Events.ClientReady, async (readyClient) => {
         );
 
         if (verifyMessages.size > 1) {
+
             const messagesToDelete = [...verifyMessages.values()].slice(1);
 
             for (const message of messagesToDelete) {
@@ -113,7 +117,12 @@ client.once(Events.ClientReady, async (readyClient) => {
         }
 
     } catch (error) {
-        console.error('VERIFY mesajı işlemi başarısız:', error);
+
+        console.error(
+            'VERIFY mesajı işlemi başarısız:',
+            error
+        );
+
     }
 });
 
@@ -136,6 +145,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
         );
 
         if (!verifiedRole) {
+
             await interaction.reply({
                 content: '❌ VERIFIED rolü bulunamadı.',
                 ephemeral: true
@@ -156,8 +166,6 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
         try {
 
-            // SADECE VERIFIED VERİYORUZ
-            // USER ROLÜNE DOKUNMUYORUZ
             await member.roles.add(verifiedRole);
 
             await interaction.reply({
@@ -177,10 +185,12 @@ client.on(Events.InteractionCreate, async (interaction) => {
             );
 
             if (!interaction.replied) {
+
                 await interaction.reply({
                     content: '❌ Doğrulama sırasında bir hata oluştu.',
                     ephemeral: true
                 });
+
             }
         }
 
@@ -215,6 +225,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
                 PermissionsBitField.Flags.ManageMessages
             )
         ) {
+
             await interaction.reply({
                 content: '❌ Bu komutu kullanmak için **Mesajları Yönet** yetkisine sahip olmalısın.',
                 ephemeral: true
@@ -225,7 +236,6 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
         const miktar = interaction.options.getInteger('miktar');
 
-        // Discord'a hemen cevap veriyoruz.
         await interaction.deferReply({
             ephemeral: true
         });
@@ -241,13 +251,17 @@ client.on(Events.InteractionCreate, async (interaction) => {
             for (const message of messages.values()) {
 
                 try {
+
                     await message.delete();
                     deletedCount++;
+
                 } catch (error) {
+
                     console.error(
                         `Mesaj silinemedi: ${message.id}`,
                         error
                     );
+
                 }
             }
 
@@ -261,12 +275,52 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
         } catch (error) {
 
-            console.error('Mesaj silme hatası:', error);
+            console.error(
+                'Mesaj silme hatası:',
+                error
+            );
 
             await interaction.editReply({
                 content: '❌ Mesajlar silinirken bir hata oluştu.'
             });
         }
+
+        return;
+    }
+
+    // ==========================
+    // /HELP
+    // ==========================
+
+    if (interaction.commandName === 'help') {
+
+        const helpEmbed = new EmbedBuilder()
+            .setTitle('🤖 Wayn Komutları')
+            .setDescription(
+                'Wayn botun mevcut komutları aşağıdadır.'
+            )
+            .addFields(
+                {
+                    name: '🏓 /ping',
+                    value: 'Wayn botun çalışıp çalışmadığını kontrol eder.'
+                },
+                {
+                    name: '🧹 /clear',
+                    value: 'Kanaldaki belirlediğin miktarda mesajı siler.'
+                },
+                {
+                    name: '🔐 VERIFY',
+                    value: 'Sunucuya erişim doğrulamasını yapar.'
+                }
+            )
+            .setColor(0x5865F2)
+            .setFooter({
+                text: 'Wayn • KaeWayn'
+            });
+
+        await interaction.reply({
+            embeds: [helpEmbed]
+        });
 
         return;
     }

@@ -24,6 +24,11 @@ const commands = [
                 .setMinValue(1)
                 .setMaxValue(100)
         )
+        .toJSON(),
+
+    new SlashCommandBuilder()
+        .setName('help')
+        .setDescription('Wayn botun komutlarını gösterir.')
         .toJSON()
 
 ];
@@ -31,7 +36,7 @@ const commands = [
 const rest = new REST({ version: '10' })
     .setToken(process.env.DISCORD_TOKEN);
 
-const CLIENT_ID = '1556695891732070503'; 
+const CLIENT_ID = '1556695891732070503';
 const GUILD_ID = '1284848918982688859';
 
 (async () => {
