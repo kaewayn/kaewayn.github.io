@@ -324,7 +324,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
         return;
     }
-});
+}); 
 
 // ==============================
 // BOTU BAŞLAT
