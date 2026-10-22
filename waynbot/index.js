@@ -84,7 +84,7 @@ client.once(Events.ClientReady, async (readyClient) => {
             )
         );
 
-        if (verifyMessages.size > 1) {
+        if (verifyMessages.size > 1) { 
 
             const messagesToDelete = [...verifyMessages.values()].slice(1);
 
