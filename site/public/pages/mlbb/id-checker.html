@@ -39,7 +39,7 @@
 <!-- MLBB ORTAK TEMA -->
 <link
     rel="stylesheet"
-    href="/css/mlbb/winrate.css"
+    href="/css/mlbb/mlbb.css"
 >
 
 <link
@@ -1029,12 +1029,11 @@
         <div class="winrate-header">
 
             <h1>
-                Mobile Legends ID Checker
+                MLBB ID Checker
             </h1>
 
             <p>
-                Mobile Legends oyuncu ID ve Zone ID
-                bilgilerini girerek oyuncu adını sorgula.
+                Mobile Legends ID ve Zone ID sorgusu atarak hesabınızın kayıtlı olduğu sunucuyu ve oyuncu bilgilerinizi görebilirsiniz.
             </p>
 
         </div>
@@ -1107,9 +1106,40 @@
 
                     <!-- ID CHECKER -->
 
-                    <a
+                    <a/* MOBİL ARAÇLAR MENÜSÜNÜ KÜÇÜLT */
+@media (max-width: 650px) {
+    .tools-menu {
+        width: calc(100vw - 50px);
+    }
+
+    .tools-list {
+        grid-template-columns: 1fr;
+        gap: 5px;
+    }
+
+    .tool-link {
+        min-height: 42px;
+        padding: 6px 8px;
+        gap: 8px;
+    }
+
+    .tool-icon {
+        width: 28px;
+        height: 28px;
+        flex-basis: 28px;
+        font-size: 11px;
+    }
+
+    .tool-name {
+        font-size: 11px;
+    }
+
+    .tool-description {
+        font-size: 9px;
+    }
+}
                         href="/id-checker"
-                        class="tool-link active"
+                        class="tool-link"
                     >
 
                         <span class="tool-icon">

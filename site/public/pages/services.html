@@ -1,361 +1,312 @@
+
 <!DOCTYPE html>
 <html lang="tr">
-
 <head>
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <meta
-        name="description"
-        content="Servisler"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kaewayn servisleri ve araçları">
     <link rel="icon" type="image/png" href="/img/favicon.png">
+    <title>Servisler | Kaewayn</title>
 
-    <title>Servisler</title>
-
-    <!-- Font Awesome -->
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    >
-
-    <!-- Ana tema -->
-    <link
-        rel="stylesheet"
-        href="../css/index.css"
-    >
-<link rel="stylesheet" href="/css/mlbb/winrate.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="/css/mlbb/mlbb.css">
 
     <style>
-
-        /* ==================================================
-           SERVICES PAGE
-        ================================================== */
+        :root {
+            --red: #ffffff;
+            --white: #f7f7f7;
+            --muted: #a1a1a1;
+        }
 
         .services-page {
+            position: relative;
+            isolation: isolate;
             min-height: 100vh;
             padding: 150px 6% 100px;
-            position: relative;
-            z-index: 1;
+            overflow: hidden;
+        }
+
+        .services-page::before,
+        .services-page::after {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            width: 420px;
+            height: 420px;
+            border-radius: 50%;
+            filter: blur(100px);
+            pointer-events: none;
+        }
+
+        .services-page::before {
+            top: 100px;
+            left: -220px;
+            background: #ffffff;
+            opacity: .07;
+        }
+
+        .services-page::after {
+            top: 420px;
+            right: -250px;
+            background: #aaaaaa;
+            opacity: .09;
         }
 
         .services-page-header {
+            max-width: 850px;
+            margin: 0 auto 62px;
             text-align: center;
-            margin-bottom: 70px;
-            animation: servicesHeaderIn 1s ease forwards;
+            animation: svcIn .8s ease both;
         }
 
         .services-page-label {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 18px;
-            padding: 8px 18px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            gap: 9px;
+            margin-bottom: 22px;
+            padding: 9px 15px;
+            border: 1px solid #ffffff35;
             border-radius: 999px;
-            background: rgba(255, 255, 255, 0.035);
-            backdrop-filter: blur(12px);
-            color: rgba(255, 255, 255, 0.65);
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 2px;
-        }
-
-        .services-page-label i {
-            font-size: 10px;
+            background: #ffffff0c;
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2.4px;
         }
 
         .services-page-header h1 {
             margin: 0;
-            font-size: clamp(42px, 6vw, 76px);
-            line-height: 1;
-            font-weight: 800;
-            letter-spacing: -3px;
             color: #fff;
+            font-size: clamp(42px, 7vw, 82px);
+            font-weight: 900;
+            line-height: .98;
+            letter-spacing: -4px;
         }
 
         .services-page-header h1 span {
-            background: linear-gradient(
-                90deg,
-                #fff,
-                rgba(255, 255, 255, 0.45)
-            );
+            color: transparent;
+            background: linear-gradient(100deg, #ffffff 5%, #aaaaaa 58%, #f5f5f5);
             -webkit-background-clip: text;
             background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
 
         .services-page-header p {
-            max-width: 620px;
-            margin: 22px auto 0;
-            color: rgba(255, 255, 255, 0.48);
+            max-width: 600px;
+            margin: 23px auto 0;
+            color: #ffffff94;
             font-size: 15px;
-            line-height: 1.8;
+            line-height: 1.85;
         }
 
-
-        /* ==================================================
-           KARTLAR
-        ================================================== */
-
         .services-page-grid {
-            width: min(1250px, 100%);
-            margin: 0 auto;
-
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 22px;
+            width: min(1240px, 100%);
+            margin: auto;
         }
 
         .services-page-card {
             position: relative;
-            min-height: 330px;
-            padding: 34px;
-
             display: flex;
+            min-height: 365px;
             flex-direction: column;
-            justify-content: space-between;
-
+            align-items: flex-start;
+            padding: 30px;
             overflow: hidden;
-
-            border: 1px solid rgba(255, 255, 255, 0.09);
-            border-radius: 24px;
-
+            border: 1px solid #ffffff1f;
+            border-radius: 23px;
             background:
-                linear-gradient(
-                    145deg,
-                    rgba(255, 255, 255, 0.065),
-                    rgba(255, 255, 255, 0.018)
-                );
-
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-
-            box-shadow:
-                0 20px 60px rgba(0, 0, 0, 0.25),
-                inset 0 1px 0 rgba(255, 255, 255, 0.04);
-
-            transform: translateY(25px);
+                radial-gradient(circle at 100% 0%, #ffffff0a, transparent 38%),
+                linear-gradient(145deg, #1c1c1cf0, #0a0a0af5);
+            box-shadow: 0 18px 55px #0007, inset 0 1px #ffffff09;
             opacity: 0;
-
-            animation: serviceCardIn 0.8s ease forwards;
-
-            transition:
-                transform 0.45s ease,
-                border-color 0.45s ease,
-                box-shadow 0.45s ease,
-                background 0.45s ease;
+            animation: svcIn .75s ease forwards;
+            transition: transform .35s, border-color .35s, box-shadow .35s;
         }
 
         .services-page-card:nth-child(1) {
-            animation-delay: 0.15s;
+            animation-delay: .1s;
         }
 
         .services-page-card:nth-child(2) {
-            animation-delay: 0.3s;
+            animation-delay: .22s;
         }
 
         .services-page-card:nth-child(3) {
-            animation-delay: 0.45s;
+            animation-delay: .34s;
         }
-
-
-        /* Kartın içindeki ışık */
 
         .services-page-card::before {
             content: "";
             position: absolute;
-
-            width: 180px;
-            height: 180px;
-
-            top: -80px;
-            right: -80px;
-
+            top: -100px;
+            right: -95px;
+            width: 220px;
+            height: 220px;
             border-radius: 50%;
-
-            background: rgba(255, 255, 255, 0.055);
-            filter: blur(35px);
-
-            transition:
-                transform 0.6s ease,
-                opacity 0.6s ease;
+            background: #ffffff;
+            opacity: .06;
+            filter: blur(65px);
+            transition: opacity .35s, transform .5s;
+            pointer-events: none;
         }
 
-
-        /* Hover */
-
         .services-page-card:hover {
-            transform: translateY(-12px) scale(1.015);
-
-            border-color: rgba(255, 255, 255, 0.22);
-
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(255, 255, 255, 0.09),
-                    rgba(255, 255, 255, 0.025)
-                );
-
-            box-shadow:
-                0 30px 80px rgba(0, 0, 0, 0.4),
-                0 0 35px rgba(255, 255, 255, 0.035),
-                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            transform: translateY(-9px);
+            border-color: #ffffff85;
+            box-shadow: 0 28px 70px #000b, 0 0 32px #ffffff0a;
         }
 
         .services-page-card:hover::before {
-            transform: scale(1.8);
-            opacity: 0.8;
+            opacity: .15;
+            transform: scale(1.25);
         }
-
-
-        /* ==================================================
-           NUMARA
-        ================================================== */
 
         .services-page-number {
             position: absolute;
             top: 28px;
-            right: 30px;
-
-            font-size: 12px;
-            font-weight: 700;
+            right: 29px;
+            color: #ffffff55;
+            font-size: 11px;
+            font-weight: 800;
             letter-spacing: 2px;
-
-            color: rgba(255, 255, 255, 0.22);
         }
 
-
-        /* ==================================================
-           İKON
-        ================================================== */
-
         .services-page-icon {
-            width: 62px;
-            height: 62px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 18px;
-
-            border: 1px solid rgba(255, 255, 255, 0.12);
-
-            background: rgba(255, 255, 255, 0.045);
-
-            color: rgba(255, 255, 255, 0.9);
-
-            font-size: 23px;
-
-            box-shadow:
-                0 10px 35px rgba(0, 0, 0, 0.25),
-                inset 0 1px 0 rgba(255, 255, 255, 0.05);
-
-            transition:
-                transform 0.5s ease,
-                border-color 0.5s ease,
-                box-shadow 0.5s ease;
+            position: relative;
+            display: grid;
+            width: 64px;
+            height: 64px;
+            place-items: center;
+            border: 1px solid #ffffff35;
+            border-radius: 19px;
+            background: linear-gradient(145deg, #ffffff15, #ffffff09);
+            color: #fff;
+            font-size: 24px;
+            box-shadow: 0 8px 28px #ffffff0a;
+            transition: transform .35s, box-shadow .35s;
         }
 
         .services-page-card:hover .services-page-icon {
-            transform: rotate(-5deg) scale(1.1);
-
-            border-color: rgba(255, 255, 255, 0.3);
-
-            box-shadow:
-                0 0 30px rgba(255, 255, 255, 0.08),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px) rotate(-5deg) scale(1.06);
+            box-shadow: 0 0 28px #ffffff18;
         }
-
-
-        /* ==================================================
-           İÇERİK
-        ================================================== */
 
         .services-page-content {
             position: relative;
-            z-index: 2;
-            margin-top: 35px;
+            z-index: 1;
+            margin: 30px 0 28px;
+        }
+
+        .services-page-content .eyebrow {
+            display: block;
+            margin-bottom: 9px;
+            color: #cccccc;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
         }
 
         .services-page-content h2 {
             margin: 0 0 12px;
-
             color: #fff;
-
-            font-size: clamp(21px, 2vw, 27px);
-            font-weight: 750;
-            letter-spacing: -0.5px;
+            font-size: clamp(21px, 2vw, 25px);
+            font-weight: 800;
+            letter-spacing: -.7px;
+            line-height: 1.2;
         }
 
         .services-page-content p {
             margin: 0;
-
-            color: rgba(255, 255, 255, 0.45);
-
-            font-size: 14px;
-            line-height: 1.7;
+            color: #ffffff8c;
+            font-size: 13px;
+            line-height: 1.8;
         }
-
-
-        /* ==================================================
-           ALT OK
-        ================================================== */
 
         .services-page-link {
             position: relative;
-            z-index: 2;
-
-            margin-top: 30px;
-
+            z-index: 1;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-
-            width: fit-content;
-
-            color: rgba(255, 255, 255, 0.72);
-
-            font-size: 13px;
-            font-weight: 700;
-
+            justify-content: center;
+            gap: 12px;
+            min-height: 45px;
+            margin-top: auto;
+            padding: 0 17px;
+            border: 1px solid #ffffff26;
+            border-radius: 12px;
+            background: #ffffff0b;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 800;
             text-decoration: none;
-
-            transition:
-                color 0.35s ease,
-                gap 0.35s ease;
+            transition: gap .3s, border-color .3s, background .3s,
+                        transform .3s, box-shadow .3s;
         }
 
         .services-page-link i {
+            color: #ffffff;
             font-size: 11px;
-            transition: transform 0.35s ease;
+            transition: transform .3s;
         }
 
-        .services-page-card:hover .services-page-link {
-            color: #fff;
-            gap: 15px;
+        .services-page-link:hover {
+            gap: 17px;
+            transform: translateY(-2px);
+            border-color: #ffffff8c;
+            background: #ffffff12;
+            box-shadow: 0 8px 25px #ffffff0a;
         }
 
-        .services-page-card:hover .services-page-link i {
-            transform: translateX(4px);
+        .services-page-link:hover i {
+            transform: translateX(3px);
         }
 
+        .services-page-link.is-disabled {
+            color: #ffffff8c;
+            cursor: default;
+        }
 
-        /* ==================================================
-           ANİMASYONLAR
-        ================================================== */
+        .services-page-link.is-disabled:hover {
+            gap: 12px;
+            transform: none;
+            border-color: #ffffff26;
+            background: #ffffff0b;
+            box-shadow: none;
+        }
 
-        @keyframes serviceCardIn {
+        .services-page-link.is-disabled i {
+            color: #ffffff73;
+        }
+
+        .services-bottom-note {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: fit-content;
+            max-width: 100%;
+            margin: 36px auto 0;
+            padding: 12px 16px;
+            border: 1px solid #ffffff17;
+            border-radius: 12px;
+            background: #ffffff06;
+            color: #ffffff80;
+            font-size: 11px;
+            text-align: center;
+        }
+
+        .services-bottom-note i {
+            color: #ffffff;
+        }
+
+        @keyframes svcIn {
             from {
                 opacity: 0;
-                transform: translateY(35px);
+                transform: translateY(22px);
             }
 
             to {
@@ -364,96 +315,119 @@
             }
         }
 
-        @keyframes servicesHeaderIn {
-            from {
-                opacity: 0;
-                transform: translateY(25px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-
-        /* ==================================================
-           MOBİL
-        ================================================== */
-
-        @media (max-width: 900px) {
-
+        @media (max-width: 1000px) {
             .services-page {
-                padding: 125px 25px 70px;
+                padding: 135px 25px 85px;
+            }
+
+            .services-page-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .services-page-card {
+                min-height: 345px;
+            }
+
+            .services-page-card:nth-child(3) {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .services-page {
+                padding: 115px 17px 65px;
+            }
+
+            .services-page-header {
+                margin-bottom: 38px;
+            }
+
+            .services-page-header h1 {
+                letter-spacing: -2.5px;
+            }
+
+            .services-page-header p {
+                margin-top: 17px;
+                font-size: 13px;
             }
 
             .services-page-grid {
                 grid-template-columns: 1fr;
-                max-width: 600px;
+                gap: 15px;
+                max-width: 470px;
             }
 
-            .services-page-card {
-                min-height: 290px;
+            .services-page-card,
+            .services-page-card:nth-child(3) {
+                grid-column: auto;
+                min-height: 315px;
+                padding: 25px;
+                border-radius: 20px;
             }
 
-        }
-
-
-        @media (max-width: 500px) {
-
-            .services-page {
-                padding: 110px 17px 60px;
+            .services-page-content {
+                margin: 25px 0;
             }
 
-            .services-page-header {
-                margin-bottom: 45px;
-            }
-
-            .services-page-header h1 {
-                letter-spacing: -2px;
-            }
-
-            .services-page-header p {
-                font-size: 13px;
-            }
-
-            .services-page-card {
-                min-height: 270px;
-                padding: 27px;
-                border-radius: 21px;
+            .services-page-content h2 {
+                font-size: 22px;
             }
 
             .services-page-number {
-                top: 23px;
-                right: 25px;
+                top: 25px;
+                right: 24px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .services-page-header,
+            .services-page-card {
+                animation: none;
+                opacity: 1;
             }
 
+            .services-page-card,
+            .services-page-icon,
+            .services-page-link {
+                transition: none;
+            }
+            
         }
+
+        /* Navbar sabit kalsın */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+}
+
+        /* Bu sayfada menü navbarın üstünde kalsın */
+.header {
+    z-index: 1000;
+}
+
+#side-menu {
+    z-index: 10002;
+}
+
+#menu-overlay {
+    z-index: 10001;
+}
+
+
     </style>
-
 </head>
-
 
 <body>
 
-    <!-- ==================================================
-         ARKA PLAN
-    ================================================== -->
-
-<div class="particles">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
+<div class="particles" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
 </div>
 
-<div class="animated-background">
+<div class="animated-background" aria-hidden="true">
     <span class="bg-square square-1"></span>
     <span class="bg-square square-2"></span>
     <span class="bg-square square-3"></span>
@@ -464,357 +438,183 @@
     <span class="bg-square square-8"></span>
 </div>
 
-
-    <!-- ==================================================
-         NAVBAR
-    ================================================== -->
-
-    <header class="header">
-
-        <div class="navbar">
-
-            <a href="/" class="logo">
-
-                <div class="logo-image">
-                    <img src="/img/logo.png" alt="Kae">
-                </div>
-
-                <div class="logo-text">
-                    <h2>Kaewayn</h2>
-                </div>
-
-            </a>
-
-
-            <nav class="desktop-menu">
-            </nav>
-
-
-            <div class="navbar-right">
-
-                <button
-                    class="menu-button"
-                    id="menuButton"
-                >
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-
+<header class="header">
+    <div class="navbar">
+        <a href="/" class="logo">
+            <div class="logo-image">
+                <img src="/img/logo.png" alt="Kae">
             </div>
+            <div class="logo-text">
+                <h2>Kaewayn</h2>
+            </div>
+        </a>
+
+        <nav class="desktop-menu" aria-label="Ana menü"></nav>
+
+        <div class="navbar-right">
+            <button class="menu-button" id="menuButton"
+                    type="button" aria-label="Menüyü aç">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<div class="menu-overlay" id="menu-overlay"></div>
+
+<aside class="side-menu" id="side-menu">
+    <button type="button" class="menu-close" id="menu-close"
+            aria-label="Menüyü kapat">×</button>
+
+    <div class="menu-profile">
+        <div class="menu-profile-logo">
+            <img src="/img/logo.png" alt="Kaewayn">
+        </div>
+        <h2 id="menuUsername">Misafir</h2>
+        <p id="menuStatus">Giriş yapmadınız</p>
+    </div>
+
+    <nav class="menu-navigation" aria-label="Menü bağlantıları">
+        <a href="/" class="menu-link">
+            <i class="fas fa-house"></i><span>Ana Sayfa</span>
+        </a>
+        <a href="/#about" class="menu-link">
+            <i class="fas fa-id-card"></i><span>Hakkımda</span>
+        </a>
+    </nav>
+
+    <div id="loginMenu">
+        <a href="/login">
+            <i class="fas fa-right-to-bracket"></i><span>Giriş Yap</span>
+        </a>
+    </div>
+
+    <div id="logoutMenu" style="display:none">
+        <a href="#" id="logoutButton">
+            <i class="fas fa-right-from-bracket"></i><span>Çıkış Yap</span>
+        </a>
+    </div>
+</aside>
+
+<main>
+    <section class="services-page">
+
+        <header class="services-page-header">
+            <div class="services-page-label">
+                <i class="fas fa-bolt"></i> KAE WAYN / SERVİSLER
+            </div>
+
+            <h1>Gücünü <span>Keşfet.</span></h1>
+
+            <p>
+                Kaewayn tarafından sunulan servisleri keşfet
+                ve sana uygun olana göz at.
+            </p>
+        </header>
+
+        <div class="services-page-grid">
+
+            <article class="services-page-card">
+                <span class="services-page-number">01 / GAMING</span>
+
+                <div class="services-page-icon">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+
+                <div class="services-page-content">
+                    <span class="eyebrow">Oyun araçları</span>
+                    <h2>Mobile Legends</h2>
+                    <p>
+                        Mobile Legends için geliştirilmiş araçlara
+                        ve yardımcı sistemlere tek noktadan ulaş.
+                    </p>
+                </div>
+
+                <a href="/winrate" class="services-page-link">
+                    Araçları keşfet <i class="fas fa-arrow-right"></i>
+                </a>
+            </article>
+
+            <article class="services-page-card">
+                <span class="services-page-number">02 / SOCIAL</span>
+
+                <div class="services-page-icon">
+                    <i class="fas fa-share-nodes"></i>
+                </div>
+
+                <div class="services-page-content">
+                    <span class="eyebrow">Dijital çözümler</span>
+                    <h2>Sosyal Medya</h2>
+                    <p>
+                        Sosyal medya araçlarını ve ilgili hizmetleri
+                        incele; ihtiyacına uygun çözümleri keşfet.
+                    </p>
+                </div>
+
+                <a href="#" class="services-page-link is-disabled"
+   aria-disabled="true" onclick="return false;">
+    Yakında <i class="fas fa-hourglass-half"></i>
+</a>
+            </article>
+
+            <article class="services-page-card">
+                <span class="services-page-number">03 / MORE</span>
+
+                <div class="services-page-icon">
+                    <i class="fas fa-cubes"></i>
+                </div>
+
+                <div class="services-page-content">
+                    <span class="eyebrow">Yeni projeler</span>
+                    <h2>Diğer Araçlar</h2>
+                    <p>
+                        Yeni yardımcı araçlar ve sistemler hazır oldukça
+                        bu bölümde yayınlanacak.
+                    </p>
+                </div>
+
+                <a href="#" class="services-page-link is-disabled"
+                   aria-disabled="true" onclick="return false;">
+                    Yakında <i class="fas fa-hourglass-half"></i>
+                </a>
+            </article>
 
         </div>
 
-    </header>
-
-
-    <!-- ==================================================
-         MENÜ
-    ================================================== -->
-
-    <div
-        class="menu-overlay"
-        id="menu-overlay"
-    ></div>
-
-
-    <aside
-        class="side-menu"
-        id="side-menu"
-    >
-
-        <button
-            type="button"
-            class="menu-close"
-            id="menu-close"
-            aria-label="Menüyü kapat"
-        >
-            ×
-        </button>
-
-
-
-
-        <!-- PROFİL -->
-
-<!-- PROFİL -->
-
-<div class="menu-profile">
-
-    <div class="menu-profile-logo">
-
-        <img
-            src="/img/logo.png"
-            alt="kaewayn"
-        >
-
-    </div>
-
-    <h2 id="menuUsername">
-        Misafir
-    </h2>
-
-    <p id="menuStatus">
-        Giriş yapmadınız
-    </p>
-
-</div>
-
-
-
-        <!-- MENÜ -->
-
-        <nav class="menu-navigation">
-
-            <a
-                href="/"
-                class="menu-link"
-            >
-
-<i class="fas fa-star"></i>  
-
-                <span>
-                    Ana Sayfa
-                </span>
-
-            </a>
-
-
-            <a
-                href="#about"
-                class="menu-link"
-            >
-<i class="fas fa-id-card"></i>
-
-                <span>
-                    Hakkımda
-                </span>
-
-            </a>
-
-            
-
-        </nav>
-
-        <!-- HESAP -->
-
-                <div id="loginMenu">
-    <a href="/login">
-        <i class="fas fa-right-to-bracket"></i>
-        <span>Giriş Yap</span>
-    </a>
-</div>
-
-<div id="logoutMenu" style="display: none;">
-    <a href="#" id="logoutButton">
-        <i class="fas fa-right-from-bracket"></i>
-        <span>Çıkış Yap</span>
-    </a>
-</div>
-
-
-
-    </aside>
-
-
-    <!-- ==================================================
-         ANA İÇERİK
-    ================================================== -->
-
-    <main>
-
-        <section class="services-page">
-
-
-            <!-- BAŞLIK -->
-
-            <div class="services-page-header">
-
-                <div class="services-page-label">
-                    <i class="fas fa-layer-group"></i>
-                    SERVİSLER
-                </div>
-
-                <h1>
-                    Tüm <span>Araçlar.</span>
-                </h1>
-
-                <p>
-                    Kaewayn tarafından sunulan araçlara ve hizmetlere
-                    buradan ulaşabilirsiniz.
-                </p>
-
-            </div>
-
-
-            <!-- ==================================================
-                 3 KUTU
-            ================================================== -->
-
-            <div class="services-page-grid">
-
-
-                <!-- MOBILE LEGENDS -->
-
-                <article class="services-page-card">
-
-                    <span class="services-page-number">
-                        01
-                    </span>
-
-                    <div class="services-page-icon">
-                        <i class="fas fa-gamepad"></i>
-                    </div>
-
-                    <div class="services-page-content">
-
-                        <h2>
-                            Mobile Legends Araçları
-                        </h2>
-
-                        <p>
-                            Mobile Legends için geliştirilmiş
-                            araçlara ve yardımcı sistemlere erişin.
-                        </p>
-
-                        <a
-                            href="/winrate"
-                            class="services-page-link"
-                        >
-                            Araçları Gör
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
-
-                    </div>
-
-                </article>
-
-
-                <!-- SOSYAL MEDYA -->
-
-                <article class="services-page-card">
-
-                    <span class="services-page-number">
-                        02
-                    </span>
-
-                    <div class="services-page-icon">
-                        <i class="fas fa-share-nodes"></i>
-                    </div>
-
-                    <div class="services-page-content">
-
-                        <h2>
-                            Sosyal Medya Araçları
-                        </h2>
-
-                        <p>
-                            Sosyal medya hesaplarınız için
-                            kullanabileceğiniz araçları keşfedin.
-                        </p>
-
-                        <a
-                            href="smm"
-                            class="services-page-link"
-                        >
-                            Araçları Gör
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
-
-                    </div>
-
-                </article>
-
-
-                <!-- DİĞER -->
-
-                <article class="services-page-card">
-
-                    <span class="services-page-number">
-                        03
-                    </span>
-
-                    <div class="services-page-icon">
-                        <i class="fas fa-cubes"></i>
-                    </div>
-
-                    <div class="services-page-content">
-
-                        <h2>
-                            Diğer Araçlar
-                        </h2>
-
-                        <p>
-                            Diğer yardımcı araçlar ve sistemler
-                            burada yer alacak.
-                        </p>
-
-                        <a
-                            href="#"
-                            class="services-page-link"
-                        >
-                            Yakında
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
-
-                    </div>
-
-                </article>
-
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- ==================================================
-         JS
-    ================================================== -->
-
-    <script src="/js/index.js"></script>
-    <script src="/js/toast.js"></script>
-
-    <script type="module" src="/js/auth.js"></script>
-
-    <script type="module">
-
-        import { auth } from "/js/firebase.js";
-        import {
-            signOut
-        } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
-
-        document.addEventListener("DOMContentLoaded", () => {
-
-            const logoutButton =
-                document.getElementById("logoutButton");
-
-
-            if (logoutButton) {
-
-                logoutButton.addEventListener(
-                    "click",
-                    async (event) => {
-
-                        event.preventDefault();
-
-                        await signOut(auth);
-
-                        localStorage.removeItem("username");
-
-                        window.location.href = "/";
-
-                    }
-                );
-
+        <div class="services-bottom-note">
+            <i class="fas fa-shield-halved"></i>
+            <span>Yeni araçlar ve geliştirmeler eklendikçe bu sayfa güncellenecek.</span>
+        </div>
+
+    </section>
+</main>
+
+<script src="/js/index.js"></script>
+<script src="/js/toast.js"></script>
+<script type="module" src="/js/auth.js"></script>
+
+<script type="module">
+    import { auth } from "/js/firebase.js";
+    import { signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const logoutButton = document.getElementById("logoutButton");
+
+        if (!logoutButton) return;
+
+        logoutButton.addEventListener("click", async (event) => {
+            event.preventDefault();
+
+            try {
+                await signOut(auth);
+                localStorage.removeItem("username");
+                window.location.href = "/";
+            } catch (error) {
+                console.error("Çıkış yapılamadı:", error);
             }
-
         });
-
-    </script>
+    });
+</script>
 
 </body>
-
 </html>

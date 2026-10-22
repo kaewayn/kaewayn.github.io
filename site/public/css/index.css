@@ -1331,3 +1331,93 @@ img {
         transform: translateY(-12px);
     }
 }
+
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* MENÜ LİNKLERİNE KUTU TASARIMI */
+.side-menu .menu-link {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.035);
+    box-sizing: border-box;
+}
+
+.side-menu .menu-link:hover {
+    background: rgba(255, 255, 255, 0.09);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* GİRİŞ / ÇIKIŞ KUTUSU */
+.side-menu #loginMenu a,
+.side-menu #logoutMenu a {
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.035);
+}
+
+.side-menu #loginMenu a:hover,
+.side-menu #logoutMenu a:hover {
+    background: rgba(255, 255, 255, 0.09);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+/* ÇIKIŞ BUTONUNU MENÜNÜN ALTINA İNDİR */
+.side-menu #logoutMenu {
+    margin-top: auto !important;
+    padding-top: 24px;
+}
+
+.side-menu {
+    display: flex;
+    flex-direction: column;
+}
+
+.side-menu #logoutMenu {
+    margin-top: auto !important;
+}
+/* Menü ile çıkış butonu arasına boşluk */
+.side-menu #logoutMenu {
+    margin-top: 600px !important;
+}
+/* Çıkış butonunu menü bağlantılarının altına al */
+.side-menu #logoutMenu {
+    display: block;
+    margin-top: 35px !important;
+    margin-bottom: 25px;
+}
+
+/* Menü öğelerinin sırası ve giriş/çıkış hizası */
+.side-menu {
+    display: flex;
+    flex-direction: column;
+}
+
+.side-menu .menu-profile {
+    order: 1;
+}
+
+.side-menu .menu-navigation {
+    order: 2;
+}
+
+.side-menu #loginMenu,
+.side-menu #logoutMenu {
+    order: 3;
+    margin: 60px 0 50px !important;
+}
+/* Menü yüksekliğini içeriğe göre ayarla */
+.side-menu {
+    height: auto !important;
+    max-height: calc(100dvh - 30px);
+    top: 15px;
+    bottom: auto;
+    overflow-y: auto;
+    border-radius: 16px 0 0 16px;
+}

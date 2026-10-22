@@ -747,3 +747,11 @@ body {
 #reset-send:hover::after {
     left: 140%;
 }
+/* MOBİL KLAVYE AÇILINCA OTOMATİK ZOOMU ENGELLE */
+@media screen and (max-width: 768px) {
+    input,
+    textarea,
+    select {
+        font-size: 16px !important;
+    }
+}

@@ -410,3 +410,74 @@ body::after {
     pointer-events: auto !important;
 }
 
+@media (max-width: 768px) {
+    .header {
+        position: relative;
+        z-index: 100;
+    }
+
+    .navbar {
+        z-index: 101;
+    }
+
+    .side-menu {
+        position: fixed;
+        z-index: 10003;
+    }
+
+    .menu-close {
+        position: absolute;
+        z-index: 10004;
+        top: 15px;
+        right: 15px;
+        display: block;
+        cursor: pointer;
+    }
+
+    .menu-overlay {
+        z-index: 10001;
+    }
+}
+
+/* MOBİL ARAÇLAR MENÜSÜ BOYUT KONTROLÜ */
+@media (max-width: 650px) {
+    .tools-menu {
+        width: 280px !important;
+        max-width: calc(100vw - 40px) !important;
+        left: 50% !important;
+        box-sizing: border-box !important;
+    }
+
+    .tools-list {
+        grid-template-columns: 1fr !important;
+        gap: 4px !important;
+    }
+
+    .tool-link {
+        min-height: 36px !important;
+        padding: 4px 7px !important;
+        gap: 7px !important;
+    }
+
+    .tool-icon {
+        width: 24px !important;
+        height: 24px !important;
+        flex: 0 0 24px !important;
+    }
+
+    .tool-name {
+        font-size: 10px !important;
+    }
+
+    .tool-description {
+        font-size: 8px !important;
+    }
+}
+/* MOBİL KLAVYE AÇILINCA OTOMATİK ZOOMU ENGELLE */
+@media screen and (max-width: 768px) {
+    input,
+    textarea,
+    select {
+        font-size: 16px !important;
+    }
+}
