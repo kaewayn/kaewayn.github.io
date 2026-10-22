@@ -1331,3 +1331,6 @@ img {
         transform: translateY(-12px);
     }
 }
+html {
+    font-size: 70%;
+}
