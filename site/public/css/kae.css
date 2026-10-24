@@ -1,0 +1,1676 @@
+
+/* =========================================================
+   KAE WAYN — PERSONAL PAGE
+   Mevcut Kaewayn temasına uyumlu, bağımsız stiller
+   ========================================================= */
+
+:root {
+    --kae-bg: #050505;
+    --kae-panel: rgba(16, 16, 16, .76);
+    --kae-panel-light: rgba(255, 255, 255, .045);
+    --kae-border: rgba(255, 255, 255, .105);
+    --kae-border-soft: rgba(255, 255, 255, .065);
+    --kae-white: #f5f5f5;
+    --kae-muted: #858585;
+    --kae-dim: #505050;
+    --kae-ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+html {
+    scroll-padding-top: 110px;
+}
+
+body {
+    background: var(--kae-bg);
+}
+
+body.kae-loading {
+    overflow: hidden;
+}
+
+.kae-main {
+    position: relative;
+    z-index: 1;
+    overflow: clip;
+}
+
+.kae-main a:focus-visible,
+.kae-footer a:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 5px;
+}
+
+/* Açılış ekranı */
+
+.kae-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    background: #050505;
+    opacity: 1;
+    visibility: visible;
+    transition:
+        opacity .8s ease,
+        visibility .8s ease;
+}
+
+.kae-loader.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.kae-loader-mark {
+    position: relative;
+    width: 76px;
+    height: 76px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 22px;
+    background: rgba(255,255,255,.04);
+    box-shadow: 0 0 70px rgba(255,255,255,.08);
+    animation: kaeLoaderFloat 1.8s ease-in-out infinite;
+}
+
+.kae-loader-mark img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.kae-loader-title {
+    color: #f5f5f5;
+    font-size: 17px;
+    font-weight: 850;
+    letter-spacing: 5px;
+}
+
+.kae-loader-status {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #777;
+    font-size: 11px;
+    letter-spacing: 1.1px;
+}
+
+.kae-loader-dot,
+.kae-live-dot {
+    width: 7px;
+    height: 7px;
+    display: inline-block;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: #eee;
+    box-shadow: 0 0 13px rgba(255,255,255,.55);
+    animation: kaeDotPulse 1.6s ease-in-out infinite;
+}
+
+.kae-loader-track {
+    width: min(230px, 60vw);
+    height: 2px;
+    margin-top: 9px;
+    overflow: hidden;
+    background: rgba(255,255,255,.09);
+}
+
+.kae-loader-track span {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: kaeLoadProgress 2.7s var(--kae-ease) forwards;
+}
+
+.kae-loader-index {
+    position: absolute;
+    bottom: 35px;
+    color: #414141;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+/* Partiküller ve scanline */
+
+.kae-particles {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: .58;
+}
+
+.kae-scanlines {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: .1;
+    background: repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 3px,
+        rgba(255,255,255,.045) 4px
+    );
+    mask-image: linear-gradient(to bottom, #000, transparent 80%);
+}
+
+/* Hero */
+
+.kae-hero {
+    position: relative;
+    min-height: 890px;
+    min-height: min(920px, 100svh);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 155px 24px 125px;
+    isolation: isolate;
+}
+
+.kae-hero::before {
+    content: "";
+    position: absolute;
+    z-index: -2;
+    top: 48%;
+    left: 50%;
+    width: min(900px, 100vw);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(
+        circle,
+        rgba(255,255,255,.065) 0%,
+        rgba(255,255,255,.018) 35%,
+        transparent 70%
+    );
+    filter: blur(20px);
+    pointer-events: none;
+}
+
+.kae-hero-inner {
+    position: relative;
+    z-index: 2;
+    width: min(100%, 1060px);
+    margin: 0 auto;
+    text-align: center;
+}
+
+.kae-eyebrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 11px;
+    color: #929292;
+    font-size: 10px;
+    font-weight: 750;
+    letter-spacing: 2.3px;
+}
+
+.kae-eyebrow-line {
+    width: 36px;
+    height: 1px;
+    background: rgba(255,255,255,.22);
+}
+
+.kae-hero-name-wrap {
+    position: relative;
+    width: fit-content;
+    max-width: 100%;
+    margin: 37px auto 0;
+    overflow: hidden;
+}
+
+.kae-name-ghost {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: -1;
+    color: rgba(255,255,255,.025);
+    font-size: clamp(75px, 16vw, 190px);
+    font-weight: 950;
+    letter-spacing: -.09em;
+    white-space: nowrap;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.kae-hero-name {
+    position: relative;
+    margin: 0;
+    color: #f6f6f6;
+    font-size: clamp(65px, 11vw, 132px);
+    font-weight: 950;
+    line-height: .98;
+    letter-spacing: -.085em;
+    text-wrap: balance;
+    text-shadow: 0 15px 70px rgba(255,255,255,.055);
+}
+
+.kae-hero-name > span:first-child {
+    color: #fff;
+}
+
+.kae-name-muted {
+    color: #858585;
+}
+
+.kae-name-scan {
+    position: absolute;
+    top: -20%;
+    bottom: -20%;
+    left: -45%;
+    width: 25%;
+    pointer-events: none;
+    transform: skewX(-18deg);
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.14),
+        transparent
+    );
+    animation: kaeNameScan 5.5s ease-in-out infinite;
+}
+
+.kae-role-line {
+    min-height: 29px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    margin-top: 26px;
+    color: #bdbdbd;
+    font-size: 14px;
+    font-weight: 650;
+    letter-spacing: 1.5px;
+}
+
+.kae-role-dash {
+    color: #777;
+}
+
+.kae-type-caret {
+    color: #fff;
+    animation: kaeCaretBlink .8s steps(2, start) infinite;
+}
+
+.kae-hero-description {
+    max-width: 530px;
+    margin: 19px auto 0;
+    color: #888;
+    font-size: 15px;
+    line-height: 1.9;
+}
+
+.kae-hero-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+}
+
+.kae-button {
+    position: relative;
+    min-height: 49px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 13px 20px;
+    overflow: hidden;
+    border: 1px solid var(--kae-border);
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 750;
+    transition:
+        transform .3s var(--kae-ease),
+        background .3s ease,
+        border-color .3s ease,
+        box-shadow .3s ease;
+}
+
+.kae-button i {
+    font-size: 11px;
+    transition: transform .3s ease;
+}
+
+.kae-button:hover {
+    transform: translateY(-3px);
+}
+
+.kae-button:hover i {
+    transform: translate(2px, -2px);
+}
+
+.kae-button-primary {
+    color: #050505;
+    background: #f4f4f4;
+    border-color: #f4f4f4;
+    box-shadow: 0 12px 35px rgba(255,255,255,.07);
+}
+
+.kae-button-primary:hover {
+    background: #fff;
+    box-shadow: 0 16px 45px rgba(255,255,255,.14);
+}
+
+.kae-button-secondary {
+    color: #e5e5e5;
+    background: rgba(255,255,255,.035);
+}
+
+.kae-button-secondary:hover {
+    border-color: rgba(255,255,255,.28);
+    background: rgba(255,255,255,.075);
+}
+
+.kae-hero-meta {
+    width: min(690px, 100%);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 64px auto 0;
+    padding-top: 23px;
+    border-top: 1px solid rgba(255,255,255,.085);
+}
+
+.kae-hero-meta > div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+}
+
+.kae-hero-meta > div + div {
+    border-left: 1px solid rgba(255,255,255,.08);
+}
+
+.kae-meta-label {
+    color: #555;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.7px;
+}
+
+.kae-meta-value {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #d1d1d1;
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.kae-meta-value .kae-live-dot {
+    width: 5px;
+    height: 5px;
+}
+
+.kae-scroll-hint {
+    position: absolute;
+    bottom: 27px;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 11px;
+    transform: translateX(-50%);
+}
+
+.kae-scroll-hint span {
+    width: 1px;
+    height: 34px;
+    background: linear-gradient(to bottom, #aaa, transparent);
+    animation: kaeScrollLine 1.8s ease-in-out infinite;
+}
+
+.kae-scroll-hint small {
+    color: #4c4c4c;
+    font-size: 8px;
+    letter-spacing: 2px;
+    white-space: nowrap;
+}
+
+.kae-hero-orbit {
+    position: absolute;
+    z-index: -1;
+    left: 50%;
+    top: 49%;
+    border: 1px solid rgba(255,255,255,.035);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.kae-orbit-one {
+    width: min(700px, 95vw);
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    animation: kaeOrbit 40s linear infinite;
+}
+
+.kae-orbit-two {
+    width: min(1000px, 130vw);
+    aspect-ratio: 1;
+    border-style: dashed;
+    border-color: rgba(255,255,255,.02);
+    transform: translate(-50%, -50%);
+    animation: kaeOrbitReverse 65s linear infinite;
+}
+
+/* Ortak section yapısı */
+
+.kae-section {
+    position: relative;
+    width: min(1180px, calc(100% - 50px));
+    margin: 0 auto;
+    padding: 100px 0;
+    scroll-margin-top: 90px;
+}
+
+.kae-section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 36px;
+}
+
+.kae-section-kicker,
+.kae-mini-label {
+    display: block;
+    color: #777;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.kae-section-heading h2 {
+    margin-top: 12px;
+    color: #f5f5f5;
+    font-size: clamp(36px, 5.4vw, 61px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -.065em;
+}
+
+.kae-section-heading h2 span {
+    color: #737373;
+}
+
+.kae-section-heading > p {
+    max-width: 300px;
+    margin-bottom: 4px;
+    color: #777;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+/* Profil kartları */
+
+.kae-profile-grid {
+    display: grid;
+    grid-template-columns: 1.05fr .95fr;
+    gap: 18px;
+}
+
+.kae-profile-card,
+.kae-info-card,
+.kae-project-card,
+.kae-setup-panel,
+.kae-contact-box {
+    border: 1px solid var(--kae-border-soft);
+    background: linear-gradient(
+        145deg,
+        rgba(255,255,255,.045),
+        rgba(255,255,255,.012) 65%
+    );
+    box-shadow: 0 25px 75px rgba(0,0,0,.2);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+.kae-profile-card {
+    position: relative;
+    min-height: 430px;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    overflow: hidden;
+    border-radius: 24px;
+}
+
+.kae-profile-card::before {
+    content: "";
+    position: absolute;
+    top: -140px;
+    left: 50%;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.06);
+    filter: blur(85px);
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+
+.kae-card-topline,
+.kae-profile-card-footer {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.kae-card-number,
+.kae-card-status {
+    color: #737373;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.kae-card-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.kae-card-status > span {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #eee;
+}
+
+.kae-profile-logo {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    display: grid;
+    place-items: center;
+    margin: 40px auto 27px;
+}
+
+.kae-profile-logo img {
+    position: relative;
+    z-index: 2;
+    width: 95px;
+    height: 95px;
+    object-fit: cover;
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 25px;
+    background: #0b0b0b;
+    box-shadow: 0 15px 55px rgba(0,0,0,.45);
+    animation: kaeLogoFloat 5s ease-in-out infinite;
+}
+
+.kae-logo-ring {
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 50%;
+}
+
+.kae-logo-ring-one {
+    animation: kaeOrbit 24s linear infinite;
+}
+
+.kae-logo-ring-two {
+    inset: 13px;
+    border-style: dashed;
+    border-color: rgba(255,255,255,.075);
+    animation: kaeOrbitReverse 32s linear infinite;
+}
+
+.kae-profile-name {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+.kae-profile-name h3 {
+    margin-top: 7px;
+    color: #f4f4f4;
+    font-size: clamp(28px, 4vw, 39px);
+    font-weight: 900;
+    letter-spacing: -.06em;
+}
+
+.kae-profile-name h3 span {
+    color: #777;
+}
+
+.kae-profile-name p {
+    min-height: 24px;
+    margin-top: 5px;
+    color: #8b8b8b;
+    font-size: 12px;
+    transition: opacity .25s ease, transform .25s ease;
+}
+
+.kae-profile-name p.is-changing {
+    opacity: 0;
+    transform: translateY(5px);
+}
+
+.kae-profile-card-footer {
+    margin-top: auto;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,.075);
+    color: #5e5e5e;
+    font-size: 10px;
+    letter-spacing: .6px;
+}
+
+.kae-profile-card-footer i {
+    color: #aaa;
+}
+
+.kae-profile-side {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 18px;
+}
+
+.kae-info-card {
+    position: relative;
+    min-height: 205px;
+    padding: 25px;
+    overflow: hidden;
+    border-radius: 21px;
+    transition:
+        transform .35s var(--kae-ease),
+        border-color .35s ease,
+        background .35s ease;
+}
+
+.kae-info-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255,255,255,.18);
+    background: rgba(255,255,255,.04);
+}
+
+.kae-info-icon {
+    width: 39px;
+    height: 39px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 21px;
+    border: 1px solid rgba(255,255,255,.09);
+    border-radius: 12px;
+    background: rgba(255,255,255,.045);
+    color: #e9e9e9;
+    font-size: 14px;
+}
+
+.kae-info-card h3 {
+    position: relative;
+    z-index: 1;
+    margin-top: 8px;
+    color: #eee;
+    font-size: 23px;
+    font-weight: 850;
+    letter-spacing: -.04em;
+}
+
+.kae-info-card > p {
+    margin-top: 3px;
+    color: #858585;
+    font-size: 12px;
+}
+
+.kae-card-watermark {
+    position: absolute;
+    right: 17px;
+    bottom: -24px;
+    color: rgba(255,255,255,.035);
+    font-size: 105px;
+    font-weight: 950;
+    line-height: 1;
+    pointer-events: none;
+}
+
+.kae-chip-list {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 13px;
+}
+
+.kae-chip-list span {
+    padding: 6px 9px;
+    border: 1px solid rgba(255,255,255,.09);
+    border-radius: 8px;
+    background: rgba(255,255,255,.025);
+    color: #aaa;
+    font-size: 10px;
+}
+
+/* Projeler */
+
+.kae-project-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.kae-project-card {
+    position: relative;
+    min-height: 310px;
+    display: flex;
+    flex-direction: column;
+    padding: 23px;
+    overflow: hidden;
+    border-radius: 20px;
+    transition:
+        transform .35s var(--kae-ease),
+        border-color .3s ease,
+        background .3s ease;
+}
+
+.kae-project-card::after {
+    content: "";
+    position: absolute;
+    right: -80px;
+    bottom: -100px;
+    width: 180px;
+    height: 180px;
+    border: 1px solid rgba(255,255,255,.055);
+    border-radius: 50%;
+    box-shadow: 0 0 0 20px rgba(255,255,255,.012),
+                0 0 0 40px rgba(255,255,255,.008);
+    pointer-events: none;
+    transition: transform .5s var(--kae-ease);
+}
+
+.kae-project-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(255,255,255,.2);
+    background: linear-gradient(145deg, rgba(255,255,255,.07), rgba(255,255,255,.015));
+}
+
+.kae-project-card:hover::after {
+    transform: scale(1.15);
+}
+
+.kae-project-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.kae-project-index {
+    color: #666;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.6px;
+}
+
+.kae-project-arrow {
+    width: 33px;
+    height: 33px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255,255,255,.09);
+    border-radius: 10px;
+    color: #aaa;
+    font-size: 11px;
+    transition: color .25s ease, background .25s ease;
+}
+
+.kae-project-card:hover .kae-project-arrow {
+    color: #050505;
+    background: #fff;
+}
+
+.kae-project-icon {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    margin-top: 34px;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 14px;
+    background: rgba(255,255,255,.04);
+    color: #f2f2f2;
+    font-size: 18px;
+}
+
+.kae-project-card h3 {
+    margin-top: 23px;
+    color: #eee;
+    font-size: 21px;
+    font-weight: 850;
+    letter-spacing: -.045em;
+}
+
+.kae-project-card p {
+    margin-top: 8px;
+    color: #818181;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.kae-project-tags {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: auto;
+    padding-top: 24px;
+}
+
+.kae-project-tags span {
+    padding: 5px 7px;
+    border: 1px solid rgba(255,255,255,.075);
+    border-radius: 6px;
+    color: #747474;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: .8px;
+}
+
+/* Bilgisayar sistemi */
+
+.kae-setup-panel {
+    padding: 27px;
+    border-radius: 23px;
+}
+
+.kae-setup-panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding-bottom: 23px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.kae-setup-panel-head h3 {
+    margin-top: 7px;
+    color: #eee;
+    font-size: 24px;
+    font-weight: 850;
+    letter-spacing: -.045em;
+}
+
+.kae-setup-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 11px;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 9px;
+    color: #9a9a9a;
+    font-size: 9px;
+    font-weight: 750;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+.kae-hardware-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    padding-top: 20px;
+}
+
+.kae-hardware-item {
+    position: relative;
+    min-width: 0;
+    min-height: 142px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.065);
+    border-radius: 13px;
+    background: rgba(255,255,255,.018);
+    transition:
+        background .25s ease,
+        border-color .25s ease,
+        transform .25s ease;
+}
+
+.kae-hardware-item:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255,255,255,.16);
+    background: rgba(255,255,255,.045);
+}
+
+.kae-hardware-icon {
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 12px;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 9px;
+    color: #d5d5d5;
+    font-size: 12px;
+}
+
+.kae-hardware-label {
+    color: #858585;
+    font-size: 11px;
+}
+
+.kae-hardware-item strong {
+    max-width: 100%;
+    margin-top: 5px;
+    overflow-wrap: anywhere;
+    color: #ddd;
+    font-size: 11px;
+    font-weight: 650;
+}
+
+.kae-hardware-index {
+    position: absolute;
+    top: 13px;
+    right: 12px;
+    color: #4b4b4b;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: .7px;
+}
+
+.kae-setup-note {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 17px;
+    color: #656565;
+    font-size: 11px;
+}
+
+.kae-setup-note i {
+    color: #aaa;
+}
+
+/* İletişim */
+
+.kae-contact-section {
+    padding-top: 90px;
+    padding-bottom: 130px;
+}
+
+.kae-contact-box {
+    position: relative;
+    padding: 75px 30px;
+    overflow: hidden;
+    border-radius: 27px;
+    text-align: center;
+    background:
+        radial-gradient(ellipse at 50% 0%, rgba(255,255,255,.07), transparent 55%),
+        rgba(255,255,255,.015);
+}
+
+.kae-contact-box::before {
+    content: "";
+    position: absolute;
+    top: -180px;
+    left: 50%;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.045);
+    filter: blur(80px);
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+
+.kae-contact-box > * {
+    position: relative;
+    z-index: 1;
+}
+
+.kae-contact-box h2 {
+    margin-top: 15px;
+    color: #f4f4f4;
+    font-size: clamp(43px, 7vw, 75px);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -.075em;
+}
+
+.kae-contact-box h2 span {
+    color: #777;
+}
+
+.kae-contact-box > p {
+    margin-top: 17px;
+    color: #858585;
+    font-size: 13px;
+}
+
+.kae-social-links {
+    width: min(620px, 100%);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin: 32px auto 0;
+}
+
+.kae-social-links a {
+    min-height: 57px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 15px;
+    border: 1px solid rgba(255,255,255,.09);
+    border-radius: 12px;
+    background: rgba(255,255,255,.025);
+    color: #c9c9c9;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: left;
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease;
+}
+
+.kae-social-links a > i:first-child {
+    width: 18px;
+    color: #eee;
+    font-size: 16px;
+    text-align: center;
+}
+
+.kae-social-links a:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255,255,255,.2);
+    background: rgba(255,255,255,.065);
+}
+
+.kae-social-arrow {
+    margin-left: auto;
+    color: #666;
+    font-size: 10px;
+}
+
+/* Footer */
+
+.kae-footer {
+    position: relative;
+    z-index: 1;
+}
+
+.kae-footer-logo {
+    width: 78px;
+    height: 78px;
+    display: grid;
+    place-items: center;
+    margin: 0 auto;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 22px;
+    background: #090909;
+    transition: transform .3s ease, border-color .3s ease;
+}
+
+.kae-footer-logo:hover {
+    transform: translateY(-4px) rotate(-3deg);
+    border-color: rgba(255,255,255,.25);
+}
+
+.kae-footer-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.kae-footer-motto {
+    margin-top: 7px;
+    color: #666;
+    font-size: 12px;
+}
+
+.kae-back-top {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: #777;
+    font-size: 11px;
+    transition: color .25s ease;
+}
+
+.kae-back-top:hover {
+    color: #fff;
+}
+
+.kae-back-top i {
+    transition: transform .25s ease;
+}
+
+.kae-back-top:hover i {
+    transform: translateY(-3px);
+}
+
+/* Scroll ile giriş */
+
+.kae-reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+        opacity .75s var(--kae-ease),
+        transform .75s var(--kae-ease);
+}
+
+.kae-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.kae-profile-grid .kae-reveal:nth-child(2),
+.kae-project-grid .kae-reveal:nth-child(2) {
+    transition-delay: .08s;
+}
+
+.kae-project-grid .kae-reveal:nth-child(3) {
+    transition-delay: .16s;
+}
+
+/* Animasyonlar */
+
+@keyframes kaeLoaderFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+@keyframes kaeLoadProgress {
+    to { transform: scaleX(1); }
+}
+
+@keyframes kaeDotPulse {
+    0%, 100% { opacity: .45; }
+    50% { opacity: 1; }
+}
+
+@keyframes kaeNameScan {
+    0%, 12% { left: -45%; }
+    48%, 100% { left: 125%; }
+}
+
+@keyframes kaeCaretBlink {
+    to { opacity: 0; }
+}
+
+@keyframes kaeOrbit {
+    to { rotate: 360deg; }
+}
+
+@keyframes kaeOrbitReverse {
+    from { rotate: 360deg; }
+    to { rotate: 0deg; }
+}
+
+@keyframes kaeLogoFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
+}
+
+@keyframes kaeScrollLine {
+    0%, 100% { opacity: .35; transform: scaleY(.75); transform-origin: top; }
+    50% { opacity: 1; transform: scaleY(1); transform-origin: top; }
+}
+
+/* Tablet */
+
+@media (max-width: 900px) {
+    .kae-hero {
+        min-height: 830px;
+        min-height: min(900px, 100svh);
+    }
+
+    .kae-section {
+        padding: 82px 0;
+    }
+
+    .kae-profile-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .kae-profile-card {
+        min-height: 410px;
+    }
+
+    .kae-profile-side {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: auto;
+    }
+
+    .kae-info-card {
+        min-height: 210px;
+    }
+
+    .kae-project-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .kae-project-card:last-child {
+        grid-column: 1 / -1;
+        min-height: 280px;
+    }
+
+    .kae-hardware-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Telefon */
+
+@media (max-width: 600px) {
+    .kae-hero {
+        min-height: 760px;
+        min-height: min(820px, 100svh);
+        padding: 130px 19px 100px;
+    }
+
+    .kae-eyebrow {
+        gap: 7px;
+        font-size: 8px;
+        letter-spacing: 1.5px;
+    }
+
+    .kae-hero-name-wrap {
+        margin-top: 32px;
+    }
+
+    .kae-hero-name {
+        font-size: clamp(52px, 12.5vw, 76px);
+        letter-spacing: -.075em;
+    }
+
+    .kae-role-line {
+        margin-top: 22px;
+        font-size: 12px;
+    }
+
+    .kae-hero-description {
+        max-width: 330px;
+        font-size: 13px;
+    }
+
+    .kae-hero-actions {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        margin-top: 26px;
+    }
+
+    .kae-button {
+        width: min(100%, 265px);
+    }
+
+    .kae-hero-meta {
+        gap: 8px;
+        margin-top: 43px;
+        padding-top: 18px;
+    }
+
+    .kae-meta-label {
+        font-size: 7px;
+        letter-spacing: 1px;
+    }
+
+    .kae-meta-value {
+        font-size: 10px;
+    }
+
+    .kae-scroll-hint {
+        bottom: 19px;
+    }
+
+    .kae-section {
+        width: calc(100% - 32px);
+        padding: 68px 0;
+    }
+
+    .kae-section-heading {
+        display: block;
+        margin-bottom: 25px;
+    }
+
+    .kae-section-heading h2 {
+        font-size: clamp(37px, 10vw, 50px);
+    }
+
+    .kae-section-heading > p {
+        margin-top: 13px;
+        font-size: 12px;
+    }
+
+    .kae-profile-card {
+        min-height: 390px;
+        padding: 19px;
+        border-radius: 19px;
+    }
+
+    .kae-profile-logo {
+        width: 135px;
+        height: 135px;
+        margin-top: 34px;
+    }
+
+    .kae-profile-logo img {
+        width: 85px;
+        height: 85px;
+    }
+
+    .kae-profile-side {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .kae-info-card {
+        min-height: 190px;
+        padding: 22px;
+    }
+
+    .kae-project-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .kae-project-card,
+    .kae-project-card:last-child {
+        grid-column: auto;
+        min-height: 285px;
+        padding: 20px;
+    }
+
+    .kae-project-icon {
+        margin-top: 25px;
+    }
+
+    .kae-setup-panel {
+        padding: 17px;
+        border-radius: 18px;
+    }
+
+    .kae-setup-panel-head {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 13px;
+    }
+
+    .kae-setup-panel-head h3 {
+        font-size: 21px;
+    }
+
+    .kae-hardware-grid {
+        gap: 8px;
+        padding-top: 14px;
+    }
+
+    .kae-hardware-item {
+        min-height: 137px;
+        padding: 12px 10px;
+    }
+
+    .kae-hardware-index {
+        top: 10px;
+        right: 8px;
+        font-size: 7px;
+    }
+
+    .kae-hardware-label {
+        font-size: 10px;
+    }
+
+    .kae-hardware-item strong {
+        font-size: 10px;
+    }
+
+    .kae-contact-section {
+        padding-top: 60px;
+        padding-bottom: 85px;
+    }
+
+    .kae-contact-box {
+        padding: 55px 17px;
+        border-radius: 20px;
+    }
+
+    .kae-contact-box h2 {
+        font-size: clamp(42px, 11vw, 59px);
+    }
+
+    .kae-social-links {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        margin-top: 25px;
+    }
+
+    .kae-social-links a {
+        min-height: 52px;
+    }
+
+    .kae-footer .footer-inner {
+        width: calc(100% - 32px);
+    }
+
+    .kae-footer .footer-bottom {
+        gap: 12px;
+    }
+
+    .kae-orbit-two {
+        width: 150vw;
+    }
+}
+
+/* Hareket hassasiyeti */
+
+@media (prefers-reduced-motion: reduce) {
+    .kae-loader *,
+    .kae-hero *,
+    .kae-profile-grid *,
+    .kae-project-grid *,
+    .kae-hardware-item,
+    .kae-info-card,
+    .kae-button,
+    .kae-social-links a,
+    .kae-footer-logo,
+    .kae-back-top {
+        animation: none !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+    }
+
+    .kae-reveal {
+        opacity: 1;
+        transform: none;
+    }
+
+    .kae-name-scan {
+        display: none;
+    }
+}
+
+/* =========================================
+   KAE PROFILE MAIN — PREMIUM HOVER EFFECT
+========================================= */
+
+.kae-profile-main {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    transition:
+        transform .35s cubic-bezier(.22, 1, .36, 1),
+        border-color .35s ease,
+        box-shadow .35s ease,
+        background .35s ease;
+}
+
+/* Kartın içinden geçen yumuşak ışık */
+.kae-profile-main::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(
+        400px circle at var(--kae-mouse-x, 50%) var(--kae-mouse-y, 35%),
+        rgba(255, 255, 255, .105),
+        rgba(255, 255, 255, .025) 38%,
+        transparent 72%
+    );
+    transition: opacity .35s ease;
+}
+
+/* İmlecin konumuna göre kenar ışığı */
+.kae-profile-main::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    padding: 1px;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(
+        280px circle at var(--kae-mouse-x, 50%) var(--kae-mouse-y, 50%),
+        rgba(255, 255, 255, .62),
+        rgba(255, 255, 255, .14) 35%,
+        transparent 75%
+    );
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    transition: opacity .35s ease;
+}
+
+.kae-profile-main:hover {
+    border-color: rgba(255, 255, 255, .22);
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, .38),
+        0 0 35px rgba(255, 255, 255, .035),
+        inset 0 1px 0 rgba(255, 255, 255, .045);
+}
+
+.kae-profile-main:hover::before,
+.kae-profile-main:hover::after {
+    opacity: 1;
+}
+
+/* Logo ve içerik katmanları ışığın altında kalmasın */
+.kae-profile-main > * {
+    position: relative;
+}
+
+/* Profil logosuna hover sırasında parlama */
+.kae-profile-main .kae-profile-logo img {
+    transition:
+        box-shadow .35s ease,
+        border-color .35s ease,
+        transform .35s cubic-bezier(.22, 1, .36, 1);
+}
+
+.kae-profile-main:hover .kae-profile-logo img {
+    border-color: rgba(255, 255, 255, .3);
+    box-shadow:
+        0 0 28px rgba(255, 255, 255, .11),
+        0 15px 55px rgba(0, 0, 0, .5);
+}
+
+/* Dokunmatik cihazlarda gereksiz eğim yok */
+@media (prefers-reduced-motion: reduce) {
+    .kae-profile-main {
+        transform: none !important;
+        transition: none;
+    }
+
+    .kae-profile-main::before,
+    .kae-profile-main::after {
+        display: none;
+    }
+}
+
+/* HERO: Kae Wayn ışık taraması — PC + mobil */
+
+.kae-hero-name-wrap {
+    isolation: isolate;
+}
+
+.kae-hero-name {
+    position: relative;
+    z-index: 1;
+}
+
+.kae-name-scan {
+    z-index: 2;
+    pointer-events: none;
+    animation: kaeNameScan 4s ease-in-out infinite !important;
+    will-change: left, opacity;
+}
+
+@keyframes kaeNameScan {
+    0% {
+        left: -45%;
+        opacity: 0;
+    }
+    12% {
+        opacity: 1;
+    }
+    48% {
+        left: 125%;
+        opacity: 1;
+    }
+    55%, 100% {
+        left: 125%;
+        opacity: 0;
+    }
+}
+
+/* Alt yazı değişirken yumuşak geçiş */
+#kaeRoleText {
+    display: inline-block;
+    min-width: 1ch;
+    transition: opacity .2s ease, transform .2s ease;
+    will-change: opacity, transform;
+}
+
+.kae-type-caret {
+    display: inline-block;
+    animation: kaeCaretBlink .8s steps(2, start) infinite !important;
+}
+
+/* HERO animasyonlarını masaüstünde de etkin tut */
+
+@media (prefers-reduced-motion: reduce) {
+    .kae-name-scan {
+        animation: kaeNameScan 4s ease-in-out infinite !important;
+        animation-duration: 4s !important;
+        animation-iteration-count: infinite !important;
+    }
+
+    .kae-type-caret {
+        animation: kaeCaretBlink .8s steps(2, start) infinite !important;
+        animation-duration: .8s !important;
+        animation-iteration-count: infinite !important;
+    }
+}

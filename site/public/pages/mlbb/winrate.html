@@ -707,6 +707,187 @@ z-index: 1;
 
         }
 
+        
+/* =====================================================
+   CANLI MAÇ TAKİBİ — SADECE WINRATE SAYFASI
+===================================================== */
+
+.live-tracker {
+    width: 100%;
+    max-width: 650px;
+    margin: 28px auto 0;
+    padding: 26px;
+    background: rgba(10, 10, 10, .88);
+    border: 1px solid rgba(255, 255, 255, .13);
+    border-radius: 18px;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, .3);
+    color: #fff;
+}
+
+.live-tracker * {
+    box-sizing: border-box;
+}
+
+.live-tracker h2 {
+    margin: 0 0 8px;
+    font-size: 21px;
+    font-weight: 900;
+}
+
+.live-tracker-description {
+    margin: 0 0 22px;
+    color: rgba(255, 255, 255, .55);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.live-tracker-start {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.live-tracker-field label {
+    display: block;
+    margin-bottom: 7px;
+    color: rgba(255, 255, 255, .7);
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.live-tracker-field input {
+    width: 100%;
+    min-width: 0;
+    height: 44px;
+    padding: 0 12px;
+    background: rgba(255, 255, 255, .05);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, .15);
+    border-radius: 9px;
+    outline: none;
+}
+
+.live-tracker-field input:focus {
+    border-color: rgba(255, 255, 255, .5);
+}
+
+.live-tracker-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 9px;
+    margin-bottom: 20px;
+}
+
+.live-tracker-stat {
+    min-width: 0;
+    padding: 15px 8px;
+    text-align: center;
+    background: rgba(255, 255, 255, .045);
+    border: 1px solid rgba(255, 255, 255, .09);
+    border-radius: 11px;
+}
+
+.live-tracker-stat span {
+    display: block;
+    margin-bottom: 8px;
+    color: rgba(255, 255, 255, .55);
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.live-tracker-stat strong {
+    display: block;
+    overflow-wrap: anywhere;
+    font-size: clamp(17px, 3vw, 23px);
+    font-weight: 900;
+}
+
+.live-tracker-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.live-tracker-button {
+    min-height: 48px;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, .15);
+    border-radius: 10px;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: transform .2s ease, opacity .2s ease;
+}
+
+.live-tracker-button:hover {
+    transform: translateY(-2px);
+}
+
+.live-tracker-button:active {
+    transform: scale(.98);
+}
+
+.live-tracker-win {
+    background: #dfffea;
+    color: #087a40;
+}
+
+.live-tracker-lose {
+    background: #ffe5e5;
+    color: #bd2525;
+}
+
+.live-tracker-secondary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.live-tracker-secondary button {
+    min-height: 40px;
+    background: rgba(255, 255, 255, .045);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: 9px;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.live-tracker button:disabled {
+    opacity: .35;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.live-tracker-message {
+    min-height: 18px;
+    margin: 14px 0 0;
+    color: rgba(255, 255, 255, .55);
+    font-size: 12px;
+    text-align: center;
+}
+
+@media (max-width: 480px) {
+    .live-tracker {
+        padding: 19px;
+    }
+
+    .live-tracker-stats {
+        gap: 6px;
+    }
+
+    .live-tracker-stat {
+        padding: 13px 5px;
+    }
+}
+
+
     </style>
 
 </head>
@@ -1058,6 +1239,11 @@ z-index: 1;
                 </div>
 
             </div>
+
+
+
+
+            
 
 
             <!-- HESAPLAYICI -->

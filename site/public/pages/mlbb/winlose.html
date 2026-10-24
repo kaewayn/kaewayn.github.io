@@ -708,6 +708,114 @@
 
         }
 
+        .mode-switch {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 0 auto 22px;
+}
+
+.mode-button {
+    min-height: 42px;
+    padding: 0 20px;
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 10px;
+    background: rgba(255,255,255,.05);
+    color: rgba(255,255,255,.72);
+    font: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.mode-button.active {
+    background: #fff;
+    color: #111;
+}
+
+.live-tracker[hidden] {
+    display: none !important;
+}
+
+.tracker-hint {
+    color: rgba(255,255,255,.55);
+    font-size: 12px;
+    margin-bottom: 22px;
+}
+
+.tracker-start-grid,
+.tracker-stats,
+.tracker-actions,
+.tracker-secondary-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.tracker-stats {
+    margin-top: 18px;
+}
+
+.tracker-stat {
+    padding: 16px 12px;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 12px;
+    background: rgba(255,255,255,.035);
+    text-align: center;
+}
+
+.tracker-stat span {
+    display: block;
+    color: rgba(255,255,255,.5);
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.tracker-stat strong {
+    display: block;
+    margin-top: 7px;
+    color: #fff;
+    font-size: 26px;
+    font-weight: 900;
+}
+
+.tracker-actions,
+.tracker-secondary-actions {
+    margin-top: 18px;
+}
+
+.tracker-action {
+    min-height: 52px;
+    border: 0;
+    border-radius: 10px;
+    color: #fff;
+    font: inherit;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.win-action {
+    background: #16834b;
+}
+
+.lose-action {
+    background: #b52c3a;
+}
+
+.tracker-secondary-actions .clear-button {
+    margin-top: 0;
+}
+
+@media (max-width: 650px) {
+    .mode-button {
+        padding: 0 14px;
+    }
+
+    .tracker-stat {
+        padding: 13px 8px;
+    }
+}
+
     </style>
 
 </head>
@@ -954,6 +1062,8 @@
 
             </div>
 
+            
+
 
             <!-- =================================================
                  ARAÇLAR
@@ -1087,6 +1197,71 @@
                 </div>
 
             </div>
+
+
+
+            <div class="mode-switch">
+    <button type="button" class="mode-button active" id="winloseMode">
+        <i class="fa-solid fa-calculator"></i>
+        Win Lose Hesaplama
+    </button>
+
+    <button type="button" class="mode-button" id="liveMode">
+        <i class="fa-solid fa-chart-line"></i>
+        Win Lose Oran Takibi
+    </button>
+</div>
+
+
+<section class="calculator live-tracker" id="liveTracker" hidden>
+    <h2>Win Lose Oran Takibi</h2>
+
+    <p class="tracker-hint">
+        Mevcut maç sayını ve Win Rate oranını gir.
+    </p>
+
+    <div class="input-group">
+        <label for="startMatches">Mevcut Maç</label>
+        <input class="input" id="startMatches" type="number" min="0" placeholder="Örn. 0">
+    </div>
+
+    <div class="input-group">
+        <label for="startRate">Mevcut Win Rate (%)</label>
+        <input class="input" id="startRate" type="number" min="0" max="100" step="0.01" placeholder="Örn. 70">
+    </div>
+
+    <button class="clear-button" id="startTracking" type="button">
+        Takibi Başlat
+    </button>
+
+    <div class="tracker-stats">
+        <div class="tracker-stat">
+            <span>TOPLAM MAÇ</span>
+            <strong id="trackerMatches">0</strong>
+        </div>
+        <div class="tracker-stat">
+            <span>WIN RATE</span>
+            <strong id="trackerRate">%0.00</strong>
+        </div>
+        <div class="tracker-stat">
+            <span>WIN</span>
+            <strong id="trackerWins">0</strong>
+        </div>
+        <div class="tracker-stat">
+            <span>LOSE</span>
+            <strong id="trackerLoses">0</strong>
+        </div>
+    </div>
+
+    <div class="tracker-actions">
+        <button class="tracker-action win-action" id="addWin" type="button">
+            +1 Win
+        </button>
+        <button class="tracker-action lose-action" id="addLose" type="button">
+            -1 Lose
+        </button>
+    </div>
+</section>
 
 
             <!-- =================================================
@@ -1520,6 +1695,103 @@
 
             }
         );
+
+
+        // SAYFA GEÇİŞLERİ
+const winloseMode = document.getElementById("winloseMode");
+const liveMode = document.getElementById("liveMode");
+const calculator = document.querySelector(".calculator:not(.live-tracker)");
+const liveTracker = document.getElementById("liveTracker");
+
+winloseMode.addEventListener("click", () => {
+    calculator.hidden = false;
+    liveTracker.hidden = true;
+
+    winloseMode.classList.add("active");
+    liveMode.classList.remove("active");
+});
+
+liveMode.addEventListener("click", () => {
+    calculator.hidden = true;
+    liveTracker.hidden = false;
+
+    liveMode.classList.add("active");
+    winloseMode.classList.remove("active");
+});
+
+// CANLI ORAN TAKİBİ
+const startMatches = document.getElementById("startMatches");
+const startRate = document.getElementById("startRate");
+const startTracking = document.getElementById("startTracking");
+
+const trackerMatches = document.getElementById("trackerMatches");
+const trackerRate = document.getElementById("trackerRate");
+const trackerWins = document.getElementById("trackerWins");
+const trackerLoses = document.getElementById("trackerLoses");
+
+const addWin = document.getElementById("addWin");
+const addLose = document.getElementById("addLose");
+
+let matchCount = 0;
+let winCount = 0;
+let loseCount = 0;
+let trackingStarted = false;
+
+function updateTracker() {
+    trackerMatches.textContent = matchCount.toLocaleString("tr-TR");
+    trackerWins.textContent = winCount.toLocaleString("tr-TR");
+    trackerLoses.textContent = loseCount.toLocaleString("tr-TR");
+
+    const rate = matchCount > 0 ? (winCount / matchCount) * 100 : 0;
+    trackerRate.textContent = "%" + rate.toFixed(2);
+}
+
+startTracking.addEventListener("click", () => {
+    const matches = Number(startMatches.value);
+    const rate = Number(startRate.value);
+
+    if (
+        startMatches.value.trim() === "" ||
+        startRate.value.trim() === "" ||
+        !Number.isInteger(matches) ||
+        matches < 0 ||
+        !Number.isFinite(rate) ||
+        rate < 0 ||
+        rate > 100
+    ) {
+        alert("Lütfen geçerli maç sayısı ve Win Rate gir.");
+        return;
+    }
+
+    matchCount = matches;
+    winCount = Math.round(matches * rate / 100);
+    loseCount = matchCount - winCount;
+    trackingStarted = true;
+
+    updateTracker();
+});
+
+addWin.addEventListener("click", () => {
+    if (!trackingStarted) {
+        alert("Önce mevcut maç ve Win Rate değerlerini girip Takibi Başlat.");
+        return;
+    }
+
+    matchCount++;
+    winCount++;
+    updateTracker();
+});
+
+addLose.addEventListener("click", () => {
+    if (!trackingStarted) {
+        alert("Önce mevcut maç ve Win Rate değerlerini girip Takibi Başlat.");
+        return;
+    }
+
+    matchCount++;
+    loseCount++;
+    updateTracker();
+});
 
     </script>
 

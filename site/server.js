@@ -477,6 +477,22 @@ app.get("/services", (req, res) => {
 });
 
 
+// =========================================================
+// KAE
+// =========================================================
+
+app.get("/kae", (req, res) => {
+
+    res.sendFile(
+        path.join(
+            pagesPath,
+            "kae.html"
+        )
+    );
+
+});
+
+
 
 
 // =========================================================
@@ -538,6 +554,10 @@ app.listen(
 
         console.log(
            `   http://localhost:${PORT}/services`
+        );
+
+        console.log(
+           `   http://localhost:${PORT}/kae`
         );
 
 
