@@ -1,7 +1,6 @@
-
 /* =========================================================
    KAE WAYN — PERSONAL PAGE
-   Mevcut Kaewayn temasına uyumlu, bağımsız stiller
+   Bağımsız stiller
    ========================================================= */
 
 :root {
@@ -54,9 +53,7 @@ body.kae-loading {
     background: #050505;
     opacity: 1;
     visibility: visible;
-    transition:
-        opacity .8s ease,
-        visibility .8s ease;
+    transition: opacity .8s ease, visibility .8s ease;
 }
 
 .kae-loader.is-hidden {
@@ -266,6 +263,8 @@ body.kae-loading {
     color: #858585;
 }
 
+/* Başlığın arkasındaki ışık taraması */
+
 .kae-name-scan {
     position: absolute;
     top: -20%;
@@ -280,8 +279,10 @@ body.kae-loading {
         rgba(255,255,255,.14),
         transparent
     );
-    animation: kaeNameScan 5.5s ease-in-out infinite;
+    animation: kaeNameScan 4s ease-in-out infinite;
 }
+
+/* Alt başlık */
 
 .kae-role-line {
     min-height: 29px;
@@ -468,7 +469,6 @@ body.kae-loading {
     transform: translate(-50%, -50%);
     animation: kaeOrbitReverse 65s linear infinite;
 }
-
 /* Ortak section yapısı */
 
 .kae-section {
@@ -761,110 +761,133 @@ body.kae-loading {
     color: #aaa;
     font-size: 10px;
 }
+/* =========================================================
+   PROJELER
+   ========================================================= */
 
-/* Projeler */
-
-.kae-project-grid {
+.kae-projects-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
 }
 
 .kae-project-card {
     position: relative;
-    min-height: 310px;
+    min-height: 280px;
     display: flex;
     flex-direction: column;
-    padding: 23px;
+    padding: 26px;
     overflow: hidden;
-    border-radius: 20px;
+    border-radius: 22px;
     transition:
-        transform .35s var(--kae-ease),
-        border-color .3s ease,
-        background .3s ease;
-}
-
-.kae-project-card::after {
-    content: "";
-    position: absolute;
-    right: -80px;
-    bottom: -100px;
-    width: 180px;
-    height: 180px;
-    border: 1px solid rgba(255,255,255,.055);
-    border-radius: 50%;
-    box-shadow: 0 0 0 20px rgba(255,255,255,.012),
-                0 0 0 40px rgba(255,255,255,.008);
-    pointer-events: none;
-    transition: transform .5s var(--kae-ease);
+        transform .4s var(--kae-ease),
+        border-color .35s ease,
+        background .35s ease,
+        box-shadow .35s ease;
 }
 
 .kae-project-card:hover {
     transform: translateY(-6px);
     border-color: rgba(255,255,255,.2);
-    background: linear-gradient(145deg, rgba(255,255,255,.07), rgba(255,255,255,.015));
+    background: linear-gradient(
+        145deg,
+        rgba(255,255,255,.06),
+        rgba(255,255,255,.015)
+    );
+    box-shadow: 0 30px 80px rgba(0,0,0,.3);
+}
+
+.kae-project-card::after {
+    content: "";
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.035);
+    filter: blur(65px);
+    pointer-events: none;
+    transition: background .35s ease;
 }
 
 .kae-project-card:hover::after {
-    transform: scale(1.15);
+    background: rgba(255,255,255,.075);
 }
 
 .kae-project-top {
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
+    gap: 15px;
 }
 
 .kae-project-index {
     color: #666;
-    font-size: 9px;
+    font-size: 10px;
     font-weight: 800;
-    letter-spacing: 1.6px;
+    letter-spacing: 1.5px;
 }
 
-.kae-project-arrow {
-    width: 33px;
-    height: 33px;
-    display: grid;
-    place-items: center;
-    border: 1px solid rgba(255,255,255,.09);
-    border-radius: 10px;
-    color: #aaa;
-    font-size: 11px;
-    transition: color .25s ease, background .25s ease;
+.kae-project-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #888;
+    font-size: 10px;
 }
 
-.kae-project-card:hover .kae-project-arrow {
-    color: #050505;
-    background: #fff;
+.kae-project-status::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #ccc;
+    box-shadow: 0 0 10px rgba(255,255,255,.25);
 }
 
 .kae-project-icon {
-    width: 48px;
-    height: 48px;
+    position: relative;
+    z-index: 1;
+    width: 51px;
+    height: 51px;
     display: grid;
     place-items: center;
-    margin-top: 34px;
+    margin-top: 31px;
     border: 1px solid rgba(255,255,255,.1);
-    border-radius: 14px;
+    border-radius: 15px;
     background: rgba(255,255,255,.04);
-    color: #f2f2f2;
-    font-size: 18px;
+    color: #eee;
+    font-size: 20px;
+    transition:
+        transform .35s var(--kae-ease),
+        background .35s ease;
+}
+
+.kae-project-card:hover .kae-project-icon {
+    transform: translateY(-3px) scale(1.04);
+    background: rgba(255,255,255,.08);
 }
 
 .kae-project-card h3 {
-    margin-top: 23px;
-    color: #eee;
-    font-size: 21px;
+    position: relative;
+    z-index: 1;
+    margin-top: 22px;
+    color: #f1f1f1;
+    font-size: clamp(22px, 3vw, 29px);
     font-weight: 850;
-    letter-spacing: -.045em;
+    letter-spacing: -.05em;
 }
 
-.kae-project-card p {
-    margin-top: 8px;
-    color: #818181;
-    font-size: 12px;
+.kae-project-card > p {
+    position: relative;
+    z-index: 1;
+    max-width: 430px;
+    margin-top: 9px;
+    color: #858585;
+    font-size: 13px;
     line-height: 1.8;
 }
 
@@ -874,154 +897,307 @@ body.kae-loading {
     display: flex;
     flex-wrap: wrap;
     gap: 7px;
-    margin-top: auto;
-    padding-top: 24px;
+    margin-top: 19px;
 }
 
 .kae-project-tags span {
-    padding: 5px 7px;
-    border: 1px solid rgba(255,255,255,.075);
-    border-radius: 6px;
-    color: #747474;
-    font-size: 8px;
-    font-weight: 800;
-    letter-spacing: .8px;
+    padding: 6px 9px;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 7px;
+    color: #999;
+    font-size: 10px;
 }
 
-/* Bilgisayar sistemi */
+.kae-project-link {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    width: fit-content;
+    margin-top: auto;
+    padding-top: 25px;
+    color: #ddd;
+    font-size: 12px;
+    font-weight: 750;
+}
+
+.kae-project-link i {
+    font-size: 10px;
+    transition: transform .3s ease;
+}
+
+.kae-project-link:hover i {
+    transform: translate(3px, -3px);
+}
+
+.kae-project-card-wide {
+    grid-column: 1 / -1;
+    min-height: 230px;
+}
+
+/* Proje kartı içi dekoratif ışık */
+
+.kae-project-glow {
+    position: absolute;
+    right: -40px;
+    bottom: -80px;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.025);
+    filter: blur(55px);
+    pointer-events: none;
+}
+
+/* Proje başlığındaki küçük etiket */
+
+.kae-project-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 12px;
+    color: #737373;
+    font-size: 10px;
+    letter-spacing: .5px;
+}
+
+.kae-project-label i {
+    font-size: 10px;
+}
+/* =========================================================
+   SETUP / TEKNOLOJİLER
+   ========================================================= */
+
+.kae-setup-grid {
+    display: grid;
+    grid-template-columns: .9fr 1.1fr;
+    gap: 18px;
+}
 
 .kae-setup-panel {
+    position: relative;
     padding: 27px;
-    border-radius: 23px;
+    overflow: hidden;
+    border-radius: 22px;
 }
 
-.kae-setup-panel-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    padding-bottom: 23px;
-    border-bottom: 1px solid rgba(255,255,255,.08);
-}
-
-.kae-setup-panel-head h3 {
-    margin-top: 7px;
-    color: #eee;
-    font-size: 24px;
+.kae-setup-panel h3 {
+    margin-top: 10px;
+    color: #f1f1f1;
+    font-size: 25px;
     font-weight: 850;
     letter-spacing: -.045em;
 }
 
-.kae-setup-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 9px 11px;
-    border: 1px solid rgba(255,255,255,.1);
-    border-radius: 9px;
-    color: #9a9a9a;
-    font-size: 9px;
-    font-weight: 750;
-    letter-spacing: 1px;
-    white-space: nowrap;
+.kae-setup-panel > p {
+    margin-top: 10px;
+    color: #858585;
+    font-size: 13px;
+    line-height: 1.85;
 }
 
-.kae-hardware-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 10px;
-    padding-top: 20px;
-}
-
-.kae-hardware-item {
-    position: relative;
-    min-width: 0;
-    min-height: 142px;
+.kae-setup-list {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    padding: 15px;
-    overflow: hidden;
-    border: 1px solid rgba(255,255,255,.065);
-    border-radius: 13px;
-    background: rgba(255,255,255,.018);
-    transition:
-        background .25s ease,
-        border-color .25s ease,
-        transform .25s ease;
+    gap: 0;
+    margin-top: 23px;
 }
 
-.kae-hardware-item:hover {
-    transform: translateY(-3px);
+.kae-setup-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+}
+
+.kae-setup-item:last-child {
+    border-bottom: 0;
+}
+
+.kae-setup-item-label {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-width: 0;
+}
+
+.kae-setup-item-label i {
+    width: 31px;
+    height: 31px;
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 10px;
+    background: rgba(255,255,255,.035);
+    color: #c8c8c8;
+    font-size: 12px;
+}
+
+.kae-setup-item-label span {
+    color: #aaa;
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.kae-setup-item-value {
+    color: #eee;
+    font-size: 12px;
+    font-weight: 750;
+    text-align: right;
+}
+
+.kae-setup-item-value small {
+    display: block;
+    margin-top: 4px;
+    color: #686868;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.kae-setup-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.kae-setup-tags span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 11px;
+    border: 1px solid rgba(255,255,255,.085);
+    border-radius: 9px;
+    background: rgba(255,255,255,.025);
+    color: #aaa;
+    font-size: 11px;
+    transition:
+        color .25s ease,
+        border-color .25s ease,
+        background .25s ease;
+}
+
+.kae-setup-tags span:hover {
+    color: #f5f5f5;
+    border-color: rgba(255,255,255,.2);
+    background: rgba(255,255,255,.06);
+}
+
+.kae-setup-tags i {
+    color: #d2d2d2;
+    font-size: 11px;
+}
+
+/* Teknoloji seviyeleri */
+
+.kae-skill-list {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    margin-top: 26px;
+}
+
+.kae-skill-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.kae-skill-head span {
+    color: #c9c9c9;
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.kae-skill-head small {
+    color: #777;
+    font-size: 10px;
+}
+
+.kae-skill-track {
+    height: 4px;
+    overflow: hidden;
+    border-radius: 10px;
+    background: rgba(255,255,255,.08);
+}
+
+.kae-skill-track span {
+    display: block;
+    width: var(--skill-level, 50%);
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #777, #f2f2f2);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1.2s var(--kae-ease);
+}
+
+.kae-skill-list.is-visible .kae-skill-track span {
+    transform: scaleX(1);
+}
+
+/* Genel bilgi kutuları */
+
+.kae-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.kae-stat-card {
+    min-width: 0;
+    padding: 19px 15px;
+    border: 1px solid rgba(255,255,255,.075);
+    border-radius: 15px;
+    background: rgba(255,255,255,.02);
+    transition:
+        transform .3s var(--kae-ease),
+        border-color .3s ease,
+        background .3s ease;
+}
+
+.kae-stat-card:hover {
+    transform: translateY(-4px);
     border-color: rgba(255,255,255,.16);
     background: rgba(255,255,255,.045);
 }
 
-.kae-hardware-icon {
-    width: 30px;
-    height: 30px;
-    display: grid;
-    place-items: center;
-    margin-bottom: 12px;
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 9px;
-    color: #d5d5d5;
-    font-size: 12px;
+.kae-stat-card strong {
+    display: block;
+    color: #f2f2f2;
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 900;
+    letter-spacing: -.06em;
 }
 
-.kae-hardware-label {
-    color: #858585;
-    font-size: 11px;
+.kae-stat-card span {
+    display: block;
+    margin-top: 6px;
+    color: #777;
+    font-size: 10px;
+    line-height: 1.6;
 }
-
-.kae-hardware-item strong {
-    max-width: 100%;
-    margin-top: 5px;
-    overflow-wrap: anywhere;
-    color: #ddd;
-    font-size: 11px;
-    font-weight: 650;
-}
-
-.kae-hardware-index {
-    position: absolute;
-    top: 13px;
-    right: 12px;
-    color: #4b4b4b;
-    font-size: 8px;
-    font-weight: 800;
-    letter-spacing: .7px;
-}
-
-.kae-setup-note {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 17px;
-    color: #656565;
-    font-size: 11px;
-}
-
-.kae-setup-note i {
-    color: #aaa;
-}
-
-/* İletişim */
+/* =========================================================
+   İLETİŞİM
+   ========================================================= */
 
 .kae-contact-section {
-    padding-top: 90px;
-    padding-bottom: 130px;
+    padding-bottom: 120px;
 }
 
 .kae-contact-box {
     position: relative;
-    padding: 75px 30px;
+    padding: clamp(28px, 6vw, 65px);
     overflow: hidden;
-    border-radius: 27px;
+    border-radius: 26px;
     text-align: center;
-    background:
-        radial-gradient(ellipse at 50% 0%, rgba(255,255,255,.07), transparent 55%),
-        rgba(255,255,255,.015);
 }
 
 .kae-contact-box::before {
@@ -1029,11 +1205,11 @@ body.kae-loading {
     position: absolute;
     top: -180px;
     left: 50%;
-    width: 350px;
-    height: 350px;
+    width: 400px;
+    height: 400px;
     border-radius: 50%;
-    background: rgba(255,255,255,.045);
-    filter: blur(80px);
+    background: rgba(255,255,255,.055);
+    filter: blur(100px);
     transform: translateX(-50%);
     pointer-events: none;
 }
@@ -1044,12 +1220,13 @@ body.kae-loading {
 }
 
 .kae-contact-box h2 {
-    margin-top: 15px;
-    color: #f4f4f4;
-    font-size: clamp(43px, 7vw, 75px);
+    max-width: 650px;
+    margin: 15px auto 0;
+    color: #f5f5f5;
+    font-size: clamp(35px, 6vw, 65px);
     font-weight: 900;
-    line-height: 1;
-    letter-spacing: -.075em;
+    line-height: 1.05;
+    letter-spacing: -.065em;
 }
 
 .kae-contact-box h2 span {
@@ -1057,116 +1234,369 @@ body.kae-loading {
 }
 
 .kae-contact-box > p {
-    margin-top: 17px;
-    color: #858585;
-    font-size: 13px;
+    max-width: 480px;
+    margin: 18px auto 0;
+    color: #888;
+    font-size: 14px;
+    line-height: 1.9;
 }
 
-.kae-social-links {
-    width: min(620px, 100%);
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-    margin: 32px auto 0;
-}
-
-.kae-social-links a {
-    min-height: 57px;
+.kae-contact-actions {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 13px 15px;
-    border: 1px solid rgba(255,255,255,.09);
-    border-radius: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 11px;
+    margin-top: 30px;
+}
+
+.kae-contact-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 27px;
+}
+
+.kae-contact-links a {
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 13px;
     background: rgba(255,255,255,.025);
-    color: #c9c9c9;
-    font-size: 12px;
-    font-weight: 700;
-    text-align: left;
+    color: #aaa;
     transition:
-        transform .25s ease,
-        background .25s ease,
-        border-color .25s ease;
+        transform .3s var(--kae-ease),
+        color .3s ease,
+        background .3s ease,
+        border-color .3s ease;
 }
 
-.kae-social-links a > i:first-child {
-    width: 18px;
-    color: #eee;
-    font-size: 16px;
-    text-align: center;
+.kae-contact-links a:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255,255,255,.24);
+    background: rgba(255,255,255,.08);
+    color: #fff;
 }
 
-.kae-social-links a:hover {
-    transform: translateY(-3px);
-    border-color: rgba(255,255,255,.2);
-    background: rgba(255,255,255,.065);
-}
-
-.kae-social-arrow {
-    margin-left: auto;
-    color: #666;
-    font-size: 10px;
-}
-
-/* Footer */
+/* =========================================================
+   FOOTER
+   ========================================================= */
 
 .kae-footer {
     position: relative;
     z-index: 1;
-}
-
-.kae-footer-logo {
-    width: 78px;
-    height: 78px;
-    display: grid;
-    place-items: center;
+    width: min(1180px, calc(100% - 50px));
     margin: 0 auto;
-    overflow: hidden;
-    border: 1px solid rgba(255,255,255,.1);
-    border-radius: 22px;
-    background: #090909;
-    transition: transform .3s ease, border-color .3s ease;
+    padding: 25px 0 30px;
+    border-top: 1px solid rgba(255,255,255,.08);
 }
 
-.kae-footer-logo:hover {
-    transform: translateY(-4px) rotate(-3deg);
-    border-color: rgba(255,255,255,.25);
+.kae-footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
-.kae-footer-logo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.kae-footer-motto {
-    margin-top: 7px;
-    color: #666;
-    font-size: 12px;
-}
-
-.kae-back-top {
+.kae-footer-brand {
     display: inline-flex;
     align-items: center;
-    gap: 9px;
+    gap: 10px;
+    color: #e8e8e8;
+    font-size: 13px;
+    font-weight: 850;
+    letter-spacing: .5px;
+}
+
+.kae-footer-brand img {
+    width: 28px;
+    height: 28px;
+    object-fit: cover;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 8px;
+}
+
+.kae-footer-copy {
+    color: #626262;
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+.kae-footer-links {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 17px;
+}
+
+.kae-footer-links a {
     color: #777;
     font-size: 11px;
     transition: color .25s ease;
 }
 
+.kae-footer-links a:hover {
+    color: #f2f2f2;
+}
+
+/* =========================================================
+   YUKARI ÇIK BUTONU
+   ========================================================= */
+
+.kae-back-top {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    z-index: 100;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255,255,255,.13);
+    border-radius: 14px;
+    background: rgba(15,15,15,.88);
+    color: #eee;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(10px);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    transition:
+        opacity .3s ease,
+        visibility .3s ease,
+        transform .3s var(--kae-ease),
+        background .3s ease;
+}
+
+.kae-back-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
 .kae-back-top:hover {
-    color: #fff;
+    background: rgba(255,255,255,.1);
 }
 
 .kae-back-top i {
-    transition: transform .25s ease;
+    font-size: 13px;
 }
 
-.kae-back-top:hover i {
-    transform: translateY(-3px);
+/* =========================================================
+   GENEL HOVER VE ODAK DURUMLARI
+   ========================================================= */
+
+.kae-main a {
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* Scroll ile giriş */
+.kae-main button {
+    font: inherit;
+}
+
+.kae-main a:focus-visible,
+.kae-main button:focus-visible,
+.kae-back-top:focus-visible {
+    outline: 2px solid rgba(255,255,255,.9);
+    outline-offset: 4px;
+}
+
+.kae-button,
+.kae-project-link,
+.kae-contact-links a,
+.kae-footer-links a,
+.kae-back-top {
+    -webkit-tap-highlight-color: transparent;
+}
+/* =========================================================
+   ANİMASYONLAR
+   ========================================================= */
+
+@keyframes kaeLoaderFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(0);
+    }
+    50% {
+        transform: translateY(-7px) rotate(2deg);
+    }
+}
+
+@keyframes kaeDotPulse {
+    0%, 100% {
+        opacity: .45;
+        transform: scale(.85);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.15);
+    }
+}
+
+@keyframes kaeLoadProgress {
+    0% {
+        transform: scaleX(0);
+    }
+    75% {
+        transform: scaleX(.85);
+    }
+    100% {
+        transform: scaleX(1);
+    }
+}
+
+@keyframes kaeNameScan {
+    0% {
+        left: -45%;
+        opacity: 0;
+    }
+    12% {
+        opacity: 1;
+    }
+    55% {
+        left: 120%;
+        opacity: .8;
+    }
+    56%, 100% {
+        left: 120%;
+        opacity: 0;
+    }
+}
+
+@keyframes kaeCaretBlink {
+    0%, 48% {
+        opacity: 1;
+    }
+    49%, 100% {
+        opacity: 0;
+    }
+}
+
+@keyframes kaeScrollLine {
+    0% {
+        transform: scaleY(.25);
+        transform-origin: top;
+        opacity: .3;
+    }
+    50% {
+        transform: scaleY(1);
+        transform-origin: top;
+        opacity: 1;
+    }
+    51% {
+        transform-origin: bottom;
+    }
+    100% {
+        transform: scaleY(.25);
+        transform-origin: bottom;
+        opacity: .3;
+    }
+}
+
+@keyframes kaeOrbit {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes kaeOrbitReverse {
+    from {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+}
+
+@keyframes kaeLogoFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-7px);
+    }
+}
+
+@keyframes kaeRevealUp {
+    from {
+        opacity: 0;
+        transform: translateY(28px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes kaeRevealScale {
+    from {
+        opacity: 0;
+        transform: scale(.96);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* =========================================================
+   HERO GİRİŞ ANİMASYONLARI
+   ========================================================= */
+
+.kae-hero-inner > * {
+    animation: kaeRevealUp .9s var(--kae-ease) both;
+}
+
+.kae-hero-inner > :nth-child(1) {
+    animation-delay: .12s;
+}
+
+.kae-hero-inner > :nth-child(2) {
+    animation-delay: .22s;
+}
+
+.kae-hero-inner > :nth-child(3) {
+    animation-delay: .34s;
+}
+
+.kae-hero-inner > :nth-child(4) {
+    animation-delay: .44s;
+}
+
+.kae-hero-inner > :nth-child(5) {
+    animation-delay: .54s;
+}
+
+.kae-hero-inner > :nth-child(6) {
+    animation-delay: .64s;
+}
+
+/* İsim taraması masaüstünde de görünür */
+
+.kae-name-scan {
+    display: block !important;
+    animation: kaeNameScan 4s ease-in-out infinite !important;
+    will-change: left, opacity;
+}
+
+/* Açılış ekranı kapandığında içerik etkileşime açık kalsın */
+
+.kae-loader.is-hidden {
+    pointer-events: none;
+}
+
+/* Scroll ile görünen öğeler */
 
 .kae-reveal {
     opacity: 0;
@@ -1181,496 +1611,1066 @@ body.kae-loading {
     transform: translateY(0);
 }
 
-.kae-profile-grid .kae-reveal:nth-child(2),
-.kae-project-grid .kae-reveal:nth-child(2) {
-    transition-delay: .08s;
+/* JavaScript tarafından görünür yapılmayan öğeleri kilitleme */
+
+.kae-reveal:not([data-kae-reveal]) {
+    opacity: 1;
+    transform: none;
 }
 
-.kae-project-grid .kae-reveal:nth-child(3) {
-    transition-delay: .16s;
+/* =========================================================
+   MASAÜSTÜ HOVER EFEKTLERİ
+   ========================================================= */
+
+@media (hover: hover) and (pointer: fine) {
+    .kae-profile-card,
+    .kae-info-card,
+    .kae-project-card,
+    .kae-setup-panel,
+    .kae-contact-box {
+        transition:
+            transform .35s var(--kae-ease),
+            border-color .35s ease,
+            box-shadow .35s ease,
+            background .35s ease;
+    }
+
+    .kae-profile-card:hover,
+    .kae-setup-panel:hover {
+        border-color: rgba(255,255,255,.16);
+        box-shadow: 0 30px 90px rgba(0,0,0,.32);
+    }
+
+    .kae-button:active {
+        transform: translateY(-1px) scale(.985);
+    }
 }
 
-/* Animasyonlar */
+/* Hareketli öğelerde daha akıcı render */
 
-@keyframes kaeLoaderFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
+.kae-name-scan,
+.kae-orbit-one,
+.kae-orbit-two,
+.kae-profile-logo img,
+.kae-logo-ring,
+.kae-loader-mark {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
+/* =========================================================
+   TABLET
+   ========================================================= */
 
-@keyframes kaeLoadProgress {
-    to { transform: scaleX(1); }
-}
-
-@keyframes kaeDotPulse {
-    0%, 100% { opacity: .45; }
-    50% { opacity: 1; }
-}
-
-@keyframes kaeNameScan {
-    0%, 12% { left: -45%; }
-    48%, 100% { left: 125%; }
-}
-
-@keyframes kaeCaretBlink {
-    to { opacity: 0; }
-}
-
-@keyframes kaeOrbit {
-    to { rotate: 360deg; }
-}
-
-@keyframes kaeOrbitReverse {
-    from { rotate: 360deg; }
-    to { rotate: 0deg; }
-}
-
-@keyframes kaeLogoFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-7px); }
-}
-
-@keyframes kaeScrollLine {
-    0%, 100% { opacity: .35; transform: scaleY(.75); transform-origin: top; }
-    50% { opacity: 1; transform: scaleY(1); transform-origin: top; }
-}
-
-/* Tablet */
-
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
     .kae-hero {
-        min-height: 830px;
-        min-height: min(900px, 100svh);
+        min-height: min(850px, 100svh);
+        padding-top: 135px;
+        padding-bottom: 110px;
     }
 
     .kae-section {
-        padding: 82px 0;
+        width: min(100% - 40px, 950px);
+        padding-top: 80px;
+        padding-bottom: 80px;
     }
 
     .kae-profile-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
     }
 
     .kae-profile-card {
         min-height: 410px;
+        padding: 21px;
     }
 
     .kae-profile-side {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        grid-template-rows: auto;
+        gap: 14px;
     }
 
     .kae-info-card {
-        min-height: 210px;
+        padding: 21px;
     }
 
-    .kae-project-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+    .kae-setup-grid {
+        grid-template-columns: 1fr 1fr;
     }
 
-    .kae-project-card:last-child {
-        grid-column: 1 / -1;
-        min-height: 280px;
-    }
-
-    .kae-hardware-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-/* Telefon */
-
-@media (max-width: 600px) {
-    .kae-hero {
-        min-height: 760px;
-        min-height: min(820px, 100svh);
-        padding: 130px 19px 100px;
-    }
-
-    .kae-eyebrow {
-        gap: 7px;
-        font-size: 8px;
-        letter-spacing: 1.5px;
-    }
-
-    .kae-hero-name-wrap {
-        margin-top: 32px;
-    }
-
-    .kae-hero-name {
-        font-size: clamp(52px, 12.5vw, 76px);
-        letter-spacing: -.075em;
-    }
-
-    .kae-role-line {
-        margin-top: 22px;
-        font-size: 12px;
-    }
-
-    .kae-hero-description {
-        max-width: 330px;
-        font-size: 13px;
-    }
-
-    .kae-hero-actions {
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        margin-top: 26px;
-    }
-
-    .kae-button {
-        width: min(100%, 265px);
+    .kae-project-card {
+        padding: 23px;
     }
 
     .kae-hero-meta {
-        gap: 8px;
+        margin-top: 50px;
+    }
+}
+
+/* =========================================================
+   MOBİL
+   ========================================================= */
+
+@media (max-width: 767px) {
+    .kae-hero {
+        min-height: 760px;
+        min-height: min(820px, 100svh);
+        padding: 125px 20px 105px;
+    }
+
+    .kae-hero::before {
+        width: 120vw;
+        opacity: .75;
+    }
+
+    .kae-hero-name-wrap {
+        margin-top: 30px;
+    }
+
+    .kae-hero-name {
+        font-size: clamp(55px, 13vw, 90px);
+        letter-spacing: -.075em;
+    }
+
+    .kae-name-ghost {
+        font-size: clamp(65px, 17vw, 125px);
+    }
+
+    .kae-role-line {
+        min-height: 26px;
+        gap: 7px;
+        margin-top: 22px;
+        font-size: 12px;
+        letter-spacing: 1px;
+    }
+
+    .kae-hero-description {
+        max-width: 420px;
+        margin-top: 15px;
+        font-size: 13px;
+        line-height: 1.8;
+    }
+
+    .kae-hero-actions {
+        gap: 9px;
+        margin-top: 25px;
+    }
+
+    .kae-button {
+        min-height: 45px;
+        gap: 9px;
+        padding: 11px 15px;
+        border-radius: 11px;
+        font-size: 12px;
+    }
+
+    .kae-hero-meta {
         margin-top: 43px;
         padding-top: 18px;
     }
 
     .kae-meta-label {
-        font-size: 7px;
+        font-size: 8px;
         letter-spacing: 1px;
     }
 
     .kae-meta-value {
+        gap: 5px;
         font-size: 10px;
     }
 
     .kae-scroll-hint {
-        bottom: 19px;
+        bottom: 18px;
+    }
+
+    .kae-scroll-hint span {
+        height: 25px;
+    }
+
+    .kae-orbit-one {
+        width: 95vw;
+    }
+
+    .kae-orbit-two {
+        width: 125vw;
     }
 
     .kae-section {
-        width: calc(100% - 32px);
-        padding: 68px 0;
+        width: calc(100% - 36px);
+        padding-top: 65px;
+        padding-bottom: 65px;
     }
 
     .kae-section-heading {
-        display: block;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 13px;
         margin-bottom: 25px;
     }
 
     .kae-section-heading h2 {
-        font-size: clamp(37px, 10vw, 50px);
+        font-size: clamp(34px, 9vw, 48px);
     }
 
     .kae-section-heading > p {
-        margin-top: 13px;
+        max-width: 450px;
         font-size: 12px;
     }
 
+    .kae-profile-grid {
+        grid-template-columns: 1fr;
+        gap: 13px;
+    }
+
     .kae-profile-card {
-        min-height: 390px;
-        padding: 19px;
-        border-radius: 19px;
+        min-height: 400px;
+        padding: 21px;
+        border-radius: 20px;
     }
 
     .kae-profile-logo {
         width: 135px;
         height: 135px;
-        margin-top: 34px;
+        margin-top: 35px;
+        margin-bottom: 24px;
     }
 
     .kae-profile-logo img {
         width: 85px;
         height: 85px;
+        border-radius: 22px;
+    }
+
+    .kae-profile-side {
+        grid-template-rows: auto;
+        grid-template-columns: 1fr 1fr;
+        gap: 13px;
+    }
+
+    .kae-info-card {
+        min-height: 195px;
+        padding: 17px;
+        border-radius: 17px;
+    }
+
+    .kae-info-icon {
+        width: 35px;
+        height: 35px;
+        margin-bottom: 17px;
+    }
+
+    .kae-info-card h3 {
+        font-size: 20px;
+    }
+
+    .kae-info-card > p {
+        font-size: 11px;
+        line-height: 1.7;
+    }
+
+    .kae-chip-list {
+        gap: 5px;
+    }
+
+    .kae-chip-list span {
+        padding: 5px 7px;
+        font-size: 9px;
+    }
+
+    .kae-projects-grid {
+        grid-template-columns: 1fr;
+        gap: 13px;
+    }
+
+    .kae-project-card {
+        min-height: 265px;
+        padding: 21px;
+        border-radius: 19px;
+    }
+
+    .kae-project-card-wide {
+        grid-column: auto;
+        min-height: 265px;
+    }
+
+    .kae-project-card h3 {
+        font-size: 25px;
+    }
+
+    .kae-project-card > p {
+        font-size: 12px;
+    }
+
+    .kae-setup-grid {
+        grid-template-columns: 1fr;
+        gap: 13px;
+    }
+
+    .kae-setup-panel {
+        padding: 22px;
+        border-radius: 19px;
+    }
+
+    .kae-setup-panel h3 {
+        font-size: 23px;
+    }
+
+    .kae-setup-item {
+        gap: 10px;
+    }
+
+    .kae-setup-item-label span,
+    .kae-setup-item-value {
+        font-size: 11px;
+    }
+
+    .kae-stat-grid {
+        gap: 8px;
+    }
+
+    .kae-stat-card {
+        padding: 15px 11px;
+        border-radius: 12px;
+    }
+
+    .kae-stat-card strong {
+        font-size: 24px;
+    }
+
+    .kae-stat-card span {
+        font-size: 9px;
+    }
+
+    .kae-contact-section {
+        padding-bottom: 75px;
+    }
+
+    .kae-contact-box {
+        padding: 32px 20px;
+        border-radius: 21px;
+    }
+
+    .kae-contact-box h2 {
+        font-size: clamp(34px, 9vw, 48px);
+    }
+
+    .kae-contact-box > p {
+        font-size: 12px;
+    }
+
+    .kae-footer {
+        width: calc(100% - 36px);
+        padding-top: 22px;
+        padding-bottom: 25px;
+    }
+
+    .kae-footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .kae-footer-links {
+        gap: 14px;
+    }
+
+    .kae-back-top {
+        right: 16px;
+        bottom: 16px;
+        width: 42px;
+        height: 42px;
+    }
+}
+
+/* =========================================================
+   DAR MOBİL EKRANLAR
+   ========================================================= */
+
+@media (max-width: 380px) {
+    .kae-hero {
+        padding-right: 14px;
+        padding-left: 14px;
+    }
+
+    .kae-hero-name {
+        font-size: 52px;
+    }
+
+    .kae-hero-actions {
+        gap: 7px;
+    }
+
+    .kae-button {
+        padding-right: 11px;
+        padding-left: 11px;
+        font-size: 11px;
+    }
+
+    .kae-hero-meta {
+        width: 100%;
     }
 
     .kae-profile-side {
         grid-template-columns: 1fr;
-        gap: 12px;
     }
 
     .kae-info-card {
-        min-height: 190px;
-        padding: 22px;
+        min-height: 175px;
     }
 
-    .kae-project-grid {
+    .kae-stat-grid {
         grid-template-columns: 1fr;
-        gap: 12px;
+    }
+}
+/* =========================================================
+   HAREKET TERCİHLERİ VE ANİMASYON KONTROLÜ
+   ========================================================= */
+
+/*
+  İşletim sistemi reduced-motion ayarı açık olsa bile
+  temel görsel tarama efektini görünür tut.
+*/
+
+@media (prefers-reduced-motion: reduce) {
+    .kae-name-scan {
+        display: block !important;
+        opacity: 1;
+        animation: kaeNameScan 4s ease-in-out infinite !important;
     }
 
+    .kae-orbit-one,
+    .kae-orbit-two {
+        animation-duration: 40s;
+    }
+
+    .kae-loader-mark,
+    .kae-loader-dot,
+    .kae-live-dot {
+        animation-duration: 2.5s;
+    }
+
+    .kae-scroll-hint span {
+        animation-duration: 2.5s;
+    }
+
+    .kae-reveal {
+        transition-duration: .2s;
+    }
+}
+
+/* =========================================================
+   JAVASCRIPT DURUMLARI
+   ========================================================= */
+
+html.kae-js-ready .kae-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.kae-main.is-ready .kae-hero-inner {
+    visibility: visible;
+}
+
+/* Tarayıcı desteği olan cihazlarda kaydırma davranışı */
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Sayfa yüklenirken yatay taşmayı önle */
+
+html,
+body {
+    max-width: 100%;
+    overflow-x: clip;
+}
+
+/* Görsellerin yüklenirken taşmasını önle */
+
+.kae-main img {
+    max-width: 100%;
+}
+
+/* Animasyonlu metinler */
+
+#kaeRoleText,
+#kaeRotatingText {
+    overflow-wrap: anywhere;
+}
+
+/* Parçacık katmanı içerikle etkileşmesin */
+
+#kaeParticles {
+    pointer-events: none;
+}
+
+/* Yükleyici açıkken sayfanın arka planda kaymasını engelle */
+
+body.kae-loading {
+    overflow: hidden;
+    overscroll-behavior: none;
+}
+
+/* Mobil dokunma geri bildirimleri */
+
+@media (hover: none) {
+    .kae-info-card:hover,
+    .kae-project-card:hover,
+    .kae-stat-card:hover,
+    .kae-setup-tags span:hover {
+        transform: none;
+    }
+
+    .kae-button:hover {
+        transform: none;
+    }
+}
+
+/* =========================================================
+   SON GÜVENLİK VE GÖRÜNÜRLÜK KURALLARI
+   ========================================================= */
+
+.kae-loader[hidden] {
+    display: none !important;
+}
+
+.kae-back-top.is-visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.kae-name-scan {
+    pointer-events: none;
+    will-change: left, opacity;
+}
+
+.kae-hero,
+.kae-section,
+.kae-footer {
+    isolation: isolate;
+}
+/* =========================================================
+   SON DÜZENLEMELER
+   ========================================================= */
+
+/* Başlık ve metinlerin taşmasını önle */
+.kae-hero-inner,
+.kae-section-heading,
+.kae-profile-card,
+.kae-info-card,
+.kae-project-card,
+.kae-setup-panel,
+.kae-contact-box {
+    min-width: 0;
+}
+
+/* Büyük ekranlarda içerik genişliğini dengede tut */
+@media (min-width: 1440px) {
+    .kae-hero-inner {
+        max-width: 1120px;
+    }
+
+    .kae-section {
+        width: min(1180px, calc(100% - 80px));
+    }
+}
+
+/* Çok küçük ekranlarda metin ve boşlukları dengede tut */
+@media (max-width: 360px) {
+    .kae-section {
+        width: calc(100% - 28px);
+    }
+
+    .kae-profile-card,
     .kae-project-card,
-    .kae-project-card:last-child {
-        grid-column: auto;
-        min-height: 285px;
-        padding: 20px;
-    }
-
-    .kae-project-icon {
-        margin-top: 25px;
-    }
-
     .kae-setup-panel {
         padding: 17px;
-        border-radius: 18px;
+    }
+
+    .kae-hero-name {
+        font-size: 47px;
+    }
+
+    .kae-role-line {
+        font-size: 11px;
+    }
+}
+
+/* Hareketli efektlerin çizim alanını sınırla */
+.kae-hero-orbit,
+.kae-name-scan,
+.kae-logo-ring {
+    pointer-events: none;
+}
+
+/* Klavye odağı görünür olsun */
+.kae-main a:focus-visible,
+.kae-main button:focus-visible,
+.kae-footer a:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 4px;
+}
+
+/* DONANIM KARTLARI — HTML sınıflarıyla eşleşen stiller */
+.kae-setup-panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-bottom: 24px;
+}
+
+.kae-setup-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 12px;
+    border: 1px solid rgba(255,255,255,.09);
+    border-radius: 10px;
+    color: #aaa;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.kae-hardware-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.kae-hardware-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 38px minmax(0, 1fr);
+    align-items: center;
+    column-gap: 12px;
+    row-gap: 5px;
+    min-width: 0;
+    padding: 15px;
+    border: 1px solid rgba(255,255,255,.075);
+    border-radius: 13px;
+    background: rgba(255,255,255,.025);
+    transition: border-color .25s ease, background .25s ease,
+                transform .25s ease;
+}
+
+.kae-hardware-item:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255,255,255,.17);
+    background: rgba(255,255,255,.045);
+}
+
+.kae-hardware-icon {
+    grid-row: span 2;
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255,255,255,.09);
+    border-radius: 11px;
+    background: rgba(255,255,255,.04);
+    color: #eee;
+}
+
+.kae-hardware-label {
+    color: #888;
+    font-size: 11px;
+}
+
+.kae-hardware-item strong {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    color: #eee;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.kae-hardware-index {
+    grid-column: 2;
+    color: #555;
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
+.kae-setup-note {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    color: #777;
+    font-size: 11px;
+}
+
+.kae-setup-note i {
+    color: #aaa;
+}
+
+@media (max-width: 600px) {
+    .kae-hardware-grid {
+        grid-template-columns: 1fr;
     }
 
     .kae-setup-panel-head {
         align-items: flex-start;
         flex-direction: column;
-        gap: 13px;
-    }
-
-    .kae-setup-panel-head h3 {
-        font-size: 21px;
-    }
-
-    .kae-hardware-grid {
-        gap: 8px;
-        padding-top: 14px;
-    }
-
-    .kae-hardware-item {
-        min-height: 137px;
-        padding: 12px 10px;
-    }
-
-    .kae-hardware-index {
-        top: 10px;
-        right: 8px;
-        font-size: 7px;
-    }
-
-    .kae-hardware-label {
-        font-size: 10px;
-    }
-
-    .kae-hardware-item strong {
-        font-size: 10px;
-    }
-
-    .kae-contact-section {
-        padding-top: 60px;
-        padding-bottom: 85px;
-    }
-
-    .kae-contact-box {
-        padding: 55px 17px;
-        border-radius: 20px;
-    }
-
-    .kae-contact-box h2 {
-        font-size: clamp(42px, 11vw, 59px);
-    }
-
-    .kae-social-links {
-        grid-template-columns: 1fr;
-        gap: 8px;
-        margin-top: 25px;
-    }
-
-    .kae-social-links a {
-        min-height: 52px;
-    }
-
-    .kae-footer .footer-inner {
-        width: calc(100% - 32px);
-    }
-
-    .kae-footer .footer-bottom {
-        gap: 12px;
-    }
-
-    .kae-orbit-two {
-        width: 150vw;
     }
 }
 
-/* Hareket hassasiyeti */
+/* ==========================================
+   PROJELER — MASAÜSTÜ VE MOBİL DÜZENİ
+   HTML sınıfı: kae-project-grid
+   ========================================== */
 
-@media (prefers-reduced-motion: reduce) {
-    .kae-loader *,
-    .kae-hero *,
-    .kae-profile-grid *,
-    .kae-project-grid *,
-    .kae-hardware-item,
-    .kae-info-card,
-    .kae-button,
-    .kae-social-links a,
-    .kae-footer-logo,
-    .kae-back-top {
-        animation: none !important;
-        scroll-behavior: auto !important;
-        transition-duration: .01ms !important;
-    }
+.kae-main .kae-project-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 18px !important;
+    align-items: stretch;
+}
 
-    .kae-reveal {
-        opacity: 1;
-        transform: none;
-    }
+.kae-main .kae-project-grid > .kae-project-card {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    min-height: 280px;
+    grid-column: auto;
+}
 
-    .kae-name-scan {
-        display: none;
+@media (min-width: 901px) {
+    .kae-main .kae-project-grid > .kae-project-card:last-child {
+        grid-column: auto;
     }
 }
 
-/* =========================================
-   KAE PROFILE MAIN — PREMIUM HOVER EFFECT
-========================================= */
+@media (max-width: 900px) {
+    .kae-main .kae-project-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 12px !important;
+    }
+}
 
-.kae-profile-main {
-    position: relative;
-    isolation: isolate;
+@media (max-width: 600px) {
+    .kae-main .kae-project-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    .kae-main .kae-project-grid > .kae-project-card {
+        min-height: 250px;
+    }
+}
+
+/* ==========================================
+   İLETİŞİM — SOSYAL BAĞLANTILAR
+   ========================================== */
+
+.kae-main .kae-contact-box {
+    text-align: center;
+}
+
+.kae-main .kae-social-links {
+    width: min(620px, 100%);
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    margin: 28px auto 0 !important;
+}
+
+.kae-main .kae-social-links > a {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    min-height: 54px;
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 13px 15px;
+    border: 1px solid rgba(255, 255, 255, .09);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, .025);
+    color: #ddd;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    text-align: left;
+    transition: background .25s ease, border-color .25s ease,
+                transform .25s ease;
+}
+
+.kae-main .kae-social-links > a:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, .2);
+    background: rgba(255, 255, 255, .065);
+}
+
+.kae-main .kae-social-links > a > i:first-child {
+    flex: 0 0 18px;
+    width: 18px;
+    color: #eee;
+    font-size: 16px;
+    text-align: center;
+}
+
+.kae-main .kae-social-links > a > span {
+    min-width: 0;
+}
+
+.kae-main .kae-social-links .kae-social-arrow {
+    flex: 0 0 auto;
+    margin-left: auto;
+    color: #777;
+    font-size: 10px;
+}
+
+@media (max-width: 600px) {
+    .kae-main .kae-social-links {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+}
+
+/* ==========================================
+   KAE FOOTER — BOYUT VE YERLEŞİM DÜZELTMESİ
+   ========================================== */
+
+footer.kae-footer {
+    width: 100%;
+    margin: 0;
+    padding: 35px 24px 18px;
     overflow: hidden;
-    transform-style: preserve-3d;
-    transition:
-        transform .35s cubic-bezier(.22, 1, .36, 1),
-        border-color .35s ease,
-        box-shadow .35s ease,
-        background .35s ease;
+    background: transparent;
 }
 
-/* Kartın içinden geçen yumuşak ışık */
-.kae-profile-main::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    opacity: 0;
-    background: radial-gradient(
-        400px circle at var(--kae-mouse-x, 50%) var(--kae-mouse-y, 35%),
-        rgba(255, 255, 255, .105),
-        rgba(255, 255, 255, .025) 38%,
-        transparent 72%
-    );
-    transition: opacity .35s ease;
+footer.kae-footer .footer-inner {
+    width: min(100%, 1100px);
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
 }
 
-/* İmlecin konumuna göre kenar ışığı */
-.kae-profile-main::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 5;
-    padding: 1px;
+footer.kae-footer .footer-brand {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-align: center;
+}
+
+/* Profil görselinin devleşmesini engelle */
+footer.kae-footer .kae-footer-logo {
+    width: 52px !important;
+    height: 52px !important;
+    min-width: 52px;
+    max-width: 52px;
+    display: block;
+    flex: 0 0 52px;
+    margin: 0 auto 5px;
+    overflow: hidden;
+    border-radius: 14px;
+}
+
+footer.kae-footer .kae-footer-logo img {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: cover;
     border-radius: inherit;
-    pointer-events: none;
-    opacity: 0;
-    background: radial-gradient(
-        280px circle at var(--kae-mouse-x, 50%) var(--kae-mouse-y, 50%),
-        rgba(255, 255, 255, .62),
-        rgba(255, 255, 255, .14) 35%,
-        transparent 75%
-    );
-    -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    transition: opacity .35s ease;
 }
 
-.kae-profile-main:hover {
-    border-color: rgba(255, 255, 255, .22);
-    box-shadow:
-        0 25px 80px rgba(0, 0, 0, .38),
-        0 0 35px rgba(255, 255, 255, .035),
-        inset 0 1px 0 rgba(255, 255, 255, .045);
+footer.kae-footer .footer-brand h2 {
+    margin: 0;
+    color: #f1f1f1;
+    font-size: 16px;
+    line-height: 1.4;
+    font-weight: 800;
 }
 
-.kae-profile-main:hover::before,
-.kae-profile-main:hover::after {
+footer.kae-footer .kae-footer-motto {
+    margin: 0;
+    color: #777;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+footer.kae-footer .footer-social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 8px;
+}
+
+footer.kae-footer .footer-social a {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 36px;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 10px;
+    background: rgba(255,255,255,.025);
+    color: #aaa;
+    font-size: 13px;
+    text-decoration: none;
+    transition: background .2s ease, color .2s ease,
+                border-color .2s ease, transform .2s ease;
+}
+
+footer.kae-footer .footer-social a:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255,255,255,.22);
+    background: rgba(255,255,255,.07);
+    color: #fff;
+}
+
+footer.kae-footer .footer-bottom {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255,255,255,.08);
+    color: #555;
+    font-size: 10px;
+}
+
+footer.kae-footer .footer-bottom .kae-back-top {
+    position: static;
+    width: auto;
+    height: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #777;
     opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: none;
+    font-size: 10px;
 }
 
-/* Logo ve içerik katmanları ışığın altında kalmasın */
-.kae-profile-main > * {
-    position: relative;
+footer.kae-footer .footer-bottom .kae-back-top:hover {
+    color: #fff;
 }
 
-/* Profil logosuna hover sırasında parlama */
-.kae-profile-main .kae-profile-logo img {
-    transition:
-        box-shadow .35s ease,
-        border-color .35s ease,
-        transform .35s cubic-bezier(.22, 1, .36, 1);
-}
-
-.kae-profile-main:hover .kae-profile-logo img {
-    border-color: rgba(255, 255, 255, .3);
-    box-shadow:
-        0 0 28px rgba(255, 255, 255, .11),
-        0 15px 55px rgba(0, 0, 0, .5);
-}
-
-/* Dokunmatik cihazlarda gereksiz eğim yok */
-@media (prefers-reduced-motion: reduce) {
-    .kae-profile-main {
-        transform: none !important;
-        transition: none;
+@media (max-width: 600px) {
+    footer.kae-footer {
+        padding: 28px 18px 15px;
     }
 
-    .kae-profile-main::before,
-    .kae-profile-main::after {
-        display: none;
+    footer.kae-footer .footer-inner {
+        gap: 20px;
+    }
+
+    footer.kae-footer .footer-bottom {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
     }
 }
-
-/* HERO: Kae Wayn ışık taraması — PC + mobil */
-
-.kae-hero-name-wrap {
-    isolation: isolate;
-}
-
-.kae-hero-name {
-    position: relative;
-    z-index: 1;
-}
-
-.kae-name-scan {
-    z-index: 2;
-    pointer-events: none;
-    animation: kaeNameScan 4s ease-in-out infinite !important;
-    will-change: left, opacity;
-}
-
-@keyframes kaeNameScan {
-    0% {
-        left: -45%;
-        opacity: 0;
+/* ALWAYS THE BEST — DESKTOP ANIMATION FIX */
+@media (min-width: 601px) {
+    .kae-hero-description {
+        animation: kaeBestEnergy 4s linear infinite !important;
+        background-size: 300% 100% !important;
+        will-change: background-position;
     }
-    12% {
-        opacity: 1;
-    }
-    48% {
-        left: 125%;
-        opacity: 1;
-    }
-    55%, 100% {
-        left: 125%;
-        opacity: 0;
+}
+/* KAE — FORCE DESKTOP TEXT ANIMATION */
+@media (min-width: 601px) {
+    html body .kae-hero .kae-hero-description {
+        animation: kaeDesktopForceSweep 3s linear infinite !important;
+        background-image: linear-gradient(
+            90deg,
+            #777 0%,
+            #fff 25%,
+            #777 50%,
+            #fff 75%,
+            #777 100%
+        ) !important;
+        background-size: 400% 100% !important;
+        background-clip: text !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
     }
 }
 
-/* Alt yazı değişirken yumuşak geçiş */
-#kaeRoleText {
-    display: inline-block;
-    min-width: 1ch;
-    transition: opacity .2s ease, transform .2s ease;
-    will-change: opacity, transform;
-}
-
-.kae-type-caret {
-    display: inline-block;
-    animation: kaeCaretBlink .8s steps(2, start) infinite !important;
-}
-
-/* HERO animasyonlarını masaüstünde de etkin tut */
-
-@media (prefers-reduced-motion: reduce) {
-    .kae-name-scan {
-        animation: kaeNameScan 4s ease-in-out infinite !important;
-        animation-duration: 4s !important;
-        animation-iteration-count: infinite !important;
+@keyframes kaeDesktopForceSweep {
+    from {
+        background-position: 100% 50%;
     }
-
-    .kae-type-caret {
-        animation: kaeCaretBlink .8s steps(2, start) infinite !important;
-        animation-duration: .8s !important;
-        animation-iteration-count: infinite !important;
+    to {
+        background-position: 0% 50%;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* KAE — MONOCHROME TYPOGRAPHY */
+
+.kae-hero .kae-hero-description,
+.kae-hero-description {
+    display: inline-block !important;
+
+    font-family: inherit !important;
+    font-size: clamp(20px, 2.5vw, 31px) !important;
+    font-weight: 900 !important;
+    font-style: italic !important;
+    letter-spacing: 1.2px !important;
+    line-height: 1.5 !important;
+
+    background: linear-gradient(
+        110deg,
+        #ffffff 0%,
+        #d8d8d8 25%,
+        #777777 50%,
+        #eeeeee 75%,
+        #ffffff 100%
+    ) !important;
+
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+
+    color: transparent !important;
+
+    text-shadow: none !important;
+    filter: none !important;
+    animation: none !important;
+    transition: none !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* CSS dosyasının sonu */

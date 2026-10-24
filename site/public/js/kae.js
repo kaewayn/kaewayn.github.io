@@ -1,6 +1,7 @@
 
 /* =========================================================
    KAE WAYN — PERSONAL PAGE JS
+   Tek rol animasyonu, PC + mobil uyumlu efektler
    ========================================================= */
 
 (() => {
@@ -8,65 +9,81 @@
 
     const ready = (callback) => {
         if (document.readyState === "loading") {
-            document.addEventListener("DOMContentLoaded", callback, { once: true });
+            document.addEventListener("DOMContentLoaded", callback, {
+                once: true
+            });
         } else {
             callback();
         }
     };
 
     ready(() => {
-        const reduceMotion = window.matchMedia(
-            "(prefers-reduced-motion: reduce)"
-        ).matches;
+        const $ = (selector, parent = document) =>
+            parent.querySelector(selector);
 
-        /* -----------------------------------------
+        const $$ = (selector, parent = document) =>
+            Array.from(parent.querySelectorAll(selector));
+
+        /* =====================================================
            1. AÇILIŞ EKRANI
-        ----------------------------------------- */
+           ===================================================== */
 
-        const loader = document.getElementById("kaeLoader");
-        const loaderText = document.getElementById("kaeLoaderText");
+        const loader = $("#kaeLoader");
+        const loaderText = $("#kaeLoaderText");
 
         if (loader) {
             document.body.classList.add("kae-loading");
 
-            const loaderMessages = [
+            const messages = [
                 "Kişisel alan hazırlanıyor",
                 "Görsel sistem başlatılıyor",
                 "Hoş geldin, Kae Wayn"
             ];
 
             let messageIndex = 0;
+            let loaderFinished = false;
 
-            const messageInterval = window.setInterval(() => {
-                messageIndex += 1;
+            const messageTimer = window.setInterval(() => {
+                messageIndex++;
 
-                if (messageIndex < loaderMessages.length && loaderText) {
-                    loaderText.textContent = loaderMessages[messageIndex];
+                if (messageIndex < messages.length && loaderText) {
+                    loaderText.textContent = messages[messageIndex];
+                } else {
+                    window.clearInterval(messageTimer);
                 }
             }, 850);
 
             const hideLoader = () => {
-                window.clearInterval(messageInterval);
+                if (loaderFinished) return;
+                loaderFinished = true;
+
+                window.clearInterval(messageTimer);
                 loader.classList.add("is-hidden");
                 document.body.classList.remove("kae-loading");
 
                 window.setTimeout(() => {
-                    loader.remove();
+                    if (loader.isConnected) {
+                        loader.remove();
+                    }
                 }, 900);
             };
 
-            if (reduceMotion) {
-                hideLoader();
-            } else {
-                window.setTimeout(hideLoader, 2900);
-            }
+            window.setTimeout(hideLoader, 2500);
+
+            // Sayfa yüklemesi uzarsa yükleyicinin takılı kalmasını önle.
+            window.addEventListener("load", () => {
+                window.setTimeout(hideLoader, 2500);
+            }, { once: true });
         }
 
-        /* -----------------------------------------
-           2. YAZI YAZMA EFEKTİ
-        ----------------------------------------- */
+        document.documentElement.classList.add("kae-js-ready");
 
-        const roleElement = document.getElementById("kaeRoleText");
+        /* =====================================================
+           2. HERO ROL YAZISI
+           Yalnızca tek zamanlayıcı kullanılır.
+           ===================================================== */
+
+        const roleElement = $("#kaeRoleText");
 
         if (roleElement) {
             const roles = [
@@ -77,92 +94,99 @@
                 "Kae Wayn"
             ];
 
-            if (reduceMotion) {
-                roleElement.textContent = roles[0];
-            } else {
-                let roleIndex = 0;
-                let charIndex = roles[0].length;
-                let deleting = true;
-                let pauseUntil = Date.now() + 1100;
+            let roleIndex = 0;
+            let charIndex = roles[0].length;
+            let deleting = true;
+            let roleTimer = null;
+            let pauseUntil = Date.now() + 1400;
 
-                const typeRole = () => {
-                    const currentRole = roles[roleIndex];
+            roleElement.textContent = roles[0];
 
-                    if (Date.now() < pauseUntil) {
-                        window.setTimeout(typeRole, 100);
-                        return;
-                    }
+            const typeRole = () => {
+                if (!roleElement.isConnected) return;
 
-                    if (deleting) {
-                        charIndex -= 1;
-                    } else {
-                        charIndex += 1;
-                    }
+                const currentRole = roles[roleIndex];
 
-                    roleElement.textContent = currentRole.slice(0, charIndex);
+                if (Date.now() < pauseUntil) {
+                    roleTimer = window.setTimeout(typeRole, 100);
+                    return;
+                }
 
-                    let delay = deleting ? 34 : 62;
+                if (deleting) {
+                    charIndex--;
+                } else {
+                    charIndex++;
+                }
 
-                    if (deleting && charIndex <= 0) {
-                        deleting = false;
-                        roleIndex = (roleIndex + 1) % roles.length;
-                        delay = 260;
-                    } else if (!deleting && charIndex >= roles[roleIndex].length) {
-                        deleting = true;
-                        pauseUntil = Date.now() + 1200;
-                        delay = 100;
-                    }
+                roleElement.textContent =
+                    currentRole.slice(0, Math.max(0, charIndex));
 
-                    window.setTimeout(typeRole, delay);
-                };
+                let delay = deleting ? 38 : 65;
 
-                window.setTimeout(() => {
-                    roleIndex = 1;
-                    charIndex = 0;
+                if (deleting && charIndex <= 0) {
                     deleting = false;
-                    typeRole();
-                }, 1800);
-            }
+                    roleIndex = (roleIndex + 1) % roles.length;
+                    charIndex = 0;
+                    delay = 280;
+                } else if (
+                    !deleting &&
+                    charIndex >= roles[roleIndex].length
+                ) {
+                    charIndex = roles[roleIndex].length;
+                    deleting = true;
+                    pauseUntil = Date.now() + 1500;
+                    delay = 100;
+                }
+
+                roleTimer = window.setTimeout(typeRole, delay);
+            };
+
+            roleTimer = window.setTimeout(() => {
+                roleIndex = 1;
+                charIndex = 0;
+                deleting = false;
+                typeRole();
+            }, 1700);
         }
 
-        /* -----------------------------------------
+        /* =====================================================
            3. PROFİL KARTINDA DÖNÜŞEN METİN
-        ----------------------------------------- */
+           ===================================================== */
 
-        const rotatingText = document.getElementById("kaeRotatingText");
+        const rotatingText = $("#kaeRotatingText");
 
-        if (rotatingText && !reduceMotion) {
-            const profileMessages = [
+        if (rotatingText) {
+            const messages = [
                 "Kendi yolumda.",
                 "Her zaman gelişim.",
                 "Farklı düşün, üret.",
                 "Yarışmayan bir insanı yenemezsin."
             ];
 
-            let profileIndex = 0;
+            let messageIndex = 0;
 
             window.setInterval(() => {
+                if (!rotatingText.isConnected) return;
+
                 rotatingText.classList.add("is-changing");
 
                 window.setTimeout(() => {
-                    profileIndex = (profileIndex + 1) % profileMessages.length;
-                    rotatingText.textContent = profileMessages[profileIndex];
+                    if (!rotatingText.isConnected) return;
+
+                    messageIndex = (messageIndex + 1) % messages.length;
+                    rotatingText.textContent = messages[messageIndex];
                     rotatingText.classList.remove("is-changing");
                 }, 260);
             }, 4000);
         }
 
-        /* -----------------------------------------
+        /* =====================================================
            4. SCROLL REVEAL
-        ----------------------------------------- */
+           ===================================================== */
 
-        const revealElements = document.querySelectorAll(".kae-reveal");
+        const revealElements = $$(".kae-reveal");
 
-        if (reduceMotion || !("IntersectionObserver" in window)) {
-            revealElements.forEach((element) => {
-                element.classList.add("is-visible");
-            });
-        } else {
+        if ("IntersectionObserver" in window) {
             const revealObserver = new IntersectionObserver(
                 (entries, observer) => {
                     entries.forEach((entry) => {
@@ -173,24 +197,28 @@
                     });
                 },
                 {
-                    threshold: 0.12,
-                    rootMargin: "0px 0px -35px 0px"
+                    threshold: 0.1,
+                    rootMargin: "0px 0px -30px 0px"
                 }
             );
 
             revealElements.forEach((element) => {
                 revealObserver.observe(element);
             });
+        } else {
+            revealElements.forEach((element) => {
+                element.classList.add("is-visible");
+            });
         }
 
-        /* -----------------------------------------
-           5. HAFİF PARTİKÜL ARKA PLANI
-        ----------------------------------------- */
+        /* =====================================================
+           5. PARÇACIK ARKA PLANI
+           ===================================================== */
 
-        const canvas = document.getElementById("kaeParticles");
+        const canvas = $("#kaeParticles");
         const context = canvas?.getContext("2d");
 
-        if (canvas && context && !reduceMotion) {
+        if (canvas && context) {
             let width = 0;
             let height = 0;
             let particles = [];
@@ -198,14 +226,22 @@
             let lastFrame = 0;
 
             const particleCount = () => {
+                const areaCount = Math.floor(
+                    (width * height) / 22000
+                );
+
+                // Mobilde daha az parçacık, PC'de daha yoğun arka plan.
                 return Math.min(
                     65,
-                    Math.max(20, Math.floor((width * height) / 22000))
+                    Math.max(18, areaCount)
                 );
             };
 
             const resizeCanvas = () => {
-                const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+                const pixelRatio = Math.min(
+                    window.devicePixelRatio || 1,
+                    2
+                );
 
                 width = window.innerWidth;
                 height = window.innerHeight;
@@ -215,83 +251,101 @@
                 canvas.style.width = `${width}px`;
                 canvas.style.height = `${height}px`;
 
-                context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+                context.setTransform(
+                    pixelRatio,
+                    0,
+                    0,
+                    pixelRatio,
+                    0,
+                    0
+                );
 
                 particles = Array.from(
                     { length: particleCount() },
                     () => ({
                         x: Math.random() * width,
                         y: Math.random() * height,
-                        radius: Math.random() * 1.3 + 0.3,
-                        vx: (Math.random() - 0.5) * 0.22,
-                        vy: (Math.random() - 0.5) * 0.22,
-                        alpha: Math.random() * 0.36 + 0.12
+                        radius: Math.random() * 1.25 + 0.35,
+                        vx: (Math.random() - 0.5) * 0.24,
+                        vy: (Math.random() - 0.5) * 0.24,
+                        alpha: Math.random() * 0.35 + 0.12
                     })
                 );
             };
 
             const drawParticles = (timestamp) => {
-                if (document.hidden) {
-                    animationFrame = 0;
-                    return;
-                }
+                animationFrame = 0;
 
-                // Gereksiz yüksek FPS yükünü sınırlar.
-                if (timestamp - lastFrame < 32) {
-                    animationFrame = window.requestAnimationFrame(drawParticles);
-                    return;
-                }
+                if (document.hidden) return;
 
-                lastFrame = timestamp;
-                context.clearRect(0, 0, width, height);
+                // Yaklaşık 30 FPS ile performansı dengeler.
+                if (timestamp - lastFrame >= 32) {
+                    lastFrame = timestamp;
 
-                particles.forEach((particle, index) => {
-                    particle.x += particle.vx;
-                    particle.y += particle.vy;
+                    context.clearRect(0, 0, width, height);
 
-                    if (particle.x < -5) particle.x = width + 5;
-                    if (particle.x > width + 5) particle.x = -5;
-                    if (particle.y < -5) particle.y = height + 5;
-                    if (particle.y > height + 5) particle.y = -5;
+                    particles.forEach((particle, index) => {
+                        particle.x += particle.vx;
+                        particle.y += particle.vy;
 
-                    context.beginPath();
-                    context.arc(
-                        particle.x,
-                        particle.y,
-                        particle.radius,
-                        0,
-                        Math.PI * 2
-                    );
-                    context.fillStyle = `rgba(235,235,235,${particle.alpha})`;
-                    context.fill();
+                        if (particle.x < -5) particle.x = width + 5;
+                        if (particle.x > width + 5) particle.x = -5;
+                        if (particle.y < -5) particle.y = height + 5;
+                        if (particle.y > height + 5) particle.y = -5;
 
-                    // Yakın parçacıklar arasında çok ince çizgiler.
-                    for (let nextIndex = index + 1; nextIndex < particles.length; nextIndex++) {
-                        const other = particles[nextIndex];
-                        const dx = particle.x - other.x;
-                        const dy = particle.y - other.y;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        context.beginPath();
+                        context.arc(
+                            particle.x,
+                            particle.y,
+                            particle.radius,
+                            0,
+                            Math.PI * 2
+                        );
 
-                        if (distance < 105) {
-                            const opacity = (1 - distance / 105) * 0.075;
+                        context.fillStyle =
+                            `rgba(235,235,235,${particle.alpha})`;
 
-                            context.beginPath();
-                            context.moveTo(particle.x, particle.y);
-                            context.lineTo(other.x, other.y);
-                            context.strokeStyle = `rgba(255,255,255,${opacity})`;
-                            context.lineWidth = 0.6;
-                            context.stroke();
+                        context.fill();
+
+                        for (
+                            let nextIndex = index + 1;
+                            nextIndex < particles.length;
+                            nextIndex++
+                        ) {
+                            const other = particles[nextIndex];
+                            const dx = particle.x - other.x;
+                            const dy = particle.y - other.y;
+                            const distance = Math.sqrt(
+                                dx * dx + dy * dy
+                            );
+
+                            if (distance < 105) {
+                                const opacity =
+                                    (1 - distance / 105) * 0.075;
+
+                                context.beginPath();
+                                context.moveTo(particle.x, particle.y);
+                                context.lineTo(other.x, other.y);
+
+                                context.strokeStyle =
+                                    `rgba(255,255,255,${opacity})`;
+
+                                context.lineWidth = 0.6;
+                                context.stroke();
+                            }
                         }
-                    }
-                });
+                    });
+                }
 
-                animationFrame = window.requestAnimationFrame(drawParticles);
+                animationFrame =
+                    window.requestAnimationFrame(drawParticles);
             };
 
             const startParticles = () => {
-                if (!document.hidden && !animationFrame) {
-                    animationFrame = window.requestAnimationFrame(drawParticles);
-                }
+                if (document.hidden || animationFrame) return;
+
+                animationFrame =
+                    window.requestAnimationFrame(drawParticles);
             };
 
             const stopParticles = () => {
@@ -304,7 +358,9 @@
             resizeCanvas();
             startParticles();
 
-            window.addEventListener("resize", resizeCanvas, { passive: true });
+            window.addEventListener("resize", () => {
+                resizeCanvas();
+            }, { passive: true });
 
             document.addEventListener("visibilitychange", () => {
                 if (document.hidden) {
@@ -316,104 +372,90 @@
             });
         }
 
-        /* -----------------------------------------
-           6. BAŞA DÖN
-        ----------------------------------------- */
+        /* =====================================================
+           6. GERİ YUKARI ÇIK BUTONU
+           ===================================================== */
 
-        const backTop = document.getElementById("kaeBackTop");
+        const backTop = $("#kaeBackTop");
 
         if (backTop) {
+            const updateBackTop = () => {
+                backTop.classList.toggle(
+                    "is-visible",
+                    window.scrollY > 450
+                );
+            };
+
+            window.addEventListener("scroll", updateBackTop, {
+                passive: true
+            });
+
+            updateBackTop();
+
             backTop.addEventListener("click", (event) => {
                 event.preventDefault();
 
                 window.scrollTo({
                     top: 0,
-                    behavior: reduceMotion ? "auto" : "smooth"
+                    behavior: "smooth"
                 });
             });
         }
-    });
-})();
 
+        /* =====================================================
+           7. PROFİL KARTI MOUSE EFEKTİ
+           Doğru sınıf: .kae-profile-card
+           ===================================================== */
 
-(() => {
-    const card = document.querySelector(".kae-profile-main");
-    if (!card) return;
+        const profileCard = $(".kae-profile-card");
 
-    const reduceMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-    ).matches;
+        if (
+            profileCard &&
+            window.matchMedia("(hover: hover) and (pointer: fine)").matches
+        ) {
+            profileCard.addEventListener("pointermove", (event) => {
+                const rect = profileCard.getBoundingClientRect();
 
-    if (reduceMotion) return;
+                const x = (event.clientX - rect.left) / rect.width;
+                const y = (event.clientY - rect.top) / rect.height;
 
-    card.addEventListener("pointermove", (event) => {
-        const rect = card.getBoundingClientRect();
+                profileCard.style.setProperty(
+                    "--kae-mouse-x",
+                    `${event.clientX - rect.left}px`
+                );
 
-        card.style.setProperty(
-            "--kae-mouse-x",
-            `${event.clientX - rect.left}px`
-        );
+                profileCard.style.setProperty(
+                    "--kae-mouse-y",
+                    `${event.clientY - rect.top}px`
+                );
 
-        card.style.setProperty(
-            "--kae-mouse-y",
-            `${event.clientY - rect.top}px`
-        );
-
-        if (event.pointerType === "mouse") {
-            const x = (event.clientX - rect.left) / rect.width - 0.5;
-            const y = (event.clientY - rect.top) / rect.height - 0.5;
-
-            card.style.transform =
-                `perspective(1100px) rotateX(${-y * 3}deg) rotateY(${x * 3}deg)`;
-        }
-    });
-
-    card.addEventListener("pointerleave", () => {
-        card.style.transform = "";
-        card.style.setProperty("--kae-mouse-x", "50%");
-        card.style.setProperty("--kae-mouse-y", "35%");
-    });
-})();
-
-/* HERO — düzenli rol yazısı değişimi */
-
-(() => {
-    const role = document.getElementById("kaeRoleText");
-    if (!role) return;
-
-    const roles = [
-        "Digital Creator",
-        "Technology Enthusiast",
-        "Web Developer",
-        "Gaming & Design",
-        "Kae Wayn"
-    ];
-
-    const reduceMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-    ).matches;
-
-    if (reduceMotion) return;
-
-    let index = 0;
-
-    role.textContent = roles[index];
-
-    window.setInterval(() => {
-        role.style.opacity = "0";
-        role.style.transform = "translateY(5px)";
-
-        window.setTimeout(() => {
-            index = (index + 1) % roles.length;
-            role.textContent = roles[index];
-            role.style.transform = "translateY(-5px)";
-
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    role.style.opacity = "1";
-                    role.style.transform = "translateY(0)";
-                });
+                profileCard.style.transform =
+                    `perspective(1100px) ` +
+                    `rotateX(${(0.5 - y) * 4}deg) ` +
+                    `rotateY(${(x - 0.5) * 4}deg)`;
             });
-        }, 220);
-    }, 3000);
+
+            profileCard.addEventListener("pointerleave", () => {
+                profileCard.style.transform = "";
+                profileCard.style.setProperty("--kae-mouse-x", "50%");
+                profileCard.style.setProperty("--kae-mouse-y", "35%");
+            });
+        }
+
+        /* =====================================================
+           8. HERO İSİM TARAMASI İÇİN DURUM
+           ===================================================== */
+
+        const nameScan = $(".kae-name-scan");
+
+        if (nameScan) {
+            nameScan.style.display = "block";
+        }
+
+        /* =====================================================
+           9. HATA AYIKLAMA İÇİN HAZIR DURUM
+           ===================================================== */
+
+        document.documentElement.classList.add("kae-ready");
+    });
 })();

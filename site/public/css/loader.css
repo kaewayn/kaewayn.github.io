@@ -1,0 +1,319 @@
+/* KAE WAYN — SHARED LOADER
+   /kae tasarımından uyarlanmıştır.
+*/
+
+.site-loader {
+    --loader-ease: cubic-bezier(.22, 1, .36, 1);
+
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    overflow: hidden;
+    background: #050505;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity .8s ease, visibility .8s ease;
+    isolation: isolate;
+}
+
+.site-loader.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* Hafif atmosferik ışık */
+.site-loader::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    width: min(650px, 100vw);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        rgba(255,255,255,.045) 0%,
+        rgba(255,255,255,.012) 38%,
+        transparent 70%
+    );
+    filter: blur(24px);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+/* Logo */
+.site-loader-mark {
+    position: relative;
+    width: 76px;
+    height: 76px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 22px;
+    background: rgba(255,255,255,.04);
+    box-shadow: 0 0 70px rgba(255,255,255,.08);
+    animation: siteLoaderFloat 1.8s ease-in-out infinite;
+}
+
+.site-loader-mark::after {
+    content: "";
+    position: absolute;
+    inset: -100% auto -100% -70%;
+    width: 45%;
+    transform: skewX(-20deg);
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.2),
+        transparent
+    );
+    animation: siteLoaderShine 3.2s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.site-loader-mark img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Başlık */
+.site-loader-title {
+    margin: 0;
+    padding-left: 5px;
+    color: #f5f5f5;
+    font-size: 17px;
+    font-weight: 850;
+    letter-spacing: 5px;
+    text-align: center;
+    animation: siteLoaderTitleIn .9s var(--loader-ease) both;
+}
+
+/* Durum metni */
+.site-loader-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 17px;
+    color: #777;
+    font-size: 11px;
+    letter-spacing: 1.1px;
+    text-align: center;
+}
+
+.site-loader-dot {
+    width: 7px;
+    height: 7px;
+    display: inline-block;
+    flex: 0 0 7px;
+    border-radius: 50%;
+    background: #eee;
+    box-shadow: 0 0 13px rgba(255,255,255,.55);
+    animation: siteLoaderPulse 1.6s ease-in-out infinite;
+}
+
+.site-loader-message {
+    animation: siteLoaderTextIn .35s ease both;
+}
+
+/* İnce yükleme çizgisi */
+.site-loader-track {
+    width: min(230px, 60vw);
+    height: 2px;
+    margin-top: 9px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.site-loader-track span {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.65);
+    transform: scaleX(0);
+    transform-origin: left center;
+    animation: siteLoaderProgress 2.7s linear forwards;
+}
+
+@keyframes siteLoaderProgress {
+    0% {
+        transform: scaleX(0);
+    }
+
+    100% {
+        transform: scaleX(1);
+    }
+}
+
+/* Alt ibare */
+.site-loader-index {
+    position: absolute;
+    bottom: 35px;
+    color: #414141;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+/* Animasyonlar */
+@keyframes siteLoaderFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-7px);
+    }
+}
+
+@keyframes siteLoaderShine {
+    0%, 20% {
+        left: -70%;
+    }
+    65%, 100% {
+        left: 140%;
+    }
+}
+
+@keyframes siteLoaderTitleIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+        filter: blur(4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+@keyframes siteLoaderTextIn {
+    from {
+        opacity: 0;
+        transform: translateY(3px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes siteLoaderPulse {
+    0%, 100% {
+        opacity: .55;
+        transform: scale(.85);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes siteLoaderProgress {
+    to {
+        transform: scaleX(1);
+    }
+}
+
+@media (max-width: 600px) {
+    .site-loader-mark {
+        width: 76px;
+        height: 76px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .site-loader-mark,
+    .site-loader-mark::after,
+    .site-loader-title,
+    .site-loader-dot,
+    .site-loader-message,
+    .site-loader-track span {
+        animation: none !important;
+    }
+
+    .site-loader-track span {
+        transform: scaleX(1);
+    }
+
+    .site-loader,
+    .site-loader.is-hidden {
+        transition-duration: .15s;
+    }
+}
+
+/* LOADER PROGRESS — FIX */
+.site-loader-track {
+    position: relative;
+    width: min(230px, 60vw);
+    height: 3px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.site-loader-track .site-loader-progress {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.7);
+    transform: scaleX(0);
+    transform-origin: left center;
+    animation: siteLoaderProgressFill 2.2s linear forwards !important;
+}
+
+@keyframes siteLoaderProgressFill {
+    from {
+        transform: scaleX(0);
+    }
+
+    to {
+        transform: scaleX(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .site-loader-track .site-loader-progress {
+        animation: none !important;
+        transform: scaleX(1);
+    }
+}
+
+/* TEST: İlerleme çubuğunu zorla görünür şekilde doldur */
+#siteLoader .site-loader-track {
+    position: relative !important;
+    width: 230px !important;
+    height: 4px !important;
+    background: #333 !important;
+    overflow: hidden !important;
+}
+
+#siteLoader .site-loader-track .site-loader-progress {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    display: block !important;
+    height: 4px !important;
+    width: 100% !important;
+    background: #fff !important;
+    transform: scaleX(0);
+    transform-origin: left center;
+    animation: testBarFill 2.2s linear forwards !important;
+}
+
+@keyframes testBarFill {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+}
