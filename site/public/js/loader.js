@@ -9,8 +9,8 @@
 
     const messages = [
         "Kişisel alan hazırlanıyor",
-        "Görsel sistem başlatılıyor",
-        "Hoş geldin, Kae Wayn"
+        "Always The Best",
+        "Hoş geldiniz"
     ];
 
     let loader = null;
@@ -20,8 +20,8 @@
     let messageIndex = 0;
     let finished = false;
 
-    const LOADER_DURATION = 2400;
-    const FADE_DURATION = 800;
+    const LOADER_DURATION = 3300;
+    const FADE_DURATION = 2400;
 
     function createLoader() {
         const element = document.createElement("div");
@@ -192,5 +192,23 @@
         window.setTimeout(() => {
             window.location.href = destination.href;
         }, 350);
+    });
+
+        // Geri / ileri tuşuyla sayfaya dönünce loader'ı temizle
+    window.addEventListener("pageshow", (event) => {
+        if (event.persisted) {
+            clearTimeout(hideTimer);
+            clearTimeout(removeTimer);
+            clearInterval(messageTimer);
+
+            finished = true;
+
+            const existingLoader = document.getElementById("siteLoader");
+            existingLoader?.remove();
+
+            loader = null;
+
+            document.documentElement.classList.remove("site-loading");
+        }
     });
 })();

@@ -1421,3 +1421,124 @@ body {
     overflow-y: auto;
     border-radius: 16px 0 0 16px;
 }
+
+
+/* ===== ALWAYS THE BEST — CHROME EFFECT ===== */
+
+h1 {
+    font-weight: 900 !important;
+    font-style: italic !important;
+    letter-spacing: -2px;
+    line-height: 1.1;
+
+    background: linear-gradient(
+        115deg,
+        #fff 0%,
+        #bcbcbc 18%,
+        #fff 32%,
+        #666 45%,
+        #fff 52%,
+        #aaa 65%,
+        #fff 80%,
+        #777 92%,
+        #fff 100%
+    );
+
+    background-size: 250% 100%;
+    background-position: 100% 50%;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+
+    animation:
+        kaeChromeFlow 4s linear infinite,
+        kaeChromeGlow 2.5s ease-in-out infinite;
+}
+
+/* Akan krom gradyan */
+@keyframes kaeChromeFlow {
+    0% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: -150% 50%;
+    }
+}
+
+/* Hafif metalik parlama */
+@keyframes kaeChromeGlow {
+    0%, 100% {
+        filter: drop-shadow(0 0 2px rgb(255 255 255 / 10%));
+    }
+    50% {
+        filter: drop-shadow(0 0 8px rgb(255 255 255 / 30%));
+    }
+}
+
+
+
+
+
+
+
+/* ALWAYS THE BEST — ORBITING PARTICLES */
+
+h1 {
+    position: relative;
+    isolation: isolate;
+    overflow: visible !important;
+}
+
+h1::before {
+    content: "";
+    position: absolute;
+    inset: -22px -35px;
+    pointer-events: none;
+    z-index: 3;
+
+    background-image:
+        radial-gradient(circle, #fff 0 1.5px, transparent 2px),
+        radial-gradient(circle, rgba(255,255,255,.9) 0 1px, transparent 1.8px),
+        radial-gradient(circle, rgba(210,210,210,.9) 0 2px, transparent 2.5px),
+        radial-gradient(circle, #fff 0 1px, transparent 1.7px),
+        radial-gradient(circle, rgba(255,255,255,.7) 0 1.5px, transparent 2px);
+
+    background-size:
+        73px 61px,
+        97px 83px,
+        113px 71px,
+        59px 89px,
+        131px 103px;
+
+    background-position:
+        0 0,
+        30px 20px,
+        60px 10px,
+        15px 45px,
+        90px 60px;
+
+    animation: kaeOrbitParticles 7s linear infinite;
+    opacity: .9;
+}
+
+@keyframes kaeOrbitParticles {
+    0% {
+        background-position:
+            0 0, 30px 20px, 60px 10px, 15px 45px, 90px 60px;
+        transform: translateY(0);
+    }
+
+    50% {
+        background-position:
+            36px -25px, -20px 42px, 15px -30px, 50px 10px, 35px 20px;
+        transform: translateY(-3px);
+    }
+
+    100% {
+        background-position:
+            73px -61px, -67px 83px, -53px -61px, 74px -44px, -41px -43px;
+        transform: translateY(0);
+    }
+}
