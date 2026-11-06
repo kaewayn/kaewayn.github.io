@@ -1,1 +1,5 @@
 
+---
+deployment:
+  tasks:
+    - /bin/cp -R site/. /home/kaewayn/
