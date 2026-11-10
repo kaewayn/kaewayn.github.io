@@ -499,7 +499,7 @@ app.get("/kae", (req, res) => {
 
 app.get("/sorgu", (req, res) => {
     res.sendFile(
-        path.join(__dirname, "public", "pages", "sorgu.html")sss
+        path.join(__dirname, "public", "pages", "sorgu.html")
     );
 });
 
