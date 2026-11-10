@@ -1,0 +1,1117 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050505">
+<title>Hesap ID Sorgu | KaeWayn</title>
+
+<style>
+:root {
+    --bg: #050505;
+    --panel: rgba(16,16,16,.78);
+    --panel-light: rgba(255,255,255,.045);
+    --border: rgba(255,255,255,.10);
+    --white: #f5f5f5;
+    --muted: #858585;
+    --dim: #505050;
+    --ease: cubic-bezier(.22,1,.36,1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--white);
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background:
+        radial-gradient(ellipse at 50% 0%, rgba(255,255,255,.09), transparent 45%),
+        radial-gradient(ellipse at 10% 50%, rgba(255,255,255,.025), transparent 40%);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* NAVBAR */
+
+.header {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(5,5,5,.82);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border);
+}
+
+.navbar {
+    max-width: 1250px;
+    height: 76px;
+    margin: auto;
+    padding: 0 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: -.8px;
+}
+
+.logo img {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+}
+
+.desktop-menu {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.desktop-menu a {
+    color: var(--muted);
+    font-size: 13px;
+    transition: .3s;
+}
+
+.desktop-menu a:hover {
+    color: white;
+}
+
+.menu-button {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    background: var(--panel-light);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.menu-button span {
+    width: 17px;
+    height: 2px;
+    background: white;
+    transition: .3s;
+}
+
+.menu-button.active span:first-child {
+    transform: translateY(4px) rotate(45deg);
+}
+
+.menu-button.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-button.active span:last-child {
+    transform: translateY(-4px) rotate(-45deg);
+}
+
+/* SIDE MENU */
+
+.menu-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 110;
+    background: rgba(0,0,0,.65);
+    opacity: 0;
+    visibility: hidden;
+    transition: .35s;
+}
+
+.menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.side-menu {
+    position: fixed;
+    top: 0;
+    right: -350px;
+    width: min(330px, 85vw);
+    height: 100vh;
+    z-index: 120;
+    padding: 25px;
+    background: #0b0b0b;
+    border-left: 1px solid var(--border);
+    transition: right .45s var(--ease);
+}
+
+.side-menu.active {
+    right: 0;
+}
+
+.menu-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+.menu-top strong {
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+.menu-close {
+    background: transparent;
+    border: 0;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.menu-profile {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 18px 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+.menu-profile img {
+    width: 48px;
+    height: 48px;
+    border-radius: 13px;
+    object-fit: contain;
+    background: #171717;
+}
+
+.menu-profile strong {
+    display: block;
+    font-size: 14px;
+}
+
+.menu-profile small {
+    color: var(--muted);
+    font-size: 11px;
+    display: block;
+    margin-top: 5px;
+}
+
+.menu-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.menu-links a {
+    padding: 15px;
+    border-radius: 10px;
+    color: var(--muted);
+    font-size: 13px;
+    transition: .3s;
+}
+
+.menu-links a:hover {
+    color: white;
+    background: var(--panel-light);
+}
+
+/* MAIN */
+
+.container {
+    width: min(1100px, 92%);
+    margin: auto;
+}
+
+.hero {
+    text-align: center;
+    padding: 85px 15px 45px;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #aaa;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.eyebrow::before,
+.eyebrow::after {
+    content: "";
+    width: 20px;
+    height: 1px;
+    background: #777;
+}
+
+.hero h1 {
+    font-size: clamp(35px, 7vw, 65px);
+    font-weight: 900;
+    letter-spacing: -3px;
+    background: linear-gradient(110deg,#777,#fff,#999);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.hero p {
+    max-width: 480px;
+    margin: 17px auto 0;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+/* SEARCH */
+
+.search-card {
+    max-width: 650px;
+    margin: 0 auto 65px;
+    padding: 30px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 20px 80px rgba(0,0,0,.35);
+}
+
+.card-heading {
+    margin-bottom: 25px;
+}
+
+.card-heading h2 {
+    font-size: 19px;
+    margin-bottom: 8px;
+}
+
+.card-heading p {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.input-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.input-group label {
+    display: block;
+    color: #aaa;
+    font-size: 11px;
+    margin-bottom: 9px;
+    letter-spacing: .5px;
+}
+
+.input-group input {
+    width: 100%;
+    height: 50px;
+    padding: 0 15px;
+    color: white;
+    background: rgba(255,255,255,.035);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    outline: none;
+    font-size: 14px;
+    transition: .3s;
+}
+
+.input-group input:focus {
+    border-color: rgba(255,255,255,.5);
+    box-shadow: 0 0 20px rgba(255,255,255,.05);
+}
+
+.search-button {
+    width: 100%;
+    height: 51px;
+    margin-top: 22px;
+    background: #f5f5f5;
+    color: #080808;
+    border: none;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 13px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.search-button:hover {
+    background: #d5d5d5;
+    transform: translateY(-2px);
+}
+
+.search-button:disabled {
+    opacity: .6;
+    cursor: wait;
+    transform: none;
+}
+
+.message {
+    display: none;
+    margin-top: 15px;
+    padding: 13px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    font-size: 12px;
+    text-align: center;
+    color: #ddd;
+}
+
+.message.show {
+    display: block;
+}
+
+.message.error {
+    color: #ff8585;
+    border-color: rgba(255,80,80,.3);
+}
+
+/* RESULTS */
+
+.results {
+    display: none;
+    padding-bottom: 80px;
+    animation: appear .7s var(--ease);
+}
+
+.results.show {
+    display: block;
+}
+
+@keyframes appear {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.result-header {
+    padding: 28px;
+    margin-bottom: 20px;
+    background: linear-gradient(120deg,#171717,#0b0b0b);
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.player-info {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+}
+
+.player-avatar {
+    width: 62px;
+    height: 62px;
+    display: grid;
+    place-items: center;
+    background: #202020;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    font-size: 28px;
+}
+
+.player-info h2 {
+    font-size: 21px;
+    margin-bottom: 7px;
+}
+
+.player-info p {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.verified {
+    color: #aaa;
+    font-size: 11px;
+    border: 1px solid var(--border);
+    padding: 9px 12px;
+    border-radius: 30px;
+}
+
+.section-title {
+    margin: 35px 0 15px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: #ddd;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 12px;
+}
+
+.stat-card {
+    min-width: 0;
+    padding: 18px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    transition: .3s;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255,255,255,.3);
+}
+
+.stat-card small {
+    display: block;
+    color: var(--muted);
+    font-size: 11px;
+    margin-bottom: 12px;
+}
+
+.stat-card strong {
+    display: block;
+    font-size: clamp(16px,2vw,23px);
+    overflow-wrap: anywhere;
+}
+
+.stat-card .sub {
+    color: var(--dim);
+    font-size: 10px;
+    margin-top: 7px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 12px;
+}
+
+.info-card {
+    padding: 20px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+}
+
+.info-card h3 {
+    font-size: 13px;
+    margin-bottom: 16px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 11px 0;
+    border-bottom: 1px solid rgba(255,255,255,.055);
+    font-size: 11px;
+}
+
+.info-row:last-child {
+    border: none;
+}
+
+.info-row span {
+    color: var(--muted);
+}
+
+.info-row strong {
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.hero-card {
+    padding: 20px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+}
+
+.hero-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+.hero-item:last-child {
+    border: none;
+}
+
+.hero-item strong {
+    font-size: 13px;
+}
+
+.hero-item small {
+    display: block;
+    color: var(--muted);
+    font-size: 10px;
+    margin-top: 6px;
+}
+
+.hero-power {
+    font-size: 13px;
+    color: #ddd;
+    text-align: right;
+}
+
+/* FOOTER */
+
+.footer {
+    border-top: 1px solid var(--border);
+    background: #080808;
+    padding: 45px 20px 25px;
+}
+
+.footer-inner {
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.footer-brand img {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+}
+
+.footer-brand strong {
+    font-size: 15px;
+}
+
+.footer-brand small {
+    display: block;
+    color: var(--muted);
+    font-size: 10px;
+    margin-top: 5px;
+}
+
+.socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+.socials a {
+    color: var(--muted);
+    font-size: 11px;
+    transition: .3s;
+}
+
+.socials a:hover {
+    color: white;
+}
+
+.copyright {
+    max-width: 1100px;
+    margin: 30px auto 0;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,.06);
+    color: #555;
+    font-size: 10px;
+    text-align: center;
+}
+
+.back-top {
+    position: fixed;
+    bottom: 22px;
+    right: 22px;
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    background: #eee;
+    color: #000;
+    border-radius: 12px;
+    font-size: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: .3s;
+    z-index: 50;
+}
+
+.back-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:750px) {
+    .desktop-menu {
+        display: none;
+    }
+
+    .hero {
+        padding-top: 65px;
+    }
+
+    .search-card {
+        padding: 22px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media(max-width:480px) {
+    .navbar {
+        height: 68px;
+        padding: 0 17px;
+    }
+
+    .input-grid,
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .result-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .verified {
+        align-self: flex-start;
+    }
+
+    .stats-grid {
+        gap: 9px;
+    }
+
+    .stat-card {
+        padding: 14px;
+    }
+
+    .hero h1 {
+        letter-spacing: -2px;
+    }
+
+    .socials {
+        gap: 13px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header class="header">
+    <nav class="navbar">
+        <a href="/" class="logo">
+            <img src="/img/logo.png" alt="KaeWayn">
+            <span>Kaewayn</span>
+        </a>
+
+        <div class="desktop-menu">
+            <a href="/">Ana Sayfa</a>
+            <a href="/services">Hizmetler</a>
+            <a href="/sorgu">Hesap Sorgu</a>
+        </div>
+
+        <button class="menu-button" id="menuButton" aria-label="Menüyü aç">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+</header>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<aside class="side-menu" id="sideMenu">
+    <div class="menu-top">
+        <strong>KAE WAYN</strong>
+        <button class="menu-close" id="menuClose" aria-label="Menüyü kapat">×</button>
+    </div>
+
+    <div class="menu-profile">
+        <img src="/img/logo.png" alt="KaeWayn">
+        <div>
+            <strong>Kaewayn</strong>
+            <small>Hesap ID Sorgu </small>
+        </div>
+    </div>
+
+    <div class="menu-links">
+        <a href="/">Ana Sayfa</a>
+        <a href="/services">Hizmetler</a>
+        <a href="/login">Giriş Yap</a>
+        <a href="/register">Kayıt Ol</a>
+    </div>
+</aside>
+
+<!-- PAGE -->
+<main class="container">
+
+    <section class="hero">
+        <div class="eyebrow">KAE WAYN SYSTEM</div>
+        <h1>Hesap ID Sorgu (BETA)</h1>
+        <p>
+            Mobile Legends hesap bilgilerini görüntülemek için
+            oyuncu ID ve sunucu numaranı gir.
+        </p>
+    </section>
+
+    <!-- SEARCH FORM -->
+    <section class="search-card">
+        <div class="card-heading">
+            <h2>Oyuncu Sorgulama</h2>
+            <p>Hesap bilgilerini sorgulamak için gerekli alanları doldur.</p>
+        </div>
+
+        <form id="searchForm">
+            <div class="input-grid">
+                <div class="input-group">
+                    <label for="playerId">OYUNCU ID</label>
+                    <input
+                        type="text"
+                        id="playerId"
+                        placeholder="Sunucu ID"
+                        inputmode="numeric"
+                        autocomplete="off"
+                        required
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label for="zoneId">ZONE ID</label>
+                    <input
+                        type="text"
+                        id="zoneId"
+                        placeholder="Zone ID"
+                        inputmode="numeric"
+                        autocomplete="off"
+                        required
+                    >
+                </div>
+            </div>
+
+            <button type="submit" class="search-button" id="searchButton">
+                HESABI SORGULA
+            </button>
+
+            <div class="message" id="message"></div>
+        </form>
+    </section>
+
+    <!-- RESULTS -->
+    <section class="results" id="results">
+
+        <div class="result-header">
+            <div class="player-info">
+                <div class="player-avatar">👤</div>
+                <div>
+                    <h2>Kaewayn</h2>
+                    <p>ID: 1311337666 &nbsp; • &nbsp; Zone: 4392</p>
+                </div>
+            </div>
+            <div class="verified">✓ Sorgulama tamamlandı</div>
+        </div>
+
+        <h3 class="section-title">GENEL HESAP BİLGİLERİ</h3>
+        <div class="stats-grid">
+            <div class="stat-card"><small>Seviye</small><strong>138</strong></div>
+            <div class="stat-card"><small>Mevcut Rütbe</small><strong>Grandmaster I</strong></div>
+            <div class="stat-card"><small>En Yüksek Rütbe</small><strong>Mythic Immortal</strong><div class="sub">123 yıldız</div></div>
+            <div class="stat-card"><small>Hesap Oluşturma</small><strong>20.10.2022</strong></div>
+            <div class="stat-card"><small>Kahraman</small><strong>132</strong></div>
+            <div class="stat-card"><small>Skin</small><strong>689</strong></div>
+            <div class="stat-card"><small>Başarım</small><strong>145230</strong></div>
+            <div class="stat-card"><small>Collector Seviyesi</small><strong>357705</strong></div>
+        </div>
+
+        <h3 class="section-title">SQUAD BİLGİLERİ</h3>
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>Squad Detayları</h3>
+                <div class="info-row"><span>Squad</span><strong>ヤ Wayn ESP</strong></div>
+                <div class="info-row"><span>Squad ID</span><strong>15147483</strong></div>
+                <div class="info-row"><span>Squad Ön Eki</span><strong>ヤ</strong></div>
+            </div>
+            <div class="info-card">
+                <h3>Collector Bilgileri</h3>
+                <div class="info-row"><span>Collector</span><strong>World Collector</strong></div>
+                <div class="info-row"><span>Collector Sayısı</span><strong>10</strong></div>
+            </div>
+        </div>
+
+        <h3 class="section-title">SKIN KATEGORİLERİ</h3>
+        <div class="stats-grid">
+            <div class="stat-card"><small>Supreme</small><strong>6</strong></div>
+            <div class="stat-card"><small>Grand</small><strong>34</strong></div>
+            <div class="stat-card"><small>Exquisite</small><strong>36</strong></div>
+            <div class="stat-card"><small>Deluxe</small><strong>106</strong></div>
+            <div class="stat-card"><small>Exceptional</small><strong>169</strong></div>
+            <div class="stat-card"><small>Common</small><strong>243</strong></div>
+        </div>
+
+        <h3 class="section-title">MAÇ İSTATİSTİKLERİ</h3>
+        <div class="stats-grid">
+            <div class="stat-card"><small>Toplam Maç</small><strong>12.282</strong></div>
+            <div class="stat-card"><small>Galibiyet</small><strong>7.844</strong></div>
+            <div class="stat-card"><small>Kazanma Oranı</small><strong>%63,9</strong></div>
+            <div class="stat-card"><small>MVP</small><strong>2.340</strong></div>
+            <div class="stat-card"><small>Kaybeden Takım MVP'si</small><strong>868</strong></div>
+            <div class="stat-card"><small>KDA</small><strong>4,09</strong></div>
+            <div class="stat-card"><small>Takım Savaşı Katılımı</small><strong>%48,6</strong></div>
+            <div class="stat-card"><small>Dakika Başına Altın</small><strong>710</strong></div>
+        </div>
+
+        <h3 class="section-title">SAVAŞ PERFORMANSI</h3>
+        <div class="stats-grid">
+            <div class="stat-card"><small>Savage</small><strong>129</strong></div>
+            <div class="stat-card"><small>Maniac</small><strong>468</strong></div>
+            <div class="stat-card"><small>Triple Kill</small><strong>2.316</strong></div>
+            <div class="stat-card"><small>Double Kill</small><strong>12.679</strong></div>
+            <div class="stat-card"><small>Legendary</small><strong>2.895</strong></div>
+            <div class="stat-card"><small>Kahraman Hasarı</small><strong>3.889</strong></div>
+            <div class="stat-card"><small>Kule Hasarı</small><strong>5.245</strong></div>
+            <div class="stat-card"><small>En Fazla Öldürme</small><strong>58</strong></div>
+            <div class="stat-card"><small>En Fazla Asist</small><strong>41</strong></div>
+            <div class="stat-card"><small>Galibiyet Serisi</small><strong>72</strong></div>
+            <div class="stat-card"><small>En Yüksek Hasar</small><strong>19.253</strong></div>
+            <div class="stat-card"><small>Alınan En Yüksek Hasar</small><strong>21.661</strong></div>
+            <div class="stat-card"><small>En Yüksek Altın</small><strong>1.918</strong></div>
+        </div>
+
+        <h3 class="section-title">SOSYAL BİLGİLER</h3>
+        <div class="stats-grid">
+            <div class="stat-card"><small>Beğeni</small><strong>16.633</strong></div>
+            <div class="stat-card"><small>Takipçi</small><strong>543</strong></div>
+            <div class="stat-card"><small>Popülerlik</small><strong>12.138</strong></div>
+            <div class="stat-card"><small>Kredi Skoru</small><strong>110</strong></div>
+            <div class="stat-card"><small>Bayraklar</small><strong>%42,9</strong></div>
+        </div>
+
+        <h3 class="section-title">HESAP DETAYLARI</h3>
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>Giriş ve Konum</h3>
+                <div class="info-row"><span>Son Giriş</span><strong>10.11.2026</strong></div>
+                <div class="info-row"><span>Giriş Zamanı</span><strong>16 dakika önce (PHT)</strong></div>
+                <div class="info-row"><span>Konum</span><strong>-</strong>Turkey</div>
+                <div class="info-row"><span>Oluşturulduğu Ülke</span><strong>-</strong>Turkey</div>
+                <div class="info-row"><span>Son Kullanılan Ülke</span><strong>-</strong>Turkey</div>
+            </div>
+            <div class="info-card">
+                <h3>Diğer Bilgiler</h3>
+                <div class="info-row"><span>Affinity</span><strong>Azalea???., ROSAA, Danirast</strong></div>
+                <div class="info-row"><span>Favori Kahramanlar</span><strong>Hayabusa, Aamon, Guinevere</strong></div>
+                <div class="info-row"><span>Son Kullanılan Kahramanlar</span><strong>Guinevere, Kimmy</strong></div>
+                <div class="info-row"><span>Son Alınan Skin</span><strong>18.09.2026 16:06</strong></div>
+                <div class="info-row"><span>Alınan Kahraman</span><strong>Marcel, Chip</strong></div>
+            </div>
+        </div>
+
+        <h3 class="section-title">EN İYİ 3 KAHRAMAN</h3>
+        <div class="hero-card">
+            <div class="hero-item">
+                <div><strong>01. Fanny</strong><small>1.007 Maç &nbsp; • &nbsp; %90,2 Kazanma</small></div>
+                <div class="hero-power">Power: 2692</div>
+            </div>
+            <div class="hero-item">
+                <div><strong>02. Guinevere</strong><small>980 Maç &nbsp; • &nbsp; %77,1 Kazanma</small></div>
+                <div class="hero-power">Power: 3231</div>
+            </div>
+            <div class="hero-item">
+                <div><strong>03. Lesley</strong><small>784 Maç &nbsp; • &nbsp; %61,7 Kazanma</small></div>
+                <div class="hero-power">Power: 2664</div>
+            </div>
+        </div>
+
+        <h3 class="section-title">SON MAÇ</h3>
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>Guinevere</h3>
+                <div class="info-row"><span>KDA</span><strong>15 / 1 / 6</strong></div>
+                <div class="info-row"><span>Altın</span><strong>9.269</strong></div>
+                <div class="info-row"><span>Kahraman Hasarı</span><strong>89.484</strong></div>
+                <div class="info-row"><span>Kule Hasarı</span><strong>6.544</strong></div>
+                <div class="info-row"><span>Alınan Hasar</span><strong>43.127</strong></div>
+            </div>
+            <div class="info-card">
+                <h3>Maç Detayları</h3>
+                <div class="info-row"><span>Son Maç</span><strong>10.11.2026</strong></div>
+                <div class="info-row"><span>Geçen Süre</span><strong>18 saat 59 dakika önce (PHT)</strong></div>
+                <div class="info-row"><span>Maç Süresi</span><strong>07:59</strong></div>
+            </div>
+        </div>
+
+    </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <img src="/img/logo.png" alt="KaeWayn">
+            <div>
+                <strong>Kae Wayn</strong>
+                <small>Yarışmayan bir insanı yenemezsin.</small>
+            </div>
+        </div>
+
+        <div class="socials">
+            <a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://tiktok.com/" target="_blank" rel="noopener">TikTok</a>
+            <a href="https://discord.com/" target="_blank" rel="noopener">Discord</a>
+            <a href="https://youtube.com/" target="_blank" rel="noopener">YouTube</a>
+        </div>
+    </div>
+
+    <div class="copyright">
+        © 2026 Kaewayn. Tüm hakları saklıdır.
+    </div>
+</footer>
+
+<a href="#" class="back-top" id="backTop" aria-label="Yukarı çık">↑</a>
+
+<script>
+// MENU
+const menuButton = document.getElementById("menuButton");
+const sideMenu = document.getElementById("sideMenu");
+const menuOverlay = document.getElementById("menuOverlay");
+const menuClose = document.getElementById("menuClose");
+
+function openMenu() {
+    sideMenu.classList.add("active");
+    menuOverlay.classList.add("active");
+    menuButton.classList.add("active");
+    document.body.style.overflow = "hidden";
+}
+
+function closeMenu() {
+    sideMenu.classList.remove("active");
+    menuOverlay.classList.remove("active");
+    menuButton.classList.remove("active");
+    document.body.style.overflow = "";
+}
+
+menuButton.addEventListener("click", openMenu);
+menuClose.addEventListener("click", closeMenu);
+menuOverlay.addEventListener("click", closeMenu);
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeMenu();
+});
+
+// SEARCH
+const searchForm = document.getElementById("searchForm");
+const playerId = document.getElementById("playerId");
+const zoneId = document.getElementById("zoneId");
+const searchButton = document.getElementById("searchButton");
+const message = document.getElementById("message");
+const results = document.getElementById("results");
+
+const ACCOUNT = {
+    id: "1311337666",
+    zone: "4392"
+};
+
+searchForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const enteredId = playerId.value.trim();
+    const enteredZone = zoneId.value.trim();
+
+    results.classList.remove("show");
+    message.className = "message";
+    message.textContent = "";
+
+    if (!enteredId || !enteredZone) {
+        message.textContent = "Lütfen ID ve Zone ID alanlarını doldur.";
+        message.classList.add("show", "error");
+        return;
+    }
+
+    searchButton.disabled = true;
+    searchButton.textContent = "HESAP SORGULANIYOR...";
+
+    message.textContent = "Hesap bilgileri kontrol ediliyor...";
+    message.classList.add("show");
+
+    setTimeout(() => {
+        searchButton.disabled = false;
+        searchButton.textContent = "HESABI SORGULA";
+
+        if (enteredId === ACCOUNT.id && enteredZone === ACCOUNT.zone) {
+            message.textContent = "Hesap başarıyla bulundu.";
+            message.className = "message show";
+
+            results.classList.add("show");
+
+            setTimeout(() => {
+                results.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            }, 150);
+
+        } else {
+            message.textContent = "Hesap bulunamadı. ID ve Zone ID bilgilerini kontrol et.";
+            message.className = "message show error";
+        }
+    }, 1400);
+});
+
+// BACK TO TOP
+const backTop = document.getElementById("backTop");
+
+window.addEventListener("scroll", () => {
+    if (window.scrollY > 400) {
+        backTop.classList.add("show");
+    } else {
+        backTop.classList.remove("show");
+    }
+});
+
+backTop.addEventListener("click", (event) => {
+    event.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+});
+</script>
+
+</body>
+</html>

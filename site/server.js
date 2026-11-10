@@ -493,6 +493,17 @@ app.get("/kae", (req, res) => {
 });
 
 
+// =========================================================
+// KAE SORGU
+// =========================================================
+
+app.get("/sorgu", (req, res) => {
+    res.sendFile(
+        path.join(__dirname, "public", "pages", "sorgu.html")sss
+    );
+});
+
+
 
 
 // =========================================================
@@ -558,6 +569,10 @@ app.listen(
 
         console.log(
            `   http://localhost:${PORT}/kae`
+        );
+
+        console.log(
+           `   http://localhost:${PORT}/sorgu`
         );
 
 
